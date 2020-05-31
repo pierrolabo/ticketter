@@ -31,6 +31,16 @@ router.post('/', (req, res) => {
   newTicket.save().then((ticket) => res.json(ticket));
 });
 
+//  @route DELETE api/tickets/s
+//  @desc   Delete a ticket
+//  @access public
+router.delete('/:id', (req, res) => {
+  console.log('delete');
+  Ticket.findById(req.params.id)
+    .then((ticket) => ticket.remove().then(() => res.json({ success: true })))
+    .catch((err) => res.status(404).json({ success: false }));
+});
+
 //  @route PUT api/tickets/setCompleted/
 //  @desc   Set a ticket to completed
 //  @access public
