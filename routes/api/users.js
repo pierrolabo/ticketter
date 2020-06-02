@@ -10,21 +10,16 @@ const User = require('../../models/User');
 //  @desc   Register new users
 //  @access Public
 router.post('/', async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, surname, email, password } = req.body;
 
   //  Quick data validations
-  if (!name || !email || !password) {
+  if (!name || !surname || !email || !password) {
     return res.status(400).json({ msg: 'All fields must be complete!' });
   }
 
-  //  Check if the pseudo || email exist in database
-  let pseudoInDatabase = await User.findOne({ name });
+  //  Check if email exist in database
   let emailInDatabase = await User.findOne({ email });
 
-  //  Name already in database
-  if (pseudoInDatabase) {
-    return res.status(400).json({ msg: 'Username is already taken!' });
-  }
   //  Email already in database
   if (emailInDatabase) {
     return res.status(400).json({ msg: 'This email is already registered!' });
@@ -33,6 +28,7 @@ router.post('/', async (req, res) => {
   //  User is not in database, we create a new user
   const newUser = new User({
     name,
+    surname,
     email,
     password,
   });
@@ -62,6 +58,7 @@ router.post('/', async (req, res) => {
               user: {
                 id: user.id,
                 name: user.name,
+                surname: user.surname,
                 email: user.email,
               },
             });

@@ -50,6 +50,7 @@ router.post('/', async (req, res) => {
             user: {
               id: user.id,
               name: user.name,
+              surname: user.surname,
               email: user.email,
             },
           });
@@ -63,7 +64,6 @@ router.post('/', async (req, res) => {
 //  @desc   GET user data
 //  @access private
 router.get('/user', simpleUser, (req, res) => {
-  console.log('req:', req.body);
   User.findById(req.user.id)
     .select('-password')
     .then((user) => res.json(user));
