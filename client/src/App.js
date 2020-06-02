@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
-import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from 'connected-react-router';
 import configureStore, { history } from './configureStore';
-import Register from './components/auth/Register';
 import { Provider } from 'react-redux';
 
 import routes from './routes';
