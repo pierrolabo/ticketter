@@ -1,5 +1,9 @@
 import axios from 'axios';
 import { returnErrors } from './errorActions.js';
+
+//Required to push the user to home after login
+import { history } from '../configureStore';
+
 import {
   USER_LOADED,
   USER_LOADING,
@@ -46,6 +50,39 @@ export const register = ({ name, surname, email, password }) => (dispatch) => {
         payload: res.data,
       });
     })
+    .catch((err) => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL')
+      );
+      dispatch({
+        type: LOGIN_FAIL,
+      });
+    });
+};
+
+//  Login user
+export const login = ({ email, password }) => (dispatch) => {
+  //  Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  //  Request body
+  const body = JSON.stringify({ email, password });
+
+  axios
+    .post('/api/auth', body, config)
+    .then((res) => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+      //redirect user to home
+      history.push('/');
+    })
+
     .catch((err) => {
       dispatch(
         returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL')
