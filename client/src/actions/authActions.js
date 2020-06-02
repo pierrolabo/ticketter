@@ -15,20 +15,26 @@ import {
   LOGOUT_SUCCESS,
 } from './types';
 
-/*
-  //    Check token & load user
-  export const loadUser = () => (dispatch, getState) => {
+//    Check token & load user
+export const loadUser = () => (dispatch, getState) => {
+  //  User loading
+  dispatch({ type: USER_LOADING });
 
-    //  User loading
-    dispatch({ type: USER_LOADING})
-
-    axios
-        .get('/api/auth/', tokenConfig(getState))
-        .then(res => {
-
-        })
-  }
-  */
+  axios
+    .get('/api/auth/checkToken', tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: AUTH_ERROR,
+      });
+    });
+};
 
 //    Register user
 export const register = ({ name, surname, email, password }) => (dispatch) => {
@@ -91,4 +97,23 @@ export const login = ({ email, password }) => (dispatch) => {
         type: LOGIN_FAIL,
       });
     });
+};
+
+//  Setup config/headers and token
+export const tokenConfig = (getState) => {
+  //get token from localstorage
+  const token = getState().auth.token;
+  //Headers
+  const config = {
+    headers: {
+      'Content-type': 'application/json',
+    },
+  };
+
+  //  if tooken, add to headers
+  if (token) {
+    config.headers['x-auth-token'] = token;
+    console.log('we got token: ', token);
+  }
+  return config;
 };
