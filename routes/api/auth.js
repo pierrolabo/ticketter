@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
+const auth = require('../../middleware/auth');
 const simpleUser = require('../../middleware/permissions/simpleUser');
 const User = require('../../models/User');
 
@@ -49,6 +50,7 @@ router.post('/', async (req, res) => {
             token,
             user: {
               id: user.id,
+              role: user.role,
               name: user.name,
               surname: user.surname,
               email: user.email,
@@ -63,10 +65,19 @@ router.post('/', async (req, res) => {
 //  @route GET api/auth/user
 //  @desc   GET user data
 //  @access private
-router.get('/user', simpleUser, (req, res) => {
+router.get('/user', (req, res) => {
+  console.log(req.user);
   User.findById(req.user.id)
     .select('-password')
     .then((user) => res.json(user));
 });
 
+//  @route GET api/auth/user
+//  @desc   GET user data
+//  @access private
+router.get('/checkToken', auth, (req, res) => {
+  User.findById(req.user.id)
+    .select('-password')
+    .then((user) => res.json(user));
+});
 module.exports = router;
