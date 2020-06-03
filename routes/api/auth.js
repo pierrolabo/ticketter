@@ -50,6 +50,7 @@ router.post('/', async (req, res) => {
             token,
             user: {
               id: user.id,
+              role: user.role,
               name: user.name,
               surname: user.surname,
               email: user.email,
