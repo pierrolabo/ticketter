@@ -68,10 +68,12 @@ class NavBar extends Component {
     );
 
     return (
-      <div className='navbar-container'>
+      <div className='navbar-container '>
         <Navbar color='dark' dark expand='sm' className='mb-8'>
           <Container>
-            <NavbarBrand href='/'>Ticketter</NavbarBrand>
+            <NavbarBrand className='d-xl-none' href='/'>
+              Ticketter
+            </NavbarBrand>
             <NavbarToggler onClick={this.toggle}></NavbarToggler>
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className='ml-auto' navbar>
