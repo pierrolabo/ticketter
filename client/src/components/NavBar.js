@@ -19,6 +19,8 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { logout } from '../actions/authActions';
+
 class NavBar extends Component {
   state = {
     isOpen: false,
@@ -26,6 +28,7 @@ class NavBar extends Component {
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
+    logout: PropTypes.func.isRequired,
   };
 
   toggle = () => {
@@ -44,6 +47,11 @@ class NavBar extends Component {
           <span className='navbar-text mr-3'>
             <strong>{user ? `Welcome ${user.name}` : ''}</strong>
           </span>
+        </NavItem>
+        <NavItem>
+          <NavLink onClick={this.props.logout} href='#'>
+            Logout
+          </NavLink>
         </NavItem>
       </Fragment>
     );
@@ -80,4 +88,4 @@ class NavBar extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, null)(NavBar);
+export default connect(mapStateToProps, { logout })(NavBar);
