@@ -9,18 +9,8 @@ import Sidebar from '../components/sidebar/SideBar';
 class UserRoles extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    redirectUnauthenticated: PropTypes.func.isRequired,
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log('auth:', this.props.auth.isAuthenticated);
-    if (
-      this.props.auth.isAuthenticated !== null &&
-      !this.props.auth.isAuthenticated
-    ) {
-      history.push('/');
-    }
-  }
   render() {
     const { isAuthenticated, role, user } = this.props.auth;
     const users = [
