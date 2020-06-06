@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PrivateRoute from './PrivateRoute';
+import AdminRoute from './AdminRoute';
 
 import NavBar from '../components/NavBar';
 import Index from '../views/Index';
@@ -9,10 +10,11 @@ import Home from '../views/Home';
 import Register from '../components/auth/Register';
 import Login from '../components/auth/Login';
 import UserRoles from '../views/UserRoles';
+import AdminProtected from '../views/AdminProtected.js';
 
 const Routes = (props) => {
   return (
-    <div>
+    <div className='router'>
       <NavBar />
       <Switch>
         <Route exact path='/' component={Index} />
@@ -24,6 +26,9 @@ const Routes = (props) => {
         <PrivateRoute path='/users' auth={props.auth}>
           <UserRoles />
         </PrivateRoute>
+        <AdminRoute path='/adminroute' auth={props.auth} role={props.auth.role}>
+          <AdminProtected />
+        </AdminRoute>
       </Switch>
     </div>
   );
