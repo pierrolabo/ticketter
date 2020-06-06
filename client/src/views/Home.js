@@ -1,22 +1,36 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
-//  Bootstrap Elm
-import { Jumbotron, Container } from 'reactstrap';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { history } from '../configureStore';
 
+import Sidebar from '../components/sidebar/SideBar';
+
+import DashboardAdmin from '../components/admin/DashboardAdmin';
 class Home extends Component {
+  static propTypes = {
+    auth: PropTypes.object.isRequired,
+    redirectUnauthenticated: PropTypes.func.isRequired,
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!this.props.auth.isAuthenticated) {
+      history.push('/');
+    }
+  }
   render() {
+    const { isAuthenticated, role, user } = this.props.auth;
+    console.log('user: ', user, 'role: ', role);
     return (
-      <div>
-        <Jumbotron fluid>
-          <Container fluid>
-            <h1 className='display-3'>Ticketter</h1>
-            <p className='lead'>The simplest ticket manager for your team :)</p>
-          </Container>
-        </Jumbotron>
-        <h2>Functionnalities</h2>
+      <div className='dashboard'>
+        <Sidebar />
+        {role === 'USER' ? <DashboardAdmin /> : '<h1>lol</h1>'}
       </div>
     );
   }
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, null)(Home);
