@@ -28,7 +28,8 @@ export const loadUser = () => (dispatch, getState) => {
         payload: res.data,
       });
       //redirect user to Home
-      history.push('/Home');
+      //history.push('/Home');
+      console.log('user loaded: ', history);
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
