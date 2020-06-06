@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Jumbotron, Container, Row, Col, NavLink, Nav } from 'reactstrap';
 import Sidebar from '../sidebar/SideBar';
 import TicketCard from '../TicketsCards/TicketCard';
-import ChartComponent from '../chart/ChartComponent';
+//import ChartComponent from '../chart/ChartComponent';
 
 export class DashboardAdmin extends Component {
   static propTypes = {
@@ -45,7 +45,6 @@ export class DashboardAdmin extends Component {
               <TicketCard ticketInfo={unresolvedTicket} />
             </Col>
           </Row>
-          <ChartComponent />
         </Container>
       </Container>
     );
