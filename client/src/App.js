@@ -5,7 +5,7 @@ import { loadUser } from './actions/authActions';
 
 import { Provider } from 'react-redux';
 
-import routes from './routes';
+import Routes from './routes';
 //import { loadUser } from './actions/authActions';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -18,7 +18,9 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <ConnectedRouter history={history}>{routes}</ConnectedRouter>
+        <ConnectedRouter history={history}>
+          <Routes />
+        </ConnectedRouter>
       </Provider>
     );
   }
