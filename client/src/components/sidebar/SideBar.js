@@ -35,8 +35,8 @@ const SideBar = (props) => {
     <div className='sideBar-container d-none d-xl-block'>
       <Navbar vertical color='dark' light expand='sm'>
         <NavbarToggler onClick={toggle} />
-        <NavbarBrand className='position-fixed' href='/Home'>
-          Ticketter
+        <NavbarBrand className='position-fixed'>
+          <Link to='/Home'>Ticketter</Link>
         </NavbarBrand>
         <Collapse
           Defect
@@ -49,7 +49,7 @@ const SideBar = (props) => {
               <NavLink href='/Tickets'>Tickets</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href='/Projects'>User Roles</NavLink>
+              <Link to='/users'>User Roles</Link>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
