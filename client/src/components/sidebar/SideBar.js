@@ -25,7 +25,7 @@ import {
   Collapse,
   NavbarText,
 } from 'reactstrap';
-import classNames from 'classnames';
+
 import { Link } from 'react-router-dom';
 
 const SideBar = (props) => {
@@ -35,8 +35,8 @@ const SideBar = (props) => {
     <div className='sideBar-container d-none d-xl-block'>
       <Navbar vertical color='dark' light expand='sm'>
         <NavbarToggler onClick={toggle} />
-        <NavbarBrand className='position-fixed'>
-          <Link to='/Home'>Ticketter</Link>
+        <NavbarBrand className='position-fixed' href='/home'>
+          Ticketter
         </NavbarBrand>
         <Collapse
           Defect
