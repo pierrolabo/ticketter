@@ -49,7 +49,7 @@ const SideBar = (props) => {
               <NavLink href='/Tickets'>Tickets</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href='/Projects'>User Roles</NavLink>
+              <NavLink href='/users'>User Roles</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>

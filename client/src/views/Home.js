@@ -13,11 +13,6 @@ class Home extends Component {
     redirectUnauthenticated: PropTypes.func.isRequired,
   };
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!this.props.auth.isAuthenticated) {
-      history.push('/');
-    }
-  }
   render() {
     const { isAuthenticated, role, user } = this.props.auth;
     console.log('user: ', user, 'role: ', role);
