@@ -5,31 +5,43 @@ import PrivateRoute from './PrivateRoute';
 import AdminRoute from './AdminRoute';
 
 import NavBar from '../components/NavBar';
+import SideBar from '../components/sidebar/SideBar';
+
 import Index from '../views/Index';
 import Home from '../views/Home';
 import Register from '../components/auth/Register';
 import Login from '../components/auth/Login';
-import UserRoles from '../views/UserRoles';
+import Users from '../views/Users';
 import AdminProtected from '../views/AdminProtected.js';
 
 const Routes = (props) => {
   return (
     <div className='router'>
       <NavBar />
-      <Switch>
-        <Route exact path='/' component={Index} />
-        <Route path='/register' component={Register} />
-        <Route path='/login' component={Login} />
-        <PrivateRoute path='/Home' auth={props.auth}>
-          <Home />
-        </PrivateRoute>
-        <PrivateRoute path='/users' auth={props.auth}>
-          <UserRoles />
-        </PrivateRoute>
-        <AdminRoute path='/adminroute' auth={props.auth} role={props.auth.role}>
-          <AdminProtected />
-        </AdminRoute>
-      </Switch>
+      <div className='main-container'>
+        {props.auth.isAuthenticated ? <SideBar /> : ''}
+
+        <Switch>
+          <main>
+            <Route exact path='/' component={Index} />
+            <Route path='/register' component={Register} />
+            <Route path='/login' component={Login} />
+            <PrivateRoute path='/home' auth={props.auth}>
+              <Home />
+            </PrivateRoute>
+            <PrivateRoute path='/users' auth={props.auth}>
+              <Users />
+            </PrivateRoute>
+            <AdminRoute
+              path='/adminroute'
+              auth={props.auth}
+              role={props.auth.role}
+            >
+              <AdminProtected />
+            </AdminRoute>
+          </main>
+        </Switch>
+      </div>
     </div>
   );
 };

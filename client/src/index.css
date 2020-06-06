@@ -12,7 +12,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
+.main-container {
+  display: flex;
+}
+main {
+  display: flex;
+  width: 100%;
+}
 .container-flex {
   display: flex;
   flex-direction: column;

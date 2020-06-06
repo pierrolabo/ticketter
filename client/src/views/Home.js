@@ -18,7 +18,6 @@ class Home extends Component {
     console.log('user: ', user, 'role: ', role);
     return (
       <div className='home'>
-        <Sidebar />
         {role === 'USER' ? <DashboardAdmin /> : '<h1>lol</h1>'}
       </div>
     );
