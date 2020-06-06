@@ -2,11 +2,9 @@ import React, { Component, Fragment } from 'react';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { history } from '../configureStore';
 import UserList from '../components/UserList/UserList';
-import Sidebar from '../components/sidebar/SideBar';
 
-class UserRoles extends Component {
+class Users extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
   };
@@ -31,9 +29,18 @@ class UserRoles extends Component {
       },
     ];
     return (
-      <div className='home'>
-        <Sidebar />
+      <div className='users-container'>
         <h1>User Roles</h1>
+        <UserList users={users}></UserList>
+        <UserList users={users}></UserList>
+        <UserList users={users}></UserList>
+        <UserList users={users}></UserList>
+        <UserList users={users}></UserList>
+        <UserList users={users}></UserList>
+        <UserList users={users}></UserList>
+        <UserList users={users}></UserList>
+        <UserList users={users}></UserList>
+        <UserList users={users}></UserList>
         <UserList users={users}></UserList>
       </div>
     );
@@ -43,4 +50,4 @@ class UserRoles extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, null)(UserRoles);
+export default connect(mapStateToProps, null)(Users);

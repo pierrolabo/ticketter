@@ -27,9 +27,6 @@ export const loadUser = () => (dispatch, getState) => {
         type: USER_LOADED,
         payload: res.data,
       });
-      //redirect user to Home
-      //history.push('/Home');
-      console.log('user loaded: ', history);
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
@@ -89,7 +86,7 @@ export const login = ({ email, password }) => (dispatch) => {
         payload: res.data,
       });
       //redirect user to Home
-      history.push('/Home');
+      history.push('/home');
     })
 
     .catch((err) => {
@@ -123,6 +120,7 @@ export const tokenConfig = (getState) => {
 
 //LOGOUT User
 export const logout = () => {
+  history.push('/');
   return {
     type: LOGOUT_SUCCESS,
   };
