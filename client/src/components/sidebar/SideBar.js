@@ -35,32 +35,33 @@ const SideBar = (props) => {
     <div className='sideBar-container d-none d-xl-block'>
       <Navbar vertical color='dark' light expand='sm'>
         <NavbarToggler onClick={toggle} />
-        <NavbarBrand className='position-fixed' href='/'>
-          reactstrap
+        <NavbarBrand className='position-fixed' href='/Home'>
+          Ticketter
         </NavbarBrand>
         <Collapse
+          Defect
           className='position-fixed sidebar-position'
           isOpen={isOpen}
           navbar
         >
           <Nav vertical className='list-unstyled bg-dark sideBar'>
             <NavItem className='menu-item'>
-              <NavLink href='/components/'>Components</NavLink>
+              <NavLink href='/Tickets'>Tickets</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href='https://github.com/reactstrap/reactstrap'>
-                GitHub
-              </NavLink>
+              <NavLink href='/Projects'>User Roles</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Options
+                Projects
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
+                <DropdownItem>New Project</DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>Reset</DropdownItem>
+                <DropdownItem>Assign Users</DropdownItem>
+                <DropdownItem>Remove Users</DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>View Projects</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavbarText>Simple Text</NavbarText>
