@@ -22,7 +22,7 @@ class Home extends Component {
     const { isAuthenticated, role, user } = this.props.auth;
     console.log('user: ', user, 'role: ', role);
     return (
-      <div className='dashboard'>
+      <div className='home'>
         <Sidebar />
         {role === 'USER' ? <DashboardAdmin /> : '<h1>lol</h1>'}
       </div>

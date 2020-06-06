@@ -28,9 +28,12 @@ code {
 .navbar-container {
   width: 100%;
 }
-.dashboard {
+.home {
   display: flex;
   flex-direction: row;
+}
+.dashboard {
+  margin-top: 2%;
 }
 .sideBar-container {
   width: 160px;
