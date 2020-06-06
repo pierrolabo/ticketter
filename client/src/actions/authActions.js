@@ -27,8 +27,8 @@ export const loadUser = () => (dispatch, getState) => {
         type: USER_LOADED,
         payload: res.data,
       });
-      //redirect user to dashboard
-      history.push('/dashboard');
+      //redirect user to Home
+      history.push('/Home');
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
@@ -87,8 +87,8 @@ export const login = ({ email, password }) => (dispatch) => {
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
-      //redirect user to dashboard
-      history.push('/dashboard');
+      //redirect user to Home
+      history.push('/Home');
     })
 
     .catch((err) => {
