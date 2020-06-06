@@ -4,6 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
+/.bit
+.bitmap
+
 
 # testing
 /coverage
