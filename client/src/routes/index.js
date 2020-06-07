@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React from 'react';
+//  Router
+import { Route, Switch } from 'react-router-dom';
+import { history } from '../configureStore';
+//  Routes
 import PrivateRoute from './PrivateRoute';
 import AdminRoute from './AdminRoute';
-
+//  Redux
+import { connect } from 'react-redux';
+//  Components
 import NavBar from '../components/NavBar';
 import SideBar from '../components/sidebar/SideBar';
-
+//  Pages
 import Index from '../views/Index';
 import Home from '../views/Home';
 import Register from '../components/auth/Register';
@@ -15,18 +19,23 @@ import Users from '../views/Users';
 import AdminProtected from '../views/AdminProtected.js';
 
 const Routes = (props) => {
+  const location = history.location;
   return (
     <div className='router'>
       <NavBar />
       <div className='main-container'>
-        {props.auth.isAuthenticated ? <SideBar /> : ''}
+        {props.auth.isAuthenticated && location.pathname !== '/' ? (
+          <SideBar />
+        ) : (
+          ''
+        )}
 
         <Switch>
           <main>
             <Route exact path='/' component={Index} />
             <Route path='/register' component={Register} />
             <Route path='/login' component={Login} />
-            <PrivateRoute path='/home' auth={props.auth}>
+            <PrivateRoute exact path='/home' auth={props.auth}>
               <Home />
             </PrivateRoute>
             <PrivateRoute path='/users' auth={props.auth}>
@@ -48,6 +57,7 @@ const Routes = (props) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  router: state.router,
 });
 
 export default connect(mapStateToProps, null)(Routes);
