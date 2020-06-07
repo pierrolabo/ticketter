@@ -3,17 +3,43 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
+const auth = require('../../middleware/auth');
+const admin = require('../../middleware/permissions/admin');
 
 const User = require('../../models/User');
 
+//  @route GET api/users
+//  @desc   Get the list of all users
+//  @access private
+router.get('/', admin, async (req, res) => {
+  User.find()
+    .select('-password')
+    .then((user) => res.json(user));
+});
+//  @route GET api/user:id
+//  @desc   Get user by id
+//  @access private
+router.get('/:id', admin, async (req, res) => {
+  const { id } = req.params;
+  try {
+    //    If ID doesnt match mongoID type
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw 'ID isnt valid';
+    }
+    User.find({ _id: id })
+      .select('-password')
+      .then((user) => res.json(user));
+  } catch (err) {
+    return res.status(400).json({ msg: err });
+  }
+});
 //  @route POST api/users
 //  @desc   Register new users
 //  @access Public
 router.post('/', async (req, res) => {
-  const { name, surname, email, password } = req.body;
-
+  const { name, lastname, email, password } = req.body;
   //  Quick data validations
-  if (!name || !surname || !email || !password) {
+  if (!name || !lastname || !email || !password) {
     return res.status(400).json({ msg: 'All fields must be complete!' });
   }
 
@@ -28,7 +54,7 @@ router.post('/', async (req, res) => {
   //  User is not in database, we create a new user
   const newUser = new User({
     name,
-    surname,
+    lastname,
     email,
     password,
   });
@@ -58,7 +84,7 @@ router.post('/', async (req, res) => {
               user: {
                 id: user.id,
                 name: user.name,
-                surname: user.surname,
+                lastname: user.lastname,
                 email: user.email,
               },
             });
@@ -68,5 +94,24 @@ router.post('/', async (req, res) => {
     });
   });
 });
+//  @route PUT api/users
+//  @desc   Update a user by id
+//  @access private
+router.put('/', admin, async (req, res) => {
+  const { name, lastname, address, email, role, id } = req.body;
 
+  if (!name || !lastname || !address || !email || !role || !id) {
+    return res.status(400).json({ msg: 'All fields must be complete!' });
+  }
+  let query = { _id: id };
+  let update = { $set: { name: name, lastname: lastname } };
+  let options = { new: true, upsert: true, useFindAndModify: false };
+  User.findOneAndUpdate(query, update, options)
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((error) => {
+      return res.status(400).json({ msg: 'Error updating user' });
+    });
+});
 module.exports = router;

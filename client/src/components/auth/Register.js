@@ -10,7 +10,7 @@ import { clearErrors } from '../../actions/errorActions.js';
 class Register extends Component {
   state = {
     name: '',
-    surname: '',
+    lastname: '',
     password: '',
     msg: null,
   };
@@ -41,12 +41,12 @@ class Register extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const { name, surname, email, password } = this.state;
+    const { name, lastname, email, password } = this.state;
 
     //  Create user object
     const newUser = {
       name,
-      surname,
+      lastname,
       email,
       password,
     };
@@ -70,12 +70,12 @@ class Register extends Component {
               className='mb-3'
               onChange={this.onChange}
             />
-            <Label for='surname'>Surname</Label>
+            <Label for='lastname'>Lastname</Label>
             <Input
               type='text'
-              name='surname'
-              id='surname'
-              placeholder='surname'
+              name='lastname'
+              id='lastname'
+              placeholder='lastname'
               className='mb-3'
               onChange={this.onChange}
             />

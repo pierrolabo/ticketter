@@ -37,7 +37,7 @@ export const loadUser = () => (dispatch, getState) => {
 };
 
 //    Register user
-export const register = ({ name, surname, email, password }) => (dispatch) => {
+export const register = ({ name, lastname, email, password }) => (dispatch) => {
   //    Headers
   const config = {
     headers: {
@@ -45,16 +45,17 @@ export const register = ({ name, surname, email, password }) => (dispatch) => {
     },
   };
   //  Body
-  const body = JSON.stringify({ name, surname, email, password });
+  const body = JSON.stringify({ name, lastname, email, password });
 
   //Request
   axios
     .post('/api/users', body, config)
     .then((res) => {
-      return dispatch({
+      dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
+      history.push('/home');
     })
     .catch((err) => {
       dispatch(
@@ -113,7 +114,6 @@ export const tokenConfig = (getState) => {
   //  if tooken, add to headers
   if (token) {
     config.headers['x-auth-token'] = token;
-    console.log('we got token: ', token);
   }
   return config;
 };

@@ -16,7 +16,6 @@ import Home from '../views/Home';
 import Register from '../components/auth/Register';
 import Login from '../components/auth/Login';
 import Users from '../views/Users';
-import AdminProtected from '../views/AdminProtected.js';
 
 const Routes = (props) => {
   const location = history.location;
@@ -38,15 +37,9 @@ const Routes = (props) => {
             <PrivateRoute exact path='/home' auth={props.auth}>
               <Home />
             </PrivateRoute>
-            <PrivateRoute path='/users' auth={props.auth}>
+
+            <AdminRoute path='/users' auth={props.auth} role={props.auth.role}>
               <Users />
-            </PrivateRoute>
-            <AdminRoute
-              path='/adminroute'
-              auth={props.auth}
-              role={props.auth.role}
-            >
-              <AdminProtected />
             </AdminRoute>
           </main>
         </Switch>
