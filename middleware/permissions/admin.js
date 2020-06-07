@@ -2,7 +2,6 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 
 function admin(req, res, next) {
-  console.log('pass in');
   //We grab the token from the header
   const token = req.header('x-auth-token');
 
@@ -17,11 +16,11 @@ function admin(req, res, next) {
 
     //  Check if user is admin
     let role = decodedToken.role;
-    console.log('decodedToken: ', decodedToken);
     if (role === 'ADMIN') {
       next();
+    } else {
+      return res.status(401).json({ msg: 'User isnt elevated enough' });
     }
-    return res.status(401).json({ msg: 'User isnt elevated enough' });
   } catch (err) {
     res.status(400).json({ msg: 'Token is not valid' });
   }
