@@ -15,7 +15,6 @@ class Home extends Component {
 
   render() {
     const { isAuthenticated, role, user } = this.props.auth;
-    console.log('user: ', user, 'role: ', role);
     return (
       <div className='home'>
         {role === 'USER' ? <DashboardAdmin /> : '<h1>lol</h1>'}

@@ -13,7 +13,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTicketAlt } from '@fortawesome/free-solid-svg-icons';
 const TicketCard = (props) => {
   const { cardTitle, ticketNumber, ticketType } = props.ticketInfo;
-  console.log(ticketNumber);
   const renderSwitch = (param) => {
     switch (param) {
       case 'NEW':
