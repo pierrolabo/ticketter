@@ -111,7 +111,7 @@ router.put('/', admin, async (req, res) => {
     orgs,
   } = req.body;
 
-  if (!name || !lastname || !address || !email || !role || !id) {
+  if (!name || !lastname || !email || !role || !id) {
     return res.status(400).json({ msg: 'All fields must be complete!' });
   }
   let query = { _id: id };
