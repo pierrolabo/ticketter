@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 
 //  User is at least authenticated
 function isAuth(req, res, next) {
-  console.log('pass in');
   //We grab the token from the header
   const token = req.header('x-auth-token');
 
