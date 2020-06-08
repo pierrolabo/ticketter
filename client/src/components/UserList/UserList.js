@@ -41,20 +41,17 @@ class UserList extends Component {
     orgs: [],
   };
   handleChange = (e) => {
-    console.log('handlechange: ', e.target.value);
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
   handleChangeRolesSelect = (e) => {
-    console.log(`Option selected:`, e);
     this.setState({
       role: e.value,
     });
   };
   handleChangeOrgsSelect = (e) => {
     const orgSelected = e;
-    console.log(`Option selected:`, orgSelected);
     //  If no org is select we set se orgs state to empty
     //  Because a user can have no orgs affected
     if (orgSelected) {
@@ -95,7 +92,6 @@ class UserList extends Component {
       state,
       zip,
     };
-    console.log('submit: ', updatedUser);
     this.props.updateUser(updatedUser);
     this.setState({
       modal: false,
