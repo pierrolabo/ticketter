@@ -25,12 +25,28 @@ const UserSchema = new Schema({
     default: Date.now,
   },
   address: {
-    type: Array,
+    type: String,
+    default: null,
+  },
+  city: {
+    type: String,
+    default: null,
+  },
+  zip: {
+    type: String,
+    default: null,
+  },
+  state: {
+    type: String,
     default: null,
   },
   role: {
     type: String,
     default: 'USER',
+  },
+  orgs: {
+    type: Array,
+    default: [],
   },
 });
 

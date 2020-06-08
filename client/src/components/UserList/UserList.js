@@ -34,16 +34,55 @@ class UserList extends Component {
     email: null,
     role: null,
     address: null,
+    city: '',
+    state: '',
+    zip: '',
     id: null,
+    orgs: [],
   };
   handleChange = (e) => {
+    console.log('handlechange: ', e.target.value);
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
+  handleChangeRolesSelect = (e) => {
+    console.log(`Option selected:`, e);
+    this.setState({
+      role: e.value,
+    });
+  };
+  handleChangeOrgsSelect = (e) => {
+    const orgSelected = e;
+    console.log(`Option selected:`, orgSelected);
+    //  If no org is select we set se orgs state to empty
+    //  Because a user can have no orgs affected
+    if (orgSelected) {
+      //  We only keep to value of the select
+      const filteredOrgs = orgSelected.map((org) => org.value);
+      this.setState({
+        orgs: [...filteredOrgs],
+      });
+    } else {
+      this.setState({
+        orgs: [],
+      });
+    }
+  };
   handleSubmit = (e) => {
     e.preventDefault();
-    const { name, lastname, address, email, role, id } = this.state;
+    const {
+      name,
+      lastname,
+      address,
+      city,
+      zip,
+      state,
+      email,
+      role,
+      id,
+      orgs,
+    } = this.state;
     const updatedUser = {
       name,
       lastname,
@@ -51,17 +90,51 @@ class UserList extends Component {
       email,
       role,
       id,
+      orgs,
+      city,
+      state,
+      zip,
     };
+    console.log('submit: ', updatedUser);
     this.props.updateUser(updatedUser);
+    this.setState({
+      modal: false,
+      name: null,
+      lastname: null,
+      email: null,
+      role: null,
+      address: null,
+      city: '',
+      state: '',
+      zip: '',
+      id: null,
+      orgs: [],
+    });
   };
   toggleModal = (e) => {
     if (!this.state.modal) {
-      const id = e.target.parentNode.id;
+      let id = e.target.parentNode.id;
+      //  If svg or <th> is clicked, sometimes we dont get id
+      //  this fix the bug
+      if (!id) {
+        id = e.target.id;
+      }
+
       try {
         let filteredUsers = this.props.users.filter(
           (user) => user._id === id
         )[0];
-        const { name, lastname, address, email, role } = filteredUsers;
+        const {
+          name,
+          lastname,
+          address,
+          city,
+          zip,
+          state,
+          email,
+          role,
+          orgs,
+        } = filteredUsers;
         this.setState({
           modal: !this.state.modal,
           id,
@@ -70,6 +143,10 @@ class UserList extends Component {
           email,
           role,
           address,
+          city,
+          zip,
+          state,
+          orgs,
         });
       } catch (err) {
         console.log(err);
@@ -88,12 +165,19 @@ class UserList extends Component {
         <EditUserModal
           modal={this.state.modal}
           handleChange={this.handleChange}
+          handleChangeRolesSelect={this.handleChangeRolesSelect}
+          handleChangeOrgsSelect={this.handleChangeOrgsSelect}
           handleSubmit={this.handleSubmit}
           toggleModal={this.toggleModal}
           name={this.state.name}
           lastname={this.state.lastname}
           email={this.state.email}
+          userRole={this.state.role}
           address={this.state.address}
+          city={this.state.city}
+          zip={this.state.zip}
+          state={this.state.state}
+          orgs={this.state.orgs}
         />
         <Card>
           <CardHeader>User List</CardHeader>

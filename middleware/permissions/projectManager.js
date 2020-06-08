@@ -2,7 +2,6 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 
 function projectManager(req, res, next) {
-  console.log('pass in');
   //We grab the token from the header
   const token = req.header('x-auth-token');
 
@@ -17,7 +16,6 @@ function projectManager(req, res, next) {
 
     //  Check if user is admin
     let role = decodedToken.role;
-    console.log('decodedToken: ', decodedToken);
     if (role === 'PROJECTMANAGER') {
       next();
     }

@@ -66,7 +66,6 @@ router.post('/', async (req, res) => {
 //  @desc   GET user data
 //  @access private
 router.get('/user', (req, res) => {
-  console.log(req.user);
   User.findById(req.user.id)
     .select('-password')
     .then((user) => res.json(user));
