@@ -98,13 +98,36 @@ router.post('/', async (req, res) => {
 //  @desc   Update a user by id
 //  @access private
 router.put('/', admin, async (req, res) => {
-  const { name, lastname, address, email, role, id } = req.body;
+  const {
+    name,
+    lastname,
+    address,
+    city,
+    zip,
+    state,
+    email,
+    role,
+    id,
+    orgs,
+  } = req.body;
 
-  if (!name || !lastname || !address || !email || !role || !id) {
+  if (!name || !lastname || !email || !role || !id) {
     return res.status(400).json({ msg: 'All fields must be complete!' });
   }
   let query = { _id: id };
-  let update = { $set: { name: name, lastname: lastname } };
+  let update = {
+    $set: {
+      name: name,
+      lastname: lastname,
+      email: email,
+      address: address,
+      city: city,
+      zip: zip,
+      state: state,
+      role: role,
+      orgs: orgs,
+    },
+  };
   let options = { new: true, upsert: true, useFindAndModify: false };
   User.findOneAndUpdate(query, update, options)
     .then((user) => {

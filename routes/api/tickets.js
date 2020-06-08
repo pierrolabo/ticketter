@@ -35,7 +35,6 @@ router.post('/', (req, res) => {
 //  @desc   Delete a ticket
 //  @access public
 router.delete('/:id', (req, res) => {
-  console.log('delete');
   Ticket.findById(req.params.id)
     .then((ticket) => ticket.remove().then(() => res.json({ success: true })))
     .catch((err) => res.status(404).json({ success: false }));
