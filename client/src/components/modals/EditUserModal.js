@@ -9,21 +9,45 @@ import {
   Label,
   Input,
   NavLink,
+  Row,
+  Col,
   Alert,
 } from 'reactstrap';
-
+import Select from 'react-select';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { clearErrors } from '../../actions/errorActions';
-
+import { faMehRollingEyes } from '@fortawesome/free-solid-svg-icons';
+const optionsRoles = [
+  { value: 'ADMIN', label: 'ADMIN' },
+  { value: 'USER', label: 'USER' },
+  { value: 'PROJECT_MANAGER', label: 'PROJECT_MANAGER' },
+  { value: 'DEVELOPER', label: 'DEVELOPER' },
+];
+const optionsOrgs = [
+  { value: 'IBM', label: 'IBM' },
+  { value: 'INTEL', label: 'Intel' },
+  { value: 'UBUNTU', label: 'Ubuntu' },
+];
+const optionsOrgsDefault = [
+  { value: 'IBM', label: 'IBM' },
+  { value: 'UBUNTU', label: 'Ubuntu' },
+];
 const EditUserModal = ({
   modal,
   name,
   lastname,
   email,
   address,
+  city,
+  state,
+  zip,
+  orgs,
+  userRole,
   toggleModal,
   handleChange,
+  handleChangeRolesSelect,
+  handleChangeOrgsSelect,
   handleSubmit,
   errorModal,
 }) => (
@@ -62,9 +86,84 @@ const EditUserModal = ({
             value={email}
             className='mb-3'
             onChange={handleChange}
+            valid
           />
+          <FormGroup>
+            <Label for='exampleAddress'>Address</Label>
+            <Input
+              type='address'
+              name='address'
+              id='address'
+              placeholder='1234 Main St'
+              value={address}
+              onChange={handleChange}
+            />
+          </FormGroup>
+          <Row form>
+            <Col md={6}>
+              <FormGroup>
+                <Label for='city'>City</Label>
+                <Input
+                  type='city'
+                  name='city'
+                  id='city'
+                  value={city}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Label for='state'>State</Label>
+                <Input
+                  type='state'
+                  name='state'
+                  id='state'
+                  value={state}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col md={2}>
+              <FormGroup>
+                <Label for='zip'>Zip</Label>
+                <Input
+                  type='zip'
+                  name='zip'
+                  id='zip'
+                  value={zip}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <FormGroup>
+            <Label for='roleSelect'>Select a role for the user</Label>
+
+            <Select
+              name='roleSelect'
+              onChange={handleChangeRolesSelect}
+              defaultValue={optionsRoles.filter(
+                (role) => role.value == userRole
+              )}
+              options={optionsRoles}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for='orgSelect'>Select organisations for the user</Label>
+
+            <Select
+              name='orgSelect'
+              onChange={handleChangeOrgsSelect}
+              defaultValue={optionsOrgs.filter(
+                (org) => orgs.indexOf(org.value) >= 0
+              )}
+              options={optionsOrgs}
+              isMulti
+            />
+          </FormGroup>
           <Button color='dark' style={{ marginTop: '2rem' }} block>
-            Login
+            Save
           </Button>
         </FormGroup>
       </Form>
