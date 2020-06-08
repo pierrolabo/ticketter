@@ -2,7 +2,6 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 
 function simpleUser(req, res, next) {
-  console.log('pass in');
   //We grab the token from the header
   const token = req.header('x-auth-token');
 

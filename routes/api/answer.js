@@ -24,9 +24,7 @@ router.post('/', (req, res) => {
     .then((ticket) => {
       res.json(ticket);
     })
-    .catch((err) => {
-      console.log('addReply: ', err);
-    });
+    .catch((err) => {});
 });
 //  @route EDIT api/answer
 //  @desc   EDIT an answer
@@ -67,9 +65,7 @@ router.put('/edit', async (req, res) => {
       .then((ticket) => {
         res.json(ticket);
       })
-      .catch((err) => {
-        console.log('edit answer: ', err);
-      });
+      .catch((err) => {});
   } catch (err) {
     console.log('edit answer: ', err);
   }
