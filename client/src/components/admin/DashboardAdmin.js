@@ -1,33 +1,54 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Jumbotron, Container, Row, Col, NavLink, Nav } from 'reactstrap';
-import Sidebar from '../sidebar/SideBar';
+import { getTickets } from '../../actions/ticketActions';
+
 import TicketCard from '../TicketsCards/TicketCard';
 //import ChartComponent from '../chart/ChartComponent';
 
 export class DashboardAdmin extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
+    ticket: PropTypes.object.isRequired,
+    getTickets: PropTypes.func.isRequired,
   };
+  componentDidMount() {
+    this.props.getTickets();
+  }
   render() {
-    const { isAuthenticated, role, user } = this.props.auth;
-    const newTicket = {
-      ticketNumber: 25,
+    let newTicket = {
+      ticketNumber: 0,
       ticketType: 'NEW',
     };
-    const progressTicket = {
+    let progressTicket = {
       ticketNumber: 50,
       ticketType: 'PROGRESS',
     };
-    const urgentTicket = {
+    let urgentTicket = {
       ticketNumber: 25,
       ticketType: 'URGENT',
     };
-    const unresolvedTicket = {
+    let unresolvedTicket = {
       ticketNumber: 5,
       ticketType: 'UNRESOLVED',
     };
+    const { isAuthenticated, role, user } = this.props.auth;
+    const { tickets } = this.props.ticket;
+    if (tickets) {
+      newTicket.ticketNumber = tickets.filter(
+        (ticket) => ticket.status == 'NEW'
+      ).length;
+      progressTicket.ticketNumber = tickets.filter(
+        (ticket) => ticket.status == 'PROGRESS'
+      ).length;
+      urgentTicket.ticketNumber = tickets.filter(
+        (ticket) => ticket.status == 'URGENT'
+      ).length;
+      unresolvedTicket.ticketNumber = tickets.filter((ticket) => {
+        return ticket.status !== 'UNRESOLVED';
+      }).length;
+    }
     return (
       <Container>
         <Container className='dashboard'>
@@ -53,5 +74,6 @@ export class DashboardAdmin extends Component {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  ticket: state.ticket,
 });
-export default connect(mapStateToProps, null)(DashboardAdmin);
+export default connect(mapStateToProps, { getTickets })(DashboardAdmin);
