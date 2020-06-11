@@ -11,6 +11,10 @@ const TicketSchema = new Schema({
     type: String,
     required: true,
   },
+  projectID: {
+    type: Schema.ObjectId,
+    require: true,
+  },
   answers: {
     type: Array,
     default: [],
