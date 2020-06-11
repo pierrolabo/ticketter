@@ -21,3 +21,13 @@ export const DELETE_USER = 'DELETE_USER';
 export const GET_USERS_FAIL = 'GET_USERS_FAIL';
 export const GET_USER_FAIL = 'GET_USER_FAIL';
 export const UPDATE_USER_FAIL = 'UPDATE_USER_FAIL';
+
+//  Tickets management
+export const GET_TICKET = 'GET_TICKET';
+export const GET_TICKETS = 'GET_TICKETS';
+export const TICKETS_LOADING = 'TICKETS_LOADING';
+export const TICKET_LOADING = 'TICKET_LOADING';
+export const GET_TICKETS_FAIL = 'GET_TICKETS_FAIL';
+export const GET_TICKET_FAIL = 'GET_TICKET_FAIL';
+export const ADD_TICKET = 'ADD_TICKET';
+export const DELETE_TICKET = 'DELETE_TICKET';

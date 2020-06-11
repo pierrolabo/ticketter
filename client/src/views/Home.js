@@ -17,7 +17,7 @@ class Home extends Component {
     const { isAuthenticated, role, user } = this.props.auth;
     return (
       <div className='home'>
-        {role === 'USER' ? <DashboardAdmin /> : '<h1>lol</h1>'}
+        {role === 'ADMIN' ? <DashboardAdmin /> : '<h1>lol</h1>'}
       </div>
     );
   }
