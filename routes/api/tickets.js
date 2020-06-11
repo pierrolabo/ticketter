@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 //  @desc   Create a ticket without a project assigned (general ticket)
 //  @access public
 router.post('/', async (req, res) => {
-  const { title, description, created_by } = req.body;
+  const { title, description, created_by, status } = req.body;
   //  We validate the data first
   if (!title || !description || !created_by) {
     return res.status(400).json({ msg: 'All fields must be completed!' });
@@ -31,6 +31,7 @@ router.post('/', async (req, res) => {
   //  First we need the "GENERAL" collection from project
   let generalTicket = await Project.find({ name: 'GENERAL' });
 
+  console.log(status);
   //  If we cant find it we create one
   if (generalTicket.length === 0) {
     const newProject = new Project({
@@ -54,6 +55,7 @@ router.post('/', async (req, res) => {
       title,
       description,
       created_by,
+      status,
     });
     let updatedProject = '';
     try {
