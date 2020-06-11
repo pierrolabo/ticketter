@@ -25,7 +25,7 @@ const TicketSchema = new Schema({
   },
   status: {
     type: String,
-    default: 'New',
+    default: 'NEW',
   },
   assigned_to: {
     type: Array,
