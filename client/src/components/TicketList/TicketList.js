@@ -16,7 +16,6 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import { getTickets } from '../../actions/ticketActions';
 import { getProjects } from '../../actions/projectActions';
-import e from 'express';
 
 export class Tickets extends Component {
   state = {
@@ -72,9 +71,6 @@ export class Tickets extends Component {
               </thead>
               <tbody>
                 {tickets.map((ticket) => {
-                  let projectName = projects.filter(
-                    (project) => project._id == ticket.projectID
-                  );
                   return (
                     <tr id={ticket._id} scope='row'>
                       <th>{ticket._id}</th>
