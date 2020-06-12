@@ -14,12 +14,15 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
+import EditTicketModal from '../modals/EditTicketModal';
+
 import { getTickets } from '../../actions/ticketActions';
 import { getProjects } from '../../actions/projectActions';
 
 export class Tickets extends Component {
   state = {
     modal: false,
+    editTicket: [],
   };
   static propTypes = {
     auth: PropTypes.object.isRequired,
@@ -35,7 +38,8 @@ export class Tickets extends Component {
     console.log('clicked: ', event.target);
     //  The modal is close
     if (!this.state.modal) {
-      let id = event.target.id;
+      let id = event.target.parentNode.id;
+
       //  If svg or <th> is clicked, sometimes we dont get id
       //  this fix the bug
       if (!id) {
@@ -45,8 +49,17 @@ export class Tickets extends Component {
       let editTicket = this.props.ticket.tickets.filter(
         (ticket) => ticket._id == id
       );
+      this.setState({
+        editTicket: editTicket[0],
+        modal: true,
+      });
       console.log('id: ', id);
       console.log('editedticket: ', editTicket);
+    } else {
+      this.setState({
+        modal: false,
+        editTicket: [],
+      });
     }
   };
   render() {
@@ -54,6 +67,15 @@ export class Tickets extends Component {
     const { projects } = this.props.project;
     return (
       <Container className='tickets-list'>
+        {this.state.modal ? (
+          <EditTicketModal
+            modal={this.state.modal}
+            projects={projects}
+            editTicket={this.state.editTicket}
+          />
+        ) : (
+          ''
+        )}
         <Card>
           <CardHeader>Tickets List</CardHeader>
           <CardBody>
