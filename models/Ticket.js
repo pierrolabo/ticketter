@@ -28,8 +28,7 @@ const TicketSchema = new Schema({
     default: 'NEW',
   },
   assigned_to: {
-    type: Array,
-    default: [],
+    type: Schema.ObjectId,
   },
   created_by: {
     type: String,

@@ -9,6 +9,9 @@ import {
   GET_TICKET_FAIL,
   ADD_TICKET,
   DELETE_TICKET,
+  UPDATE_TICKET,
+  UPDATE_TICKET_SUCCESS,
+  UPDATE_TICKET_FAIL,
 } from '../actions/types';
 
 import { tokenConfig } from './authActions';
@@ -31,7 +34,53 @@ export const getTickets = () => (dispatch, getState) => {
       });
     });
 };
-
+export const updateTicket = ({
+  id,
+  title,
+  description,
+  assigned_to,
+  projectID,
+  status,
+  nextPropID,
+}) => (dispatch, getState) => {
+  console.log('updating: ', id);
+  //    Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  // body request
+  const body = JSON.stringify({
+    title,
+    description,
+    assigned_to,
+    projectID,
+    status,
+    nextPropID,
+  });
+  dispatch(setTicketsLoading());
+  axios
+    .put(`/api/tickets/${id}`, body, config)
+    .then((res) => {
+      dispatch({
+        type: UPDATE_TICKET_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          'UPDATE_TICKET_FAIL'
+        )
+      );
+      dispatch({
+        type: UPDATE_TICKET_FAIL,
+      });
+    });
+};
 export const setTicketsLoading = () => {
   return {
     type: TICKETS_LOADING,
