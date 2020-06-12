@@ -195,4 +195,75 @@ router.put('/setCompletedTicket', (req, res) => {
     });
 });
 
+//  @route PUT api/tickets/:ticketID
+//  @desc   Update a ticket
+//  @access public
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const {
+    title,
+    description,
+    assigned_to,
+    projectID,
+    status,
+    nextProjID,
+  } = req.body;
+  console.log('id', title);
+  if (!id || !title || !description || !projectID || !status) {
+    return res
+      .status(400)
+      .json({ msg: 'Error setCompletedTicket, all fields must be complete ' });
+  }
+  let updatedTicket = null;
+  let queryTicket = { _id: id };
+  let updateTicket = {
+    $set: { title, description, assigned_to, projectID, status },
+  };
+  let optionsTicket = { new: true, useFindAndModify: false };
+
+  //  UPDATE ticket from ticket collection
+  try {
+    updatedTicket = await Ticket.findOneAndUpdate(
+      queryTicket,
+      updateTicket,
+      optionsTicket
+    );
+  } catch (err) {
+    if (err) console.log(err);
+    return res.status(400).json({ msg: 'Error updating ticket ' });
+  }
+  //  If project has to change
+  if (nextProjID) {
+    //  Update project accordingly
+    let queryProject = { _id: projectID };
+    let deleteTicketProject = {
+      $pull: { tickets: mongoose.Types.ObjectId(projectID) },
+    };
+    let addTicketProject = {
+      $push: { tickets: mongoose.Types.ObjectId(projectID) },
+    };
+    let options = { new: true, useFindAndModify: false };
+    try {
+      await Project.findOneAndUpdate(
+        queryProject,
+        deleteTicketProject,
+        options
+      );
+    } catch (err) {
+      if (err) console.log(err);
+      return res
+        .status(400)
+        .json({ msg: 'Error deleting ticket from project ' });
+    }
+    //  Add the ticket id to project collection
+    try {
+      await Project.findOneAndUpdate(queryProject, addTicketProject, options);
+    } catch (err) {
+      if (err) console.log(err);
+      return res.status(400).json({ msg: 'Error pushing ticket to project ' });
+    }
+  }
+  //  We return the updated ticket
+  res.json(updatedTicket);
+});
 module.exports = router;
