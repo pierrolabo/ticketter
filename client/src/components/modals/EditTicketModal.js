@@ -19,7 +19,6 @@ import { faMehRollingEyes } from '@fortawesome/free-solid-svg-icons';
 
 import PropTypes from 'prop-types';
 import { clearErrors } from '../../actions/errorActions';
-import { getUsers } from '../../actions/userActions';
 import { updateTicket } from '../../actions/ticketActions';
 import { USER_LOADING } from '../../actions/types';
 
@@ -29,17 +28,7 @@ const STATUS = [
   { value: 'URGENT', label: 'URGENT' },
   { value: 'UNRESOLVED', label: 'UNRESOLVED' },
 ];
-const createOptionsOrgs = (projects) => {
-  console.log('creating options..');
-  return projects.map((project) => {
-    return {
-      value: project.name,
-      label: project.name,
-    };
-  });
-};
 const createOptionsUsers = (users) => {
-  console.log('creating option users: ', users);
   let filteredUsers = users.map((user) => {
     return {
       value: user._id,
@@ -48,31 +37,44 @@ const createOptionsUsers = (users) => {
   });
   return [{ value: '', label: 'UNASSIGNED' }, ...filteredUsers];
 };
+const createOptionsProjects = (projects) => {
+  return projects.map((project) => {
+    return {
+      value: project._id,
+      label: project.name,
+    };
+  });
+};
+const createDefaultProject = (projects, projectID) => {
+  console.log('project: ', projects, 'projectid: ', projectID);
+  let defaultProject = projects.filter(
+    (project) => project._id == projectID
+  )[0];
+  return [
+    {
+      value: defaultProject._id,
+      label: defaultProject.name,
+    },
+  ];
+};
 const createDefaultUser = (users, assigned_to) => {
+  //  If ticket isnt assigned to anyone we send the default value for the select
   if (assigned_to == '') {
     return [{ value: '', label: 'UNASSIGNED' }];
   }
-  console.log('user: ', users, 'assignedto: ', assigned_to);
-  let foundUser = users.map((user) => {
-    console.log('pass: ', user._id, 'id: ', assigned_to);
-    if (user._id === assigned_to) {
-      return {
-        value: user._id,
-        label: `${user.name} ${user.lastname} | ${user.role}`,
-      };
-    }
-  });
-  if (foundUser.length == 0) {
-    return [{ value: '', label: 'UNASSIGNED' }];
-  }
-  console.log(foundUser.length);
-  return foundUser;
+
+  let defaultUser = users.filter((user) => user._id == assigned_to)[0];
+  return [
+    {
+      value: defaultUser._id,
+      label: `${defaultUser.name} ${defaultUser.lastname} | ${defaultUser.role}`,
+    },
+  ];
 };
 const createDefaultStatus = (status) => [{ value: status, label: status }];
+
 class EditTicketModal extends Component {
   static propTypes = {
-    user: PropTypes.object.isRequired,
-    getUsers: PropTypes.func.isRequired,
     updateTicket: PropTypes.func.isRequired,
   };
 
@@ -83,9 +85,10 @@ class EditTicketModal extends Component {
     _id: '',
     assigned_to: null,
     projectID: '',
-    nextPropID: null,
+    nextProjID: null,
   };
-  componentDidMount() {
+  componentWillMount() {
+    //this.props.getUsers();
     const {
       title,
       description,
@@ -95,7 +98,6 @@ class EditTicketModal extends Component {
       projectID,
     } = this.props.editTicket;
     this.setState({ title, description, status, _id, assigned_to, projectID });
-    this.props.getUsers();
   }
   handleSubmitModal = () => {
     console.log('modal submited');
@@ -106,12 +108,18 @@ class EditTicketModal extends Component {
     });
   };
   handleChangeSelectStatus = (e) => {
-    console.log('handlechangeselectstatus: ', e);
     this.setState({ status: e.value });
   };
   handleChangeSelectAssignedTo = (e) => {
-    console.log('handlechangeselectAssigned: ', e);
     this.setState({ assigned_to: e.value });
+  };
+  handleChangeSelectAssignedProject = (e) => {
+    //  TODO
+    //  if user is not part of the next project
+    //  Assign ticket to undefined
+    console.log('nextprojid: ', this.state.nextProjID);
+    console.log('nextprojid: ', e.value);
+    this.setState({ nextProjID: e.value });
   };
   handleSave = () => {
     console.log('save clicked: ');
@@ -122,7 +130,7 @@ class EditTicketModal extends Component {
       _id,
       assigned_to,
       projectID,
-      nextPropID,
+      nextProjID,
     } = this.state;
     const newTicket = {
       id: _id,
@@ -131,17 +139,21 @@ class EditTicketModal extends Component {
       status,
       assigned_to,
       projectID,
-      nextPropID,
+      nextProjID,
     };
     console.log('handlesubmit: ', newTicket);
     this.props.updateTicket(newTicket);
+
+    //  Close modal
+    this.props.toggleModal();
   };
   render() {
-    const { users } = this.props.user;
-
+    const users = this.props.users;
+    const projects = this.props.projects;
+    console.log('state: ', this.state.projectID);
     return (
-      <Modal isOpen={this.props.modal}>
-        <ModalHeader>EDIT Ticket</ModalHeader>
+      <Modal isOpen={this.props.modal} toggle={this.props.toggleModal}>
+        <ModalHeader toggle={this.props.toggleModal}>EDIT Ticket</ModalHeader>
         <ModalBody>
           <Form onSubmit={this.handleSubmitModal}>
             <FormGroup>
@@ -174,14 +186,34 @@ class EditTicketModal extends Component {
               />
             </FormGroup>
             <FormGroup>
-              <Label for='assigned'>Assigned to</Label>
+              <Label for='assigned'>Assigned Project</Label>
               <Select
-                name='assignedSelect'
-                onChange={this.handleChangeSelectAssignedTo}
-                options={createOptionsUsers(users)}
-                defaultValue={createDefaultUser(users, this.state.assigned_to)}
+                name='assignedProject'
+                onChange={this.handleChangeSelectAssignedProject}
+                options={createOptionsProjects(projects)}
+                defaultValue={createDefaultProject(
+                  projects,
+                  this.state.projectID
+                )}
               />
             </FormGroup>
+            {users.length > 0 && this.state.assigned_to != null ? (
+              <FormGroup>
+                <Label for='assigned'>Assigned to</Label>
+                <Select
+                  name='assignedSelect'
+                  onChange={this.handleChangeSelectAssignedTo}
+                  options={createOptionsUsers(users)}
+                  defaultValue={createDefaultUser(
+                    users,
+                    this.state.assigned_to
+                  )}
+                />
+              </FormGroup>
+            ) : (
+              ''
+            )}
+
             <FormGroup>
               <Button color='secondary'>Cancel</Button>
               <Button color='secondary'>Cancel</Button>
@@ -195,9 +227,5 @@ class EditTicketModal extends Component {
     );
   }
 }
-const mapStateToProps = (state) => ({
-  user: state.user,
-});
-export default connect(mapStateToProps, { getUsers, updateTicket })(
-  EditTicketModal
-);
+
+export default connect(null, { updateTicket })(EditTicketModal);

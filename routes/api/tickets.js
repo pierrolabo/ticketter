@@ -208,16 +208,21 @@ router.put('/:id', async (req, res) => {
     status,
     nextProjID,
   } = req.body;
-  console.log('id', title);
   if (!id || !title || !description || !projectID || !status) {
     return res
       .status(400)
-      .json({ msg: 'Error setCompletedTicket, all fields must be complete ' });
+      .json({ msg: 'Error updating ticket, all fields must be complete ' });
   }
-  let updatedTicket = null;
+  const updatedProjectID = nextProjID ? nextProjID : projectID;
   let queryTicket = { _id: id };
   let updateTicket = {
-    $set: { title, description, assigned_to, projectID, status },
+    $set: {
+      title,
+      description,
+      assigned_to,
+      projectID: updatedProjectID,
+      status,
+    },
   };
   let optionsTicket = { new: true, useFindAndModify: false };
 
@@ -235,17 +240,18 @@ router.put('/:id', async (req, res) => {
   //  If project has to change
   if (nextProjID) {
     //  Update project accordingly
-    let queryProject = { _id: projectID };
+    let oldProject = { _id: projectID };
+    let newProject = { _id: nextProjID };
     let deleteTicketProject = {
-      $pull: { tickets: mongoose.Types.ObjectId(projectID) },
+      $pull: { tickets: mongoose.Types.ObjectId(id) },
     };
     let addTicketProject = {
-      $push: { tickets: mongoose.Types.ObjectId(projectID) },
+      $push: { tickets: mongoose.Types.ObjectId(id) },
     };
     let options = { new: true, useFindAndModify: false };
     try {
-      await Project.findOneAndUpdate(
-        queryProject,
+      let deletetick = await Project.findOneAndUpdate(
+        oldProject,
         deleteTicketProject,
         options
       );
@@ -257,7 +263,12 @@ router.put('/:id', async (req, res) => {
     }
     //  Add the ticket id to project collection
     try {
-      await Project.findOneAndUpdate(queryProject, addTicketProject, options);
+      let addtick = await Project.findOneAndUpdate(
+        newProject,
+        addTicketProject,
+        options
+      );
+      console.log('addtick:', addtick);
     } catch (err) {
       if (err) console.log(err);
       return res.status(400).json({ msg: 'Error pushing ticket to project ' });
