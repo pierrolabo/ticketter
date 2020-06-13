@@ -41,7 +41,7 @@ export const updateTicket = ({
   assigned_to,
   projectID,
   status,
-  nextPropID,
+  nextProjID,
 }) => (dispatch, getState) => {
   console.log('updating: ', id);
   //    Headers
@@ -57,7 +57,7 @@ export const updateTicket = ({
     assigned_to,
     projectID,
     status,
-    nextPropID,
+    nextProjID,
   });
   dispatch(setTicketsLoading());
   axios
