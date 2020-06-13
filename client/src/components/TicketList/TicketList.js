@@ -18,6 +18,7 @@ import EditTicketModal from '../modals/EditTicketModal';
 
 import { getTickets } from '../../actions/ticketActions';
 import { getProjects } from '../../actions/projectActions';
+import { getUsers } from '../../actions/userActions';
 
 export class Tickets extends Component {
   state = {
@@ -27,13 +28,18 @@ export class Tickets extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
     ticket: PropTypes.object.isRequired,
+    project: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
     getTickets: PropTypes.func.isRequired,
     getProjects: PropTypes.func.isRequired,
+    getUsers: PropTypes.func.isRequired,
   };
-  componentDidMount() {
+  componentWillMount() {
+    this.props.getUsers();
     this.props.getProjects();
     this.props.getTickets();
   }
+  componentDidMount() {}
   handleEdit = (event) => {
     console.log('clicked: ', event.target);
     //  The modal is close
@@ -62,16 +68,36 @@ export class Tickets extends Component {
       });
     }
   };
+  toggleModal = () => {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  };
+
+  getUserFromID = (users, id) => {
+    //  if is unassigned
+    if (id == '') {
+      return 'UNASSIGNED';
+    }
+    if (users.length > 0) {
+      let userAssigned = users.filter((user) => user._id == id)[0];
+      return `${userAssigned.name} ${userAssigned.lastname}`;
+    }
+  };
   render() {
     const { tickets } = this.props.ticket;
     const { projects } = this.props.project;
+    const { users } = this.props.user;
+    console.log('ticket: ', tickets, 'projects', projects, 'users', users);
     return (
       <Container className='tickets-list'>
         {this.state.modal ? (
           <EditTicketModal
             modal={this.state.modal}
+            users={users}
             projects={projects}
             editTicket={this.state.editTicket}
+            toggleModal={this.toggleModal}
           />
         ) : (
           ''
@@ -84,8 +110,8 @@ export class Tickets extends Component {
                 <tr>
                   <th>#</th>
                   <th>title</th>
-                  <th>description</th>
                   <th>created by</th>
+                  <th>assigned_to</th>
                   <th>status</th>
                   <th>Project</th>
                   <th>Edit</th>
@@ -97,8 +123,8 @@ export class Tickets extends Component {
                     <tr id={ticket._id} scope='row'>
                       <th>{ticket._id}</th>
                       <th>{ticket.title}</th>
-                      <th>{ticket.description}</th>
                       <th>{ticket.created_by}</th>
+                      <th>{this.getUserFromID(users, ticket.assigned_to)}</th>
                       <th>{ticket.status}</th>
                       <th>
                         {
@@ -126,5 +152,8 @@ const mapStateToProps = (state) => ({
   isLoading: state.ticket.isLoading,
   ticket: state.ticket,
   project: state.project,
+  user: state.user,
 });
-export default connect(mapStateToProps, { getTickets, getProjects })(Tickets);
+export default connect(mapStateToProps, { getTickets, getProjects, getUsers })(
+  Tickets
+);
