@@ -41,7 +41,6 @@ export class Tickets extends Component {
   }
   componentDidMount() {}
   handleEdit = (event) => {
-    console.log('clicked: ', event.target);
     //  The modal is close
     if (!this.state.modal) {
       let id = event.target.parentNode.id;
@@ -59,8 +58,6 @@ export class Tickets extends Component {
         editTicket: editTicket[0],
         modal: true,
       });
-      console.log('id: ', id);
-      console.log('editedticket: ', editTicket);
     } else {
       this.setState({
         modal: false,
@@ -84,11 +81,17 @@ export class Tickets extends Component {
       return `${userAssigned.name} ${userAssigned.lastname}`;
     }
   };
+
+  getProjectNameFromTicket = (projects, ticket) => {
+    if (projects.length > 0) {
+      return projects.filter((project) => project._id === ticket.projectID)[0]
+        .name;
+    }
+  };
   render() {
     const { tickets } = this.props.ticket;
     const { projects } = this.props.project;
     const { users } = this.props.user;
-    console.log('ticket: ', tickets, 'projects', projects, 'users', users);
     return (
       <Container className='tickets-list'>
         {this.state.modal ? (
@@ -120,19 +123,13 @@ export class Tickets extends Component {
               <tbody>
                 {tickets.map((ticket) => {
                   return (
-                    <tr id={ticket._id} scope='row'>
+                    <tr key={ticket._id} id={ticket._id} scope='row'>
                       <th>{ticket._id}</th>
                       <th>{ticket.title}</th>
                       <th>{ticket.created_by}</th>
                       <th>{this.getUserFromID(users, ticket.assigned_to)}</th>
                       <th>{ticket.status}</th>
-                      <th>
-                        {
-                          projects.filter(
-                            (project) => project._id === ticket.projectID
-                          )[0].name
-                        }
-                      </th>
+                      <th>{this.getProjectNameFromTicket(projects, ticket)}</th>
                       <th id={ticket._id} onClick={this.handleEdit}>
                         <FontAwesomeIcon id={ticket._id} icon={faEdit} />
                       </th>

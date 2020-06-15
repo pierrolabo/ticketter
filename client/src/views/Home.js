@@ -10,7 +10,6 @@ import DashboardAdmin from '../components/admin/DashboardAdmin';
 class Home extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    redirectUnauthenticated: PropTypes.func.isRequired,
   };
 
   render() {
