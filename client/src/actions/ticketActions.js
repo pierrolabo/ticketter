@@ -34,6 +34,7 @@ export const getTickets = () => (dispatch, getState) => {
       });
     });
 };
+
 export const updateTicket = ({
   id,
   title,
@@ -43,7 +44,6 @@ export const updateTicket = ({
   status,
   nextProjID,
 }) => (dispatch, getState) => {
-  console.log('updating: ', id);
   //    Headers
   const config = {
     headers: {

@@ -46,7 +46,6 @@ const createOptionsProjects = (projects) => {
   });
 };
 const createDefaultProject = (projects, projectID) => {
-  console.log('project: ', projects, 'projectid: ', projectID);
   let defaultProject = projects.filter(
     (project) => project._id == projectID
   )[0];
@@ -99,9 +98,7 @@ class EditTicketModal extends Component {
     } = this.props.editTicket;
     this.setState({ title, description, status, _id, assigned_to, projectID });
   }
-  handleSubmitModal = () => {
-    console.log('modal submited');
-  };
+  handleSubmitModal = () => {};
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -117,8 +114,6 @@ class EditTicketModal extends Component {
     //  TODO
     //  if user is not part of the next project
     //  Assign ticket to undefined
-    console.log('nextprojid: ', this.state.nextProjID);
-    console.log('nextprojid: ', e.value);
     this.setState({ nextProjID: e.value });
   };
   handleSave = () => {
@@ -150,7 +145,6 @@ class EditTicketModal extends Component {
   render() {
     const users = this.props.users;
     const projects = this.props.projects;
-    console.log('state: ', this.state.projectID);
     return (
       <Modal isOpen={this.props.modal} toggle={this.props.toggleModal}>
         <ModalHeader toggle={this.props.toggleModal}>EDIT Ticket</ModalHeader>

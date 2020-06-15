@@ -31,7 +31,6 @@ router.post('/', async (req, res) => {
   //  First we need the "GENERAL" collection from project
   let generalTicket = await Project.find({ name: 'GENERAL' });
 
-  console.log(status);
   //  If we cant find it we create one
   if (generalTicket.length === 0) {
     const newProject = new Project({
@@ -268,7 +267,6 @@ router.put('/:id', async (req, res) => {
         addTicketProject,
         options
       );
-      console.log('addtick:', addtick);
     } catch (err) {
       if (err) console.log(err);
       return res.status(400).json({ msg: 'Error pushing ticket to project ' });
