@@ -35,11 +35,12 @@ export class Tickets extends Component {
     getUsers: PropTypes.func.isRequired,
   };
   componentWillMount() {
-    this.props.getUsers();
+    //this.props.getUsers();
+  }
+  componentDidMount() {
     this.props.getProjects();
     this.props.getTickets();
   }
-  componentDidMount() {}
   handleEdit = (event) => {
     //  The modal is close
     if (!this.state.modal) {
@@ -147,8 +148,8 @@ export class Tickets extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   isLoading: state.ticket.isLoading,
-  ticket: state.ticket,
   project: state.project,
+  ticket: state.ticket,
   user: state.user,
 });
 export default connect(mapStateToProps, { getTickets, getProjects, getUsers })(
