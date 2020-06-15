@@ -55,7 +55,7 @@ const SideBar = (props) => {
               <DropdownToggle nav caret>
                 Projects
               </DropdownToggle>
-              <DropdownMenu right>
+              <DropdownMenu left>
                 <DropdownItem>New Project</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>Assign Users</DropdownItem>

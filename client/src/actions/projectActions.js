@@ -14,6 +14,7 @@ export const getProjects = () => (dispatch, getState) => {
   axios
     .get('/api/projects')
     .then((res) => {
+      console.log('got projects: ', res);
       dispatch({
         type: GET_PROJECTS,
         payload: res.data,

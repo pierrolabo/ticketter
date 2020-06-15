@@ -35,11 +35,12 @@ export class Tickets extends Component {
     getUsers: PropTypes.func.isRequired,
   };
   componentWillMount() {
-    this.props.getUsers();
+    //this.props.getUsers();
+  }
+  componentDidMount() {
     this.props.getProjects();
     this.props.getTickets();
   }
-  componentDidMount() {}
   handleEdit = (event) => {
     console.log('clicked: ', event.target);
     //  The modal is close
@@ -84,6 +85,14 @@ export class Tickets extends Component {
       return `${userAssigned.name} ${userAssigned.lastname}`;
     }
   };
+  getProjectFromID = (projects, ticket) => {
+    if (projects.length > 0) {
+      console.log('getprojectfromID: ', projects, ticket);
+      return projects.filter((project) => project._id === ticket.projectID)[0]
+        .name;
+    }
+  };
+
   render() {
     const { tickets } = this.props.ticket;
     const { projects } = this.props.project;
@@ -126,13 +135,7 @@ export class Tickets extends Component {
                       <th>{ticket.created_by}</th>
                       <th>{this.getUserFromID(users, ticket.assigned_to)}</th>
                       <th>{ticket.status}</th>
-                      <th>
-                        {
-                          projects.filter(
-                            (project) => project._id === ticket.projectID
-                          )[0].name
-                        }
-                      </th>
+                      <th>{this.getProjectFromID(projects, ticket)}</th>
                       <th id={ticket._id} onClick={this.handleEdit}>
                         <FontAwesomeIcon id={ticket._id} icon={faEdit} />
                       </th>
@@ -150,8 +153,8 @@ export class Tickets extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   isLoading: state.ticket.isLoading,
-  ticket: state.ticket,
   project: state.project,
+  ticket: state.ticket,
   user: state.user,
 });
 export default connect(mapStateToProps, { getTickets, getProjects, getUsers })(
