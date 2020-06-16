@@ -9,7 +9,9 @@ import {
   ADD_PROJECT,
   ADD_PROJECT_SUCCESS,
   ADD_PROJECT_FAIL,
-  DELETE_PROJECTS,
+  DELETE_PROJECT,
+  DELETE_PROJECT_SUCCESS,
+  DELETE_PROJECT_FAIL,
 } from '../actions/types';
 
 import { returnErrors } from './errorActions';
@@ -20,7 +22,6 @@ export const getProjects = () => (dispatch, getState) => {
   axios
     .get('/api/projects')
     .then((res) => {
-      console.log(res.data);
       dispatch({
         type: GET_PROJECTS,
         payload: res.data,
@@ -96,6 +97,30 @@ export const addProject = ({ name, description }) => (dispatch, getState) => {
       );
       dispatch({
         type: ADD_PROJECT_FAIL,
+      });
+    });
+};
+export const deleteProject = (id) => (dispatch, getState) => {
+  dispatch({ type: DELETE_PROJECT });
+  axios
+    .delete(`/api/projects/${id}`)
+    .then((res) => {
+      dispatch({
+        type: DELETE_PROJECT_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log('error, ', err);
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          'DELETE_PROJECT_FAIL'
+        )
+      );
+      dispatch({
+        type: DELETE_PROJECT_FAIL,
       });
     });
 };
