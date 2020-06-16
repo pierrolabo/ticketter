@@ -16,6 +16,8 @@ import Home from '../views/Home';
 import Register from '../components/auth/Register';
 import Login from '../components/auth/Login';
 import Users from '../views/Users';
+import Tickets from '../views/Tickets';
+import CreateTicket from '../views/CreateTicket';
 
 const Routes = (props) => {
   const location = history.location;
@@ -24,7 +26,7 @@ const Routes = (props) => {
       <NavBar />
       <div className='main-container'>
         {props.auth.isAuthenticated && location.pathname !== '/' ? (
-          <SideBar />
+          <SideBar role={props.auth.role} />
         ) : (
           ''
         )}
@@ -37,9 +39,18 @@ const Routes = (props) => {
             <PrivateRoute exact path='/home' auth={props.auth}>
               <Home />
             </PrivateRoute>
-
+            <PrivateRoute exact path='/tickets' auth={props.auth}>
+              <Tickets />
+            </PrivateRoute>
             <AdminRoute path='/users' auth={props.auth} role={props.auth.role}>
               <Users />
+            </AdminRoute>
+            <AdminRoute
+              path='/tickets/create'
+              auth={props.auth}
+              role={props.auth.role}
+            >
+              <CreateTicket />
             </AdminRoute>
           </main>
         </Switch>

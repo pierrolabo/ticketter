@@ -23,7 +23,14 @@ router.get('/', (req, res) => {
 //  @desc   Create a ticket without a project assigned (general ticket)
 //  @access public
 router.post('/', async (req, res) => {
-  const { title, description, created_by, status } = req.body;
+  const {
+    title,
+    description,
+    created_by,
+    status,
+    assigned_to,
+    projectID,
+  } = req.body;
   //  We validate the data first
   if (!title || !description || !created_by) {
     return res.status(400).json({ msg: 'All fields must be completed!' });
@@ -31,7 +38,6 @@ router.post('/', async (req, res) => {
   //  First we need the "GENERAL" collection from project
   let generalTicket = await Project.find({ name: 'GENERAL' });
 
-  console.log(status);
   //  If we cant find it we create one
   if (generalTicket.length === 0) {
     const newProject = new Project({
@@ -47,15 +53,16 @@ router.post('/', async (req, res) => {
         .json({ msg: 'Error creating the general project' });
     }
   } else {
-    //  There's already a general project, so we use it
-    const id = generalTicket[0]._id;
-
+    //  If projectID is defined, the ticket is assigned to a project
+    //  else we use the general project,
+    const id = projectID ? projectID : generalTicket[0]._id;
     const newTicket = new Ticket({
       projectID: id,
       title,
       description,
       created_by,
-      status,
+      status: status === '' ? 'NEW' : status,
+      assigned_to,
     });
     let updatedProject = '';
     try {
@@ -195,4 +202,85 @@ router.put('/setCompletedTicket', (req, res) => {
     });
 });
 
+//  @route PUT api/tickets/:ticketID
+//  @desc   Update a ticket
+//  @access public
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const {
+    title,
+    description,
+    assigned_to,
+    projectID,
+    status,
+    nextProjID,
+  } = req.body;
+  if (!id || !title || !description || !projectID || !status) {
+    return res
+      .status(400)
+      .json({ msg: 'Error updating ticket, all fields must be complete ' });
+  }
+  const updatedProjectID = nextProjID ? nextProjID : projectID;
+  let queryTicket = { _id: id };
+  let updateTicket = {
+    $set: {
+      title,
+      description,
+      assigned_to,
+      projectID: updatedProjectID,
+      status,
+    },
+  };
+  let optionsTicket = { new: true, useFindAndModify: false };
+
+  //  UPDATE ticket from ticket collection
+  try {
+    updatedTicket = await Ticket.findOneAndUpdate(
+      queryTicket,
+      updateTicket,
+      optionsTicket
+    );
+  } catch (err) {
+    if (err) console.log(err);
+    return res.status(400).json({ msg: 'Error updating ticket ' });
+  }
+  //  If project has to change
+  if (nextProjID) {
+    //  Update project accordingly
+    let oldProject = { _id: projectID };
+    let newProject = { _id: nextProjID };
+    let deleteTicketProject = {
+      $pull: { tickets: mongoose.Types.ObjectId(id) },
+    };
+    let addTicketProject = {
+      $push: { tickets: mongoose.Types.ObjectId(id) },
+    };
+    let options = { new: true, useFindAndModify: false };
+    try {
+      let deletetick = await Project.findOneAndUpdate(
+        oldProject,
+        deleteTicketProject,
+        options
+      );
+    } catch (err) {
+      if (err) console.log(err);
+      return res
+        .status(400)
+        .json({ msg: 'Error deleting ticket from project ' });
+    }
+    //  Add the ticket id to project collection
+    try {
+      let addtick = await Project.findOneAndUpdate(
+        newProject,
+        addTicketProject,
+        options
+      );
+    } catch (err) {
+      if (err) console.log(err);
+      return res.status(400).json({ msg: 'Error pushing ticket to project ' });
+    }
+  }
+  //  We return the updated ticket
+  res.json(updatedTicket);
+});
 module.exports = router;

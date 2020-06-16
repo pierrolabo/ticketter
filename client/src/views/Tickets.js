@@ -11,41 +11,23 @@ import {
   Container,
   Table,
 } from 'reactstrap';
-import { getTickets } from '../../actions/ticketActions';
+import TicektList from '../components/TicketList/TicketList';
+import { getTickets } from '../actions/ticketActions';
+import TicketList from '../components/TicketList/TicketList';
 
 export class Tickets extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    ticket: PropTypes.object.isRequired,
-    getTickets: PropTypes.func.isRequired,
   };
   render() {
     return (
       <Container className='tickets-container'>
-        <Card>
-          <CardHeader>Tickets List</CardHeader>
-          <CardBody>
-            <Table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>title</th>
-                  <th>description</th>
-                  <th>created by</th>
-                  <th>status</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </Table>
-          </CardBody>
-        </Card>
+        <TicketList />
       </Container>
     );
   }
 }
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  isLoading: state.ticket.isLoading,
-  ticket: state.ticket,
 });
-export default connect(mapStateToProps, { getTickets })(Tickets);
+export default connect(mapStateToProps, null)(Tickets);
