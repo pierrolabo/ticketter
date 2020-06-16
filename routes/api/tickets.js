@@ -23,7 +23,14 @@ router.get('/', (req, res) => {
 //  @desc   Create a ticket without a project assigned (general ticket)
 //  @access public
 router.post('/', async (req, res) => {
-  const { title, description, created_by, status } = req.body;
+  const {
+    title,
+    description,
+    created_by,
+    status,
+    assigned_to,
+    projectID,
+  } = req.body;
   //  We validate the data first
   if (!title || !description || !created_by) {
     return res.status(400).json({ msg: 'All fields must be completed!' });
@@ -46,15 +53,16 @@ router.post('/', async (req, res) => {
         .json({ msg: 'Error creating the general project' });
     }
   } else {
-    //  There's already a general project, so we use it
-    const id = generalTicket[0]._id;
-
+    //  If projectID is defined, the ticket is assigned to a project
+    //  else we use the general project,
+    const id = projectID ? projectID : generalTicket[0]._id;
     const newTicket = new Ticket({
       projectID: id,
       title,
       description,
       created_by,
-      status,
+      status: status === '' ? 'NEW' : status,
+      assigned_to,
     });
     let updatedProject = '';
     try {
