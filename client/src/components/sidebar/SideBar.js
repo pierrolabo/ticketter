@@ -29,7 +29,7 @@ import {
 import { Link } from 'react-router-dom';
 
 import AdminTicketMenu from './AdminTicketMenu';
-
+import AdminProjectMenu from './AdmiProjectMenu';
 const SideBar = (props) => {
   console.log(props.role);
   const [isOpen, setIsOpen] = useState(false);
@@ -59,19 +59,11 @@ const SideBar = (props) => {
             <NavItem>
               <Link to='/users'>User Roles</Link>
             </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Projects
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem>New Project</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Assign Users</DropdownItem>
-                <DropdownItem>Remove Users</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>View Projects</DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+            {props.role == 'ADMIN' ? (
+              <AdminProjectMenu></AdminProjectMenu>
+            ) : (
+              <h1>not pass</h1>
+            )}
             <NavbarText>Simple Text</NavbarText>
           </Nav>
         </Collapse>

@@ -67,12 +67,16 @@ class CreateTicket extends Component {
   };
   createDefaultProject = (defaultProject) => {
     if (!defaultProject) {
-      //  We return the project general
-      if (this.props.project.projects.length > 0) {
-        let defaultProject = this.props.project.projects.filter(
-          (project) => project.name === 'GENERAL'
-        )[0];
-        return [{ value: defaultProject._id, label: defaultProject.name }];
+      let defaultProject = this.props.project.projects.filter(
+        (project) => project.name === 'GENERAL'
+      );
+      //  if there is a GENERAL Project
+      if (defaultProject.length > 0) {
+        return [
+          { value: defaultProject[0]._id, label: defaultProject[0].name },
+        ];
+      } else {
+        return [{ value: '', label: 'GENERAL' }];
       }
     }
   };
