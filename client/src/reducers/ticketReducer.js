@@ -8,7 +8,10 @@ import {
   ADD_TICKET,
   DELETE_TICKET,
   UPDATE_TICKET,
+  CREATE_TICKET,
+  CREATE_TICKET_SUCCESS,
   UPDATE_TICKET_SUCCESS,
+  CREATE_TICKET_ERROR,
   UPDATE_TICKET_FAIL,
 } from '../actions/types';
 
@@ -48,6 +51,19 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
+      };
+    case CREATE_TICKET:
+      return {
+        ...state,
+      };
+    case CREATE_TICKET_SUCCESS:
+      return {
+        ...state,
+        tickets: action.payload,
+      };
+    case CREATE_TICKET_ERROR:
+      return {
+        ...state,
       };
     default:
       return state;
