@@ -17,7 +17,7 @@ import { clearErrors } from '../../actions/errorActions';
 import { updateProject } from '../../actions/projectActions';
 import { USER_LOADING } from '../../actions/types';
 
-class EditTicketModal extends Component {
+class EditProjectModal extends Component {
   static propTypes = {
     updateProject: PropTypes.func.isRequired,
   };
@@ -46,7 +46,6 @@ class EditTicketModal extends Component {
   handleSave = () => {
     const { name, description, _id } = this.state;
     const updatedProject = { name, description, _id };
-    console.log('front: ', updatedProject);
     this.props.updateProject(updatedProject);
     //  Close modal
     this.props.toggleModal();
@@ -91,4 +90,4 @@ class EditTicketModal extends Component {
   }
 }
 
-export default connect(null, { updateProject })(EditTicketModal);
+export default connect(null, { updateProject })(EditProjectModal);

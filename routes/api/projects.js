@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 
 //const admin = require('../../middleware/permissions/admin');
 const Project = require('../../models/Project');
+const Ticket = require('../../models/Ticket');
 
 //  @route GET api/projects
 //  @desc   Get the list of all projects
@@ -19,7 +20,6 @@ router.get('/', (req, res) => {
 //  @access private
 router.post('/', async (req, res) => {
   const { name, description } = req.body;
-  console.log('create project: ', name, description);
   //  Quick data validations
   if (!name || !description) {
     return res.status(400).json({ msg: 'All fields must be complete!' });
@@ -44,8 +44,6 @@ router.post('/', async (req, res) => {
   newProject
     .save()
     .then((project) => {
-      //  Send the token back
-      console.log('newproject saved: ', project);
       res.json({ project });
     })
     .catch((err) => {
@@ -56,34 +54,37 @@ router.post('/', async (req, res) => {
 //  @route DELETE api/projects
 //  @desc   Delete a project
 //  @access public
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
   // if id isnt set
   if (!id) {
     res.status(400).json({ msg: 'Error ID isnt set' });
   }
+  let projectInDatabase = await Project.findOne({ _id: id });
+  let ticketsInProject = projectInDatabase.tickets;
+  let deleteTickets = { _id: { $in: ticketsInProject } };
+  try {
+    await Ticket.deleteMany(deleteTickets);
+  } catch (err) {
+    res.status(400).json({ msg: 'Error Deleting tickets from tickets' });
+  }
+  try {
+    await Project.deleteOne({ _id: id });
+  } catch (err) {
+    res.status(400).json({ msg: 'Error Deleting project' });
+  }
 
-  Project.deleteOne({ _id: id })
-    .then((project) => {
-      res.status(200).json({
-        msg: 'success',
-      });
-    })
-    .catch((err) => {
-      res.json({ msg: 'error deleting project' });
-    });
+  res.json({ id: id });
 });
 //  @route PUT api/projects
 //  @desc   Update a project
 //  @access public
 router.put('/', (req, res) => {
-  console.log('reqbody', req.body);
   const { name, description, _id } = req.body;
   if (!name || !description) {
     return res.status(400).json({ msg: 'name & description required' });
   }
-  console.log('pass');
   if (!_id) {
     return res.status(400).json({ msg: 'ID required ! ' });
   }
