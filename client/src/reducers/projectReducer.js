@@ -8,6 +8,9 @@ import {
   ADD_PROJECT,
   ADD_PROJECT_SUCCESS,
   ADD_PROJECT_FAIL,
+  DELETE_PROJECT,
+  DELETE_PROJECT_SUCCESS,
+  DELETE_PROJECT_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -55,11 +58,21 @@ export default function (state = initialState, action) {
         ...state,
       };
     case ADD_PROJECT_SUCCESS:
-      let test = [state.projects, action.payload];
-      console.log(test);
       return {
         ...state,
         projects: [state.projects, action.payload.project],
+      };
+    case DELETE_PROJECT:
+    case DELETE_PROJECT_FAIL:
+      return {
+        ...state,
+      };
+    case DELETE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        projects: state.projects.filter(
+          (project) => project._id !== action.payload.id
+        ),
       };
       return {
         ...state,
