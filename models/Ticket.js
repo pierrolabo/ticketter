@@ -28,8 +28,8 @@ const TicketSchema = new Schema({
     default: 'NEW',
   },
   assigned_to: {
-    type: Array,
-    default: [],
+    type: String,
+    default: '',
   },
   created_by: {
     type: String,

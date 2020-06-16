@@ -18,6 +18,7 @@ code {
 main {
   display: flex;
   width: 100%;
+  padding-top: 50px;
 }
 .container-flex {
   display: flex;
@@ -42,7 +43,7 @@ main {
   margin-top: 2%;
 }
 .sideBar-container {
-  width: 160px;
+  width: 200px;
   min-height: calc(100vh - 50px);
 }
 .sidebar-position {

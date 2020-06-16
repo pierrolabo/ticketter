@@ -28,7 +28,10 @@ import {
 
 import { Link } from 'react-router-dom';
 
+import AdminTicketMenu from './AdminTicketMenu';
+
 const SideBar = (props) => {
+  console.log(props.role);
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   return (
@@ -39,7 +42,7 @@ const SideBar = (props) => {
           Ticketter
         </NavbarBrand>
         <Collapse
-          Defect
+          defect='true'
           className='position-fixed sidebar-position'
           isOpen={isOpen}
           navbar
@@ -48,6 +51,11 @@ const SideBar = (props) => {
             <NavItem className='menu-item'>
               <NavLink href='/Tickets'>Tickets</NavLink>
             </NavItem>
+            {props.role == 'ADMIN' ? (
+              <AdminTicketMenu></AdminTicketMenu>
+            ) : (
+              <h1>not pass</h1>
+            )}
             <NavItem>
               <Link to='/users'>User Roles</Link>
             </NavItem>
@@ -55,7 +63,7 @@ const SideBar = (props) => {
               <DropdownToggle nav caret>
                 Projects
               </DropdownToggle>
-              <DropdownMenu right>
+              <DropdownMenu>
                 <DropdownItem>New Project</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>Assign Users</DropdownItem>
