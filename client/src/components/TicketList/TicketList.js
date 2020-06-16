@@ -85,8 +85,12 @@ export class Tickets extends Component {
 
   getProjectNameFromTicket = (projects, ticket) => {
     if (projects.length > 0) {
-      return projects.filter((project) => project._id === ticket.projectID)[0]
-        .name;
+      try {
+        return projects.filter((project) => project._id === ticket.projectID)[0]
+          .name;
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   render() {

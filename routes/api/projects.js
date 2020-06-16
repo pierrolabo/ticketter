@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
 //  @access private
 router.post('/', async (req, res) => {
   const { name, description } = req.body;
+  console.log('create project: ', name, description);
   //  Quick data validations
   if (!name || !description) {
     return res.status(400).json({ msg: 'All fields must be complete!' });
@@ -44,6 +45,7 @@ router.post('/', async (req, res) => {
     .save()
     .then((project) => {
       //  Send the token back
+      console.log('newproject saved: ', project);
       res.json({ project });
     })
     .catch((err) => {
@@ -72,5 +74,33 @@ router.delete('/:id', (req, res) => {
       res.json({ msg: 'error deleting project' });
     });
 });
+//  @route PUT api/projects
+//  @desc   Update a project
+//  @access public
+router.put('/', (req, res) => {
+  console.log('reqbody', req.body);
+  const { name, description, _id } = req.body;
+  if (!name || !description) {
+    return res.status(400).json({ msg: 'name & description required' });
+  }
+  console.log('pass');
+  if (!_id) {
+    return res.status(400).json({ msg: 'ID required ! ' });
+  }
 
+  let query = { _id: _id };
+  let update = {
+    $set: { name: name, description: description },
+  };
+  let options = { new: true, useFindAndModify: false };
+
+  Project.findOneAndUpdate(query, update, options)
+    .then((project) => {
+      res.json(project);
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(400).json({ msg: 'error updating ticket' });
+    });
+});
 module.exports = router;
