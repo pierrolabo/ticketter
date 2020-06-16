@@ -10,7 +10,6 @@ import {
 import { Link } from 'react-router-dom';
 
 const AdminTicketMenu = () => {
-  console.log('pass');
   return (
     <UncontrolledDropdown nav inNavbar>
       <DropdownToggle nav caret>

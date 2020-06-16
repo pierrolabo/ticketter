@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTickets } from '../actions/ticketActions';
 import { getProjects } from '../actions/projectActions';
+import { createTicket } from '../actions/ticketActions';
 import { getUsers } from '../actions/userActions';
 import Select from 'react-select';
 
@@ -35,7 +36,7 @@ class CreateTicket extends Component {
     title: '',
     description: '',
     status: '',
-    projectID: '',
+    projectID: null,
     assigned_to: '',
   };
   static propTypes = {
@@ -43,6 +44,7 @@ class CreateTicket extends Component {
     project: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     getTickets: PropTypes.func.isRequired,
+    createTicket: PropTypes.func.isRequired,
     getProjects: PropTypes.func.isRequired,
     getUsers: PropTypes.func.isRequired,
   };
@@ -66,10 +68,12 @@ class CreateTicket extends Component {
   createDefaultProject = (defaultProject) => {
     if (!defaultProject) {
       //  We return the project general
-      let defaultProject = this.props.project.projects.filter(
-        (project) => project.name === 'GENERAL'
-      )[0];
-      return [{ value: defaultProject._id, label: defaultProject.name }];
+      if (this.props.project.projects.length > 0) {
+        let defaultProject = this.props.project.projects.filter(
+          (project) => project.name === 'GENERAL'
+        )[0];
+        return [{ value: defaultProject._id, label: defaultProject.name }];
+      }
     }
   };
   componentWillMount() {
@@ -95,7 +99,17 @@ class CreateTicket extends Component {
     this.setState({ projectID: e.value });
   };
   handleSave = () => {
-    console.log('save: ', this.state);
+    const { title, description, status, assigned_to, projectID } = this.state;
+    const created_by = this.props.auth.user.id;
+    const newTicket = {
+      title,
+      description,
+      status,
+      created_by,
+      assigned_to,
+      projectID,
+    };
+    this.props.createTicket(newTicket);
   };
   render() {
     const { projects } = this.props.project;
@@ -170,6 +184,9 @@ const mapStateToProps = (state) => ({
   project: state.project,
   user: state.user,
 });
-export default connect(mapStateToProps, { getTickets, getProjects, getUsers })(
-  CreateTicket
-);
+export default connect(mapStateToProps, {
+  getTickets,
+  getProjects,
+  getUsers,
+  createTicket,
+})(CreateTicket);

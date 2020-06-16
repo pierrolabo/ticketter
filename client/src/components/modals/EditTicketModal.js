@@ -117,7 +117,6 @@ class EditTicketModal extends Component {
     this.setState({ nextProjID: e.value });
   };
   handleSave = () => {
-    console.log('save clicked: ');
     const {
       title,
       description,
@@ -136,7 +135,6 @@ class EditTicketModal extends Component {
       projectID,
       nextProjID,
     };
-    console.log('handlesubmit: ', newTicket);
     this.props.updateTicket(newTicket);
 
     //  Close modal
