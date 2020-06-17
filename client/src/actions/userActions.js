@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import {
   GET_USERS,
   GET_USER,
