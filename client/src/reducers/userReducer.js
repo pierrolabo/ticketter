@@ -69,11 +69,13 @@ export default function (state = initialState, action) {
         ...state,
         users: [action.payload, ...state.users],
       };
+    /*
     case UPDATE_USER:
       return {
         ...state,
         user: action.payload,
       };
+      */
     case UPDATE_USER_FAIL:
       return {
         ...state,
