@@ -2,18 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {
-  Card,
-  CardText,
-  CardBody,
-  CardHeader,
-  CardTitle,
-  Container,
-  Table,
-} from 'reactstrap';
+import { Card, CardBody, CardHeader, Container, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
+import { getUsers } from '../../actions/userActions';
 import { getProjects } from '../../actions/projectActions';
 import { deleteProject } from '../../actions/projectActions';
 
@@ -29,10 +22,12 @@ export class ProjectList extends Component {
     auth: PropTypes.object.isRequired,
     project: PropTypes.object.isRequired,
     getProjects: PropTypes.func.isRequired,
+    getUsers: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
     this.props.getProjects();
+    this.props.getUsers();
   }
   toggleModal = (event) => {
     if (!this.state.modal) {
@@ -45,7 +40,7 @@ export class ProjectList extends Component {
       this.setState({
         modal: true,
         editProject: this.props.project.projects.filter(
-          (project) => project._id == id
+          (project) => project._id === id
         )[0],
       });
     } else {
@@ -65,6 +60,7 @@ export class ProjectList extends Component {
       <Container>
         {this.state.modal ? (
           <EditProjectModal
+            users={this.props.user.users}
             modal={this.state.modal}
             projects={projects}
             editProject={this.state.editProject}
@@ -124,7 +120,10 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   isLoading: state.ticket.isLoading,
   project: state.project,
+  user: state.user,
 });
-export default connect(mapStateToProps, { getProjects, deleteProject })(
-  ProjectList
-);
+export default connect(mapStateToProps, {
+  getUsers,
+  getProjects,
+  deleteProject,
+})(ProjectList);

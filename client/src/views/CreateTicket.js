@@ -3,17 +3,10 @@ import {
   Container,
   Card,
   Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
   Form,
   FormGroup,
   Label,
   Input,
-  NavLink,
-  Row,
-  Col,
-  Alert,
   CardHeader,
 } from 'reactstrap';
 import { connect } from 'react-redux';

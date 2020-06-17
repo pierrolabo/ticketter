@@ -1,13 +1,9 @@
 import {
-  GET_TICKET,
   GET_TICKETS,
   TICKETS_LOADING,
   TICKET_LOADING,
   GET_TICKETS_FAIL,
   GET_TICKET_FAIL,
-  ADD_TICKET,
-  DELETE_TICKET,
-  UPDATE_TICKET,
   CREATE_TICKET,
   CREATE_TICKET_SUCCESS,
   UPDATE_TICKET_SUCCESS,
@@ -36,7 +32,7 @@ export default function (state = initialState, action) {
       };
     case UPDATE_TICKET_SUCCESS:
       const filteredTickets = state.tickets.map((ticket) => {
-        if (ticket._id == action.payload._id) {
+        if (ticket._id === action.payload._id) {
           return action.payload;
         }
         return ticket;

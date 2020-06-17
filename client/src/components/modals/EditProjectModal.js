@@ -9,13 +9,11 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import Select from 'react-select';
 import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
-import { clearErrors } from '../../actions/errorActions';
 import { updateProject } from '../../actions/projectActions';
-import { USER_LOADING } from '../../actions/types';
+import SelectMultiProjects from '../Select/SelectMultiUsers';
 
 class EditProjectModal extends Component {
   static propTypes = {
@@ -30,11 +28,12 @@ class EditProjectModal extends Component {
     assigned_to: null,
     projectID: '',
     nextProjID: null,
+    userList: null,
+    nextUserList: null,
   };
   componentWillMount() {
-    //this.props.getUsers();
-    const { name, description, _id } = this.props.editProject;
-    this.setState({ name, description, _id });
+    const { name, description, _id, userList } = this.props.editProject;
+    this.setState({ name, description, _id, userList });
   }
   handleSubmitModal = () => {};
   handleChange = (e) => {
@@ -45,12 +44,23 @@ class EditProjectModal extends Component {
 
   handleSave = () => {
     const { name, description, _id } = this.state;
-    const updatedProject = { name, description, _id };
+    let nextUsers = [];
+
+    if (this.state.nextUserList) {
+      nextUsers = this.state.nextUserList.map((user) => user.value);
+    }
+    const updatedProject = { name, description, _id, nextUsers };
     this.props.updateProject(updatedProject);
     //  Close modal
     this.props.toggleModal();
   };
+  handleChangeSelectAssignedUsers = (users) => {
+    this.setState({
+      nextUserList: users,
+    });
+  };
   render() {
+    const { users } = this.props;
     return (
       <Modal isOpen={this.props.modal} toggle={this.props.toggleModal}>
         <ModalHeader toggle={this.props.toggleModal}>EDIT Ticket</ModalHeader>
@@ -76,7 +86,11 @@ class EditProjectModal extends Component {
                 onChange={this.handleChange}
               />
             </FormGroup>
-
+            <SelectMultiProjects
+              users={users}
+              userList={this.state.userList}
+              handleChange={this.handleChangeSelectAssignedUsers}
+            />
             <FormGroup>
               <Button color='secondary'>Cancel</Button>
               <Button onClick={this.handleSave} color='success'>

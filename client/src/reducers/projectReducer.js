@@ -38,7 +38,7 @@ export default function (state = initialState, action) {
       };
     case UPDATE_PROJECT_SUCCESS:
       const filteredProjects = state.projects.map((project) => {
-        if (project._id == action.payload._id) {
+        if (project._id === action.payload._id) {
           return action.payload;
         }
         return project;
@@ -73,10 +73,6 @@ export default function (state = initialState, action) {
         projects: state.projects.filter(
           (project) => project._id !== action.payload.id
         ),
-      };
-      return {
-        ...state,
-        projects: filteredProjects,
       };
     default:
       return state;
