@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Button,
   Modal,
@@ -8,7 +8,6 @@ import {
   FormGroup,
   Label,
   Input,
-  NavLink,
   Row,
   Col,
   Alert,
@@ -22,15 +21,7 @@ const optionsRoles = [
   { value: 'PROJECT_MANAGER', label: 'PROJECT_MANAGER' },
   { value: 'DEVELOPER', label: 'DEVELOPER' },
 ];
-const optionsOrgs = [
-  { value: 'IBM', label: 'IBM' },
-  { value: 'INTEL', label: 'Intel' },
-  { value: 'UBUNTU', label: 'Ubuntu' },
-];
-const optionsOrgsDefault = [
-  { value: 'IBM', label: 'IBM' },
-  { value: 'UBUNTU', label: 'Ubuntu' },
-];
+// Need a big refactor
 const EditUserModal = ({
   modal,
   name,
@@ -146,7 +137,7 @@ const EditUserModal = ({
               name='roleSelect'
               onChange={handleChangeRolesSelect}
               defaultValue={optionsRoles.filter(
-                (role) => role.value == userRole
+                (role) => role.value === userRole
               )}
               options={optionsRoles}
             />

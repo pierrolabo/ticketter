@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
@@ -17,7 +17,6 @@ class Users extends Component {
     this.props.getUsers();
   }
   render() {
-    const { isAuthenticated, role, user } = this.props.auth;
     const { users } = this.props.user;
 
     return (
