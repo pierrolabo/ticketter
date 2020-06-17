@@ -48,23 +48,20 @@ const SideBar = (props) => {
           navbar
         >
           <Nav vertical className='list-unstyled bg-dark sideBar'>
-            <NavItem className='menu-item'>
-              <NavLink href='/Tickets'>Tickets</NavLink>
-            </NavItem>
             {props.role == 'ADMIN' ? (
               <AdminTicketMenu></AdminTicketMenu>
+            ) : (
+              <h1>not pass</h1>
+            )}
+
+            {props.role == 'ADMIN' ? (
+              <AdminProjectMenu></AdminProjectMenu>
             ) : (
               <h1>not pass</h1>
             )}
             <NavItem>
               <Link to='/users'>User Roles</Link>
             </NavItem>
-            {props.role == 'ADMIN' ? (
-              <AdminProjectMenu></AdminProjectMenu>
-            ) : (
-              <h1>not pass</h1>
-            )}
-            <NavbarText>Simple Text</NavbarText>
           </Nav>
         </Collapse>
       </Navbar>
