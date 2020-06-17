@@ -14,10 +14,8 @@ import {
   Alert,
 } from 'reactstrap';
 import Select from 'react-select';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { clearErrors } from '../../actions/errorActions';
-import { faMehRollingEyes } from '@fortawesome/free-solid-svg-icons';
+import SelectMultiProjects from '../Select/SelectMultiProjects';
+
 const optionsRoles = [
   { value: 'ADMIN', label: 'ADMIN' },
   { value: 'USER', label: 'USER' },
@@ -48,8 +46,12 @@ const EditUserModal = ({
   handleChange,
   handleChangeRolesSelect,
   handleChangeOrgsSelect,
+  handleChangeProjects,
   handleSubmit,
   errorModal,
+  users,
+  id,
+  projects,
 }) => (
   <Modal isOpen={modal} toggle={toggleModal}>
     <ModalHeader toggle={toggleModal}>Edit User</ModalHeader>
@@ -63,7 +65,7 @@ const EditUserModal = ({
             name='name'
             id='name'
             placeholder='name'
-            value={name}
+            value={name ? name : ''}
             className='mb-3'
             onChange={handleChange}
           />
@@ -74,7 +76,7 @@ const EditUserModal = ({
             id='lastname'
             placeholder='lastname'
             className='mb-3'
-            value={lastname}
+            value={lastname ? lastname : ''}
             onChange={handleChange}
           />
           <Label for='email'>Email</Label>
@@ -83,7 +85,7 @@ const EditUserModal = ({
             name='email'
             id='email'
             placeholder='Email'
-            value={email}
+            value={email ? email : ''}
             className='mb-3'
             onChange={handleChange}
             valid
@@ -95,7 +97,7 @@ const EditUserModal = ({
               name='address'
               id='address'
               placeholder='1234 Main St'
-              value={address}
+              value={address ? address : ''}
               onChange={handleChange}
             />
           </FormGroup>
@@ -149,19 +151,12 @@ const EditUserModal = ({
               options={optionsRoles}
             />
           </FormGroup>
-          <FormGroup>
-            <Label for='orgSelect'>Select organisations for the user</Label>
-
-            <Select
-              name='orgSelect'
-              onChange={handleChangeOrgsSelect}
-              defaultValue={optionsOrgs.filter(
-                (org) => orgs.indexOf(org.value) >= 0
-              )}
-              options={optionsOrgs}
-              isMulti
-            />
-          </FormGroup>
+          <SelectMultiProjects
+            users={users}
+            projects={projects}
+            id={id}
+            handleChange={handleChangeProjects}
+          />
           <Button color='dark' style={{ marginTop: '2rem' }} block>
             Save
           </Button>

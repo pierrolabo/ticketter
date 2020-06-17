@@ -19,6 +19,10 @@ const ProjectSchema = new Schema({
     type: Array,
     default: [],
   },
+  userList: {
+    type: Array,
+    default: [],
+  },
 });
 
 module.exports = Project = mongoose.model('project', ProjectSchema);

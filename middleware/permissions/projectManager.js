@@ -16,7 +16,7 @@ function projectManager(req, res, next) {
 
     //  Check if user is admin
     let role = decodedToken.role;
-    if (role === 'PROJECTMANAGER') {
+    if (role === 'PROJECT_MANAGER') {
       next();
     }
     return res.status(401).json({ msg: 'User isnt elevated enough' });

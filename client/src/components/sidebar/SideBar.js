@@ -31,7 +31,6 @@ import { Link } from 'react-router-dom';
 import AdminTicketMenu from './AdminTicketMenu';
 import AdminProjectMenu from './AdmiProjectMenu';
 const SideBar = (props) => {
-  console.log(props.role);
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   return (
