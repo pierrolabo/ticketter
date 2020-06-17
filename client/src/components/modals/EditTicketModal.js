@@ -33,7 +33,7 @@ const createOptionsUsers = (users) => {
 
 const createDefaultUser = (users, assigned_to) => {
   //  If ticket isnt assigned to anyone we send the default value for the select
-  if (assigned_to == '') {
+  if (assigned_to === '') {
     return [{ value: '', label: 'UNASSIGNED' }];
   }
 
