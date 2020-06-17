@@ -16,6 +16,8 @@ import { faUserEdit } from '@fortawesome/free-solid-svg-icons';
 //  Redux
 import { connect } from 'react-redux';
 import { updateUser } from '../../actions/userActions';
+import { getUsers } from '../../actions/userActions';
+import { getProjects } from '../../actions/projectActions';
 import PropTypes from 'prop-types';
 
 import EditUserModal from '../modals/EditUserModal';
@@ -24,8 +26,11 @@ class UserList extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
     updateUser: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
+    getProjects: PropTypes.func.isRequired,
+    getUsers: PropTypes.func.isRequired,
     loadingUser: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired,
+    project: PropTypes.object.isRequired,
   };
   state = {
     modal: false,
@@ -39,12 +44,19 @@ class UserList extends Component {
     zip: '',
     id: null,
     orgs: [],
+    prevProjects: [],
+    nextProjects: null,
   };
+  componentDidMount() {
+    this.props.getUsers();
+    this.props.getProjects();
+  }
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
+
   handleChangeRolesSelect = (e) => {
     this.setState({
       role: e.value,
@@ -66,6 +78,19 @@ class UserList extends Component {
       });
     }
   };
+  handleChangeProjects = (projects) => {
+    let nextProjects = [];
+    if (projects) {
+      nextProjects = projects.map((project) => project.value);
+    } else {
+      nextProjects = 'ALL_PROJECT_REMOVED';
+    }
+
+    this.setState({
+      nextProjects,
+    });
+    console.log('filtered: ', nextProjects);
+  };
   handleSubmit = (e) => {
     e.preventDefault();
     const {
@@ -79,6 +104,7 @@ class UserList extends Component {
       role,
       id,
       orgs,
+      nextProjects,
     } = this.state;
     const updatedUser = {
       name,
@@ -91,7 +117,9 @@ class UserList extends Component {
       city,
       state,
       zip,
+      nextProjects,
     };
+    console.log('ipdt:', updatedUser);
     this.props.updateUser(updatedUser);
     this.setState({
       modal: false,
@@ -105,6 +133,7 @@ class UserList extends Component {
       zip: '',
       id: null,
       orgs: [],
+      nextProjects: null,
     });
   };
   toggleModal = (e) => {
@@ -155,7 +184,7 @@ class UserList extends Component {
   };
 
   render() {
-    const { users } = this.props;
+    const { users, projects } = this.props;
     return (
       <Container>
         <EditUserModal
@@ -163,6 +192,7 @@ class UserList extends Component {
           handleChange={this.handleChange}
           handleChangeRolesSelect={this.handleChangeRolesSelect}
           handleChangeOrgsSelect={this.handleChangeOrgsSelect}
+          handleChangeProjects={this.handleChangeProjects}
           handleSubmit={this.handleSubmit}
           toggleModal={this.toggleModal}
           name={this.state.name}
@@ -174,6 +204,9 @@ class UserList extends Component {
           zip={this.state.zip}
           state={this.state.state}
           orgs={this.state.orgs}
+          projects={projects}
+          users={users}
+          id={this.state.id}
         />
         <Card>
           <CardHeader>User List</CardHeader>
@@ -192,7 +225,7 @@ class UserList extends Component {
               <tbody>
                 {users.map((user, index) => {
                   return (
-                    <tr>
+                    <tr key={user._id}>
                       <th scope='row'>{index}</th>
                       <th>{user.name}</th>
                       <th>{user.lastname}</th>
@@ -216,6 +249,9 @@ class UserList extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   loadingUser: state.user.loadingUser,
-  user: state.user.user,
+  user: state.user,
+  projects: state.project.projects,
 });
-export default connect(mapStateToProps, { updateUser })(UserList);
+export default connect(mapStateToProps, { updateUser, getUsers, getProjects })(
+  UserList
+);

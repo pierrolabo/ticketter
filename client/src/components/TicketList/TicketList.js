@@ -54,6 +54,7 @@ export class Tickets extends Component {
       let editTicket = this.props.ticket.tickets.filter(
         (ticket) => ticket._id == id
       );
+      //let editUserTicket = this.props.user.users.filter();
       this.setState({
         editTicket: editTicket[0],
         modal: true,
