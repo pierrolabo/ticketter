@@ -111,8 +111,6 @@ router.put('/', admin, async (req, res) => {
     orgs,
     nextProjects,
   } = req.body;
-  console.log(req.body);
-
   if (!name || !lastname || !email || !role || !id) {
     return res.status(400).json({ msg: 'All fields must be complete!' });
   }
@@ -132,25 +130,22 @@ router.put('/', admin, async (req, res) => {
     },
   };
 
-  //  Update all projects
-  if (nextProjects == 'ALL_PROJECT_REMOVED') {
-    console.log('remove user from all projects accordingly');
-    let optionsRemoveMany = { $pull: { userList: id } };
-    try {
-      await Project.updateMany({}, optionsRemoveMany);
-    } catch (err) {
-      console.log(err);
-    }
-  } else {
-    try {
-      let query = { _id: { $in: nextProjects } };
-      let update = {
-        $push: { userList: id },
-      };
-      await Project.updateMany(query, update);
-    } catch (err) {
-      console.log(err);
-    }
+  //  Delete user from all projects then add user to the selected projects
+  //  This is absolutely dumb but i have no time to refecator
+  let optionsRemoveMany = { $pull: { userList: id } };
+  try {
+    await Project.updateMany({}, optionsRemoveMany);
+  } catch (err) {
+    console.log(err);
+  }
+  try {
+    let query = { _id: { $in: nextProjects } };
+    let update = {
+      $push: { userList: id },
+    };
+    await Project.updateMany(query, update);
+  } catch (err) {
+    console.log(err);
   }
 
   let options = { new: true, upsert: true, useFindAndModify: false };

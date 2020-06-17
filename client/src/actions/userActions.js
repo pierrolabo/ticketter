@@ -2,11 +2,8 @@ import axios from 'axios';
 import {
   GET_USERS,
   GET_USER,
-  ADD_USER,
-  DELETE_USER,
   UPDATE_USER,
   UPDATE_USER_FAIL,
-  UPDATE_USER_ROLE,
   USER_LOADING,
   USERS_LOADING,
   GET_USERS_FAIL,
@@ -15,6 +12,7 @@ import {
 
 import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
+import { getProjects } from '../actions/projectActions';
 
 export const getUsers = () => (dispatch, getState) => {
   dispatch(setUsersLoading());
@@ -67,6 +65,7 @@ export const updateUser = (user) => (dispatch, getState) => {
   axios
     .put('/api/users', user, tokenConfig(getState))
     .then((res) => {
+      dispatch(getProjects());
       dispatch({
         type: UPDATE_USER,
         payload: res.data,
