@@ -74,6 +74,7 @@ export class ProjectList extends Component {
           ''
         )}
         <Card>
+          <CardHeader>Project List</CardHeader>
           <CardBody>
             <Table hover>
               <thead>
