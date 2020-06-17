@@ -81,7 +81,7 @@ router.delete('/:id', async (req, res) => {
 //  @desc   Update a project
 //  @access public
 router.put('/', (req, res) => {
-  const { name, description, _id } = req.body;
+  const { name, description, _id, nextUsers } = req.body;
   if (!name || !description) {
     return res.status(400).json({ msg: 'name & description required' });
   }
@@ -91,7 +91,7 @@ router.put('/', (req, res) => {
 
   let query = { _id: _id };
   let update = {
-    $set: { name: name, description: description },
+    $set: { name: name, description: description, userList: nextUsers },
   };
   let options = { new: true, useFindAndModify: false };
 

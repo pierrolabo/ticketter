@@ -1,18 +1,9 @@
 import React from 'react';
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Progress,
-} from 'reactstrap';
+import { Card, CardText, CardBody, CardTitle, Progress } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTicketAlt } from '@fortawesome/free-solid-svg-icons';
 const TicketCard = (props) => {
-  const { cardTitle, ticketNumber, ticketType } = props.ticketInfo;
+  const { ticketNumber, ticketType } = props.ticketInfo;
   const renderSwitch = (param) => {
     switch (param) {
       case 'NEW':

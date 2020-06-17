@@ -1,23 +1,16 @@
 import axios from 'axios';
 
 import {
-  GET_TICKET,
   GET_TICKETS,
   TICKETS_LOADING,
-  TICKET_LOADING,
   GET_TICKETS_FAIL,
-  GET_TICKET_FAIL,
   CREATE_TICKET,
   CREATE_TICKET_SUCCESS,
   CREATE_TICKET_ERROR,
-  DELETE_TICKET,
-  UPDATE_TICKET,
   UPDATE_TICKET_SUCCESS,
   UPDATE_TICKET_FAIL,
 } from '../actions/types';
 import { history } from '../configureStore';
-
-import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
 
 export const getTickets = () => (dispatch, getState) => {

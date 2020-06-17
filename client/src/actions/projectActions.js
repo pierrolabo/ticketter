@@ -35,7 +35,7 @@ export const getProjects = () => (dispatch, getState) => {
     });
 };
 
-export const updateProject = ({ name, description, _id }) => (
+export const updateProject = ({ name, description, _id, nextUsers }) => (
   dispatch,
   getState
 ) => {
@@ -51,6 +51,7 @@ export const updateProject = ({ name, description, _id }) => (
     name,
     description,
     _id,
+    nextUsers,
   });
   axios
     .put('/api/projects', body, config)
