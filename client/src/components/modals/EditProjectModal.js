@@ -9,13 +9,10 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import Select from 'react-select';
 import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
-import { clearErrors } from '../../actions/errorActions';
 import { updateProject } from '../../actions/projectActions';
-import { USER_LOADING } from '../../actions/types';
 import SelectMultiProjects from '../Select/SelectMultiUsers';
 
 class EditProjectModal extends Component {

@@ -8,19 +8,11 @@ import {
   FormGroup,
   Label,
   Input,
-  NavLink,
-  Row,
-  Col,
-  Alert,
 } from 'reactstrap';
 import Select from 'react-select';
 import { connect } from 'react-redux';
-import { faMehRollingEyes } from '@fortawesome/free-solid-svg-icons';
-
 import PropTypes from 'prop-types';
-import { clearErrors } from '../../actions/errorActions';
 import { updateTicket } from '../../actions/ticketActions';
-import { USER_LOADING } from '../../actions/types';
 import { SelectSingleProject } from '../Select/SelectSingleProject';
 
 const STATUS = [
@@ -38,32 +30,14 @@ const createOptionsUsers = (users) => {
   });
   return [{ value: '', label: 'UNASSIGNED' }, ...filteredUsers];
 };
-const createOptionsProjects = (projects) => {
-  return projects.map((project) => {
-    return {
-      value: project._id,
-      label: project.name,
-    };
-  });
-};
-const createDefaultProject = (projects, projectID) => {
-  let defaultProject = projects.filter(
-    (project) => project._id == projectID
-  )[0];
-  return [
-    {
-      value: defaultProject._id,
-      label: defaultProject.name,
-    },
-  ];
-};
+
 const createDefaultUser = (users, assigned_to) => {
   //  If ticket isnt assigned to anyone we send the default value for the select
   if (assigned_to == '') {
     return [{ value: '', label: 'UNASSIGNED' }];
   }
 
-  let defaultUser = users.filter((user) => user._id == assigned_to)[0];
+  let defaultUser = users.filter((user) => user._id === assigned_to)[0];
   return [
     {
       value: defaultUser._id,

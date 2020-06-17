@@ -20,7 +20,7 @@ export const SelectSingleProject = (props) => {
   const createDefaultProject = (projects, projectID) => {
     try {
       let defaultProject = projects.filter(
-        (project) => project._id == projectID
+        (project) => project._id === projectID
       )[0];
       if (defaultProject) {
         return [{ value: defaultProject._id, label: defaultProject.name }];
