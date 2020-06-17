@@ -14,6 +14,7 @@ import {
   Row,
   Col,
   Alert,
+  CardHeader,
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -121,6 +122,7 @@ class CreateTicket extends Component {
     return (
       <Container>
         <Card>
+          <CardHeader>Create a new ticket</CardHeader>
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
               <Label for='title'>Title</Label>
