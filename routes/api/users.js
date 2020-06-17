@@ -8,9 +8,7 @@ const admin = require('../../middleware/permissions/admin');
 
 const User = require('../../models/User');
 const Project = require('../../models/Project');
-
 const { updateUser } = require('../../client/src/actions/userActions');
-
 //  @route GET api/users
 //  @desc   Get the list of all users
 //  @access private
@@ -114,21 +112,23 @@ router.put('/', admin, async (req, res) => {
     orgs,
     nextProjects,
   } = req.body;
-  console.log('user route: ', req.body);
+  console.log(req.body);
+
   if (!name || !lastname || !email || !role || !id) {
     return res.status(400).json({ msg: 'All fields must be complete!' });
   }
-  //  Update projects
+  /*
+  //  Update all projects
   if (nextProjects == 'ALL_PROJECT_REMOVED') {
-    let updateRemoveAll = { $pull: { userList: id } };
-    let optionsRemoveAll = { multi: true };
+    console.log('update all projects accordingly');
+    let optionsRemoveMany = { $pull: { userList: id } };
     try {
-      await Project.updateMany({}, updateRemoveAll, optionsRemoveAll);
+      await Project.updateMany({}, optionsRemoveMany);
     } catch (err) {
-      console.log('removefromallproject: ', err);
+      console.log(err);
     }
   }
-
+  */
   //  Update the user
   let query = { _id: id };
   let update = {
@@ -147,7 +147,7 @@ router.put('/', admin, async (req, res) => {
   let options = { new: true, upsert: true, useFindAndModify: false };
   try {
     let updatedUser = await User.findOneAndUpdate(query, update, options);
-    res.json(updateUser);
+    return res.json(updatedUser);
   } catch (err) {
     return res.status(400).json({ msg: 'Error updating user' });
   }
