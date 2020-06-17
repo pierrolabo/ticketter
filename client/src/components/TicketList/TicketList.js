@@ -70,7 +70,7 @@ export class Tickets extends Component {
       return 'UNASSIGNED';
     }
     if (users.length > 0) {
-      let userAssigned = users.filter((user) => user._id == id)[0];
+      let userAssigned = users.filter((user) => user._id === id)[0];
       return `${userAssigned.name} ${userAssigned.lastname}`;
     }
   };
