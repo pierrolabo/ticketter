@@ -1,16 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {
-  Card,
-  CardText,
-  CardBody,
-  CardHeader,
-  CardTitle,
-  Container,
-  Table,
-} from 'reactstrap';
+import { Container } from 'reactstrap';
 
 //import TicektList from '../components/TicketList/TicketList';
 //import { getProjects } from '../actions/projectActions';

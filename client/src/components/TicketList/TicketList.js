@@ -1,16 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {
-  Card,
-  CardText,
-  CardBody,
-  CardHeader,
-  CardTitle,
-  Container,
-  Table,
-} from 'reactstrap';
+import { Card, CardBody, CardHeader, Container, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
@@ -52,7 +44,7 @@ export class Tickets extends Component {
       }
 
       let editTicket = this.props.ticket.tickets.filter(
-        (ticket) => ticket._id == id
+        (ticket) => ticket._id === id
       );
       //let editUserTicket = this.props.user.users.filter();
       this.setState({
@@ -74,7 +66,7 @@ export class Tickets extends Component {
 
   getUserFromID = (users, id) => {
     //  if is unassigned
-    if (id == '') {
+    if (id === '') {
       return 'UNASSIGNED';
     }
     if (users.length > 0) {
