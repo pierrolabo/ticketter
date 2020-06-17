@@ -34,12 +34,11 @@ export class Tickets extends Component {
     getProjects: PropTypes.func.isRequired,
     getUsers: PropTypes.func.isRequired,
   };
-  componentWillMount() {
-    //this.props.getUsers();
-  }
+  componentWillMount() {}
   componentDidMount() {
     this.props.getProjects();
     this.props.getTickets();
+    this.props.getUsers();
   }
   handleEdit = (event) => {
     //  The modal is close
