@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Jumbotron, Container, Row, Col, NavLink, Nav } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { getTickets } from '../../actions/ticketActions';
 
 import TicketCard from '../TicketsCards/TicketCard';
@@ -33,17 +33,16 @@ export class DashboardAdmin extends Component {
       ticketNumber: 5,
       ticketType: 'UNRESOLVED',
     };
-    const { isAuthenticated, role, user } = this.props.auth;
     const { tickets } = this.props.ticket;
     if (tickets) {
       newTicket.ticketNumber = tickets.filter(
-        (ticket) => ticket.status == 'NEW'
+        (ticket) => ticket.status === 'NEW'
       ).length;
       progressTicket.ticketNumber = tickets.filter(
-        (ticket) => ticket.status == 'PROGRESS'
+        (ticket) => ticket.status === 'PROGRESS'
       ).length;
       urgentTicket.ticketNumber = tickets.filter(
-        (ticket) => ticket.status == 'URGENT'
+        (ticket) => ticket.status === 'URGENT'
       ).length;
       unresolvedTicket.ticketNumber = tickets.filter((ticket) => {
         return ticket.status !== 'UNRESOLVED';

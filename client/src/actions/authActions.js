@@ -10,8 +10,6 @@ import {
   AUTH_ERROR,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
   LOGOUT_SUCCESS,
 } from './types';
 
