@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import { clearErrors } from '../../actions/errorActions';
 import { updateTicket } from '../../actions/ticketActions';
 import { USER_LOADING } from '../../actions/types';
+import { SelectSingleProject } from '../Select/SelectSingleProject';
 
 const STATUS = [
   { value: 'NEW', label: 'NEW' },
@@ -177,18 +178,11 @@ class EditTicketModal extends Component {
                 defaultValue={createDefaultStatus(this.state.status)}
               />
             </FormGroup>
-            <FormGroup>
-              <Label for='assigned'>Assigned Project</Label>
-              <Select
-                name='assignedProject'
-                onChange={this.handleChangeSelectAssignedProject}
-                options={createOptionsProjects(projects)}
-                defaultValue={createDefaultProject(
-                  projects,
-                  this.state.projectID
-                )}
-              />
-            </FormGroup>
+            <SelectSingleProject
+              projects={projects}
+              id={this.state.projectID}
+              handleChange={this.handleChangeSelectAssignedProject}
+            />
             {users.length > 0 && this.state.assigned_to != null ? (
               <FormGroup>
                 <Label for='assigned'>Assigned to</Label>
@@ -207,7 +201,6 @@ class EditTicketModal extends Component {
             )}
 
             <FormGroup>
-              <Button color='secondary'>Cancel</Button>
               <Button color='secondary'>Cancel</Button>
               <Button onClick={this.handleSave} color='success'>
                 Save
