@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
-import {
-  Card,
-  CardText,
-  CardBody,
-  CardHeader,
-  CardTitle,
-  Container,
-  Table,
-} from 'reactstrap';
+import { Card, CardBody, CardHeader, Container, Table } from 'reactstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons';
 
 //  Redux
@@ -82,10 +73,8 @@ class UserList extends Component {
     let nextProjects = [];
     if (projects) {
       nextProjects = projects.map((project) => project.value);
-    } else {
-      nextProjects = 'ALL_PROJECT_REMOVED';
     }
-
+    console.log('change projects: ', projects);
     this.setState({
       nextProjects,
     });
@@ -119,7 +108,6 @@ class UserList extends Component {
       zip,
       nextProjects,
     };
-    console.log('ipdt:', updatedUser);
     this.props.updateUser(updatedUser);
     this.setState({
       modal: false,

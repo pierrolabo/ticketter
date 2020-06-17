@@ -2,22 +2,14 @@ import React, { Component } from 'react';
 import {
   Container,
   Card,
+  CardHeader,
   Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
   Form,
   FormGroup,
   Label,
   Input,
-  NavLink,
-  Row,
-  Col,
-  Alert,
 } from 'reactstrap';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-
 import { addProject } from '../actions/projectActions';
 
 class CreateProject extends Component {
@@ -41,6 +33,7 @@ class CreateProject extends Component {
     return (
       <Container>
         <Card>
+          <CardHeader>Create a new project</CardHeader>
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
               <Label for='name'>name</Label>

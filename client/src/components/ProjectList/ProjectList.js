@@ -2,17 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {
-  Card,
-  CardText,
-  CardBody,
-  CardHeader,
-  CardTitle,
-  Container,
-  Table,
-} from 'reactstrap';
+import { Card, CardBody, CardHeader, Container, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import { getUsers } from '../../actions/userActions';
 import { getProjects } from '../../actions/projectActions';
@@ -48,7 +40,7 @@ export class ProjectList extends Component {
       this.setState({
         modal: true,
         editProject: this.props.project.projects.filter(
-          (project) => project._id == id
+          (project) => project._id === id
         )[0],
       });
     } else {

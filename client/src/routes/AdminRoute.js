@@ -6,7 +6,7 @@ const PrivateRoute = ({ children, auth, role, ...rest }) => {
     <Route
       {...rest}
       render={(location) => {
-        if (auth.isAuthenticated && role == 'ADMIN') {
+        if (auth.isAuthenticated && role === 'ADMIN') {
           return children;
         } else {
           return <Redirect to='/home' />;

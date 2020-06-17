@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const ConfirmDeleteModal = (props) => {
-  const { buttonLabel, className } = props;
-
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -18,7 +16,7 @@ const ConfirmDeleteModal = (props) => {
       <th onClick={toggle}>
         <FontAwesomeIcon icon={faTrash} />
       </th>
-      <Modal isOpen={modal} toggle={toggle} className={className}>
+      <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Warning</ModalHeader>
         <ModalBody>
           This project may contain multiple tickets, are you sure to delete this
