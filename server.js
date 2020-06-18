@@ -21,12 +21,12 @@ mongoose
   .catch((err) => console.log(err));
 
 //  Use Routes
+app.use('/api/reply', require('./routes/api/reply'));
 app.use('/api/tickets', require('./routes/api/tickets'));
 app.use('/api/answer', require('./routes/api/answer'));
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/projects', require('./routes/api/projects'));
 app.use('/api/auth', require('./routes/api/auth'));
-
 //  Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
   //set static folder

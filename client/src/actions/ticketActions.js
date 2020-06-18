@@ -1,7 +1,10 @@
 import axios from 'axios';
 
 import {
+  GET_TICKET,
+  GET_TICKET_SUCCESS,
   GET_TICKETS,
+  GET_TICKET_FAIL,
   TICKETS_LOADING,
   GET_TICKETS_FAIL,
   CREATE_TICKET,
@@ -9,10 +12,64 @@ import {
   CREATE_TICKET_ERROR,
   UPDATE_TICKET_SUCCESS,
   UPDATE_TICKET_FAIL,
+  ADD_REPLY,
+  ADD_REPLY_FAIL,
+  DELETE_REPLY,
+  DELETE_REPLY_FAIL,
 } from '../actions/types';
 import { history } from '../configureStore';
 import { returnErrors } from './errorActions';
 
+export const deleteReply = (ticketID, answerID) => (dispatch, getState) => {
+  axios
+    .delete('/api/reply', { data: { ticketID, answerID } })
+    .then((res) => {
+      dispatch({
+        type: DELETE_REPLY,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          'DELETE_REPLY_FAIL'
+        )
+      );
+      dispatch({
+        type: DELETE_REPLY_FAIL,
+      });
+    });
+};
+export const addReply = (reply, id) => (dispatch, getState) => {
+  //    Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  // body request
+  const body = JSON.stringify({
+    reply,
+  });
+  axios
+    .post(`/api/reply/${id}`, body, config)
+    .then((res) => {
+      dispatch({
+        type: ADD_REPLY,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'ADD_REPLY_FAIL')
+      );
+      dispatch({
+        type: ADD_REPLY_FAIL,
+      });
+    });
+};
 export const getTickets = () => (dispatch, getState) => {
   dispatch(setTicketsLoading());
   axios
@@ -27,6 +84,25 @@ export const getTickets = () => (dispatch, getState) => {
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: GET_TICKETS_FAIL,
+      });
+    });
+};
+
+export const getTicket = (id) => (dispatch, getState) => {
+  dispatch(setTicketsLoading());
+  dispatch({ type: GET_TICKET });
+  axios
+    .get(`/api/tickets/${id}`)
+    .then((res) => {
+      dispatch({
+        type: GET_TICKET_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: GET_TICKET_FAIL,
       });
     });
 };
