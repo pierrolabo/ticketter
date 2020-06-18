@@ -17,10 +17,71 @@ import {
   DELETE_REPLY,
   DELETE_REPLY_FAIL,
   CLEAR_TICKET,
+  COMPLETED_TICKET,
+  UPDATE_ASSIGNED_TO,
 } from '../actions/types';
 import { history } from '../configureStore';
 import { returnErrors } from './errorActions';
 
+export const setAssignedTo = (id, userID) => (dispatch) => {
+  //    Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  // body request
+  const body = JSON.stringify({
+    userID,
+  });
+  axios
+    .put(`/api/tickets/setAssignedTo/${id}`, body, config)
+    .then((res) => {
+      dispatch({
+        type: UPDATE_ASSIGNED_TO,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log('err: ', err);
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          'UPDATE_ASSIGNED_TO_FAIL'
+        )
+      );
+    });
+};
+export const setCompletedTicket = (id, userID) => (dispatch) => {
+  //    Headers
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  // body request
+  const body = JSON.stringify({
+    userID,
+  });
+  axios
+    .put(`/api/tickets/setCompletedTicket/${id}`, body, config)
+    .then((res) => {
+      dispatch({
+        type: COMPLETED_TICKET,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          'COMPLETED_TICKET_FAIL'
+        )
+      );
+    });
+};
 export const clearTicket = () => (dispatch) => {
   dispatch({
     type: CLEAR_TICKET,

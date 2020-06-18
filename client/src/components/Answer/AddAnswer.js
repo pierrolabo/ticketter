@@ -23,7 +23,7 @@ export const AddAnswer = (props) => {
       <InputGroup>
         <Input placeholder='and...' value={reply} onChange={handleChange} />
         <InputGroupAddon addonType='append'>
-          <Button onClick={handleClick} color='secondary'>
+          <Button onClick={handleClick} color='success'>
             Reply
           </Button>
         </InputGroupAddon>

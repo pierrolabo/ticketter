@@ -186,9 +186,10 @@ router.delete('/:id', async (req, res) => {
 //  @route PUT api/tickets/setCompleted/
 //  @desc   Set a ticket to completed
 //  @access public
-router.put('/setCompletedTicket', (req, res) => {
-  const { id, completed_by } = req.body;
-  if (!id || !completed_by) {
+router.put('/setCompletedTicket/:id', (req, res) => {
+  const { id } = req.params;
+  const { userID } = req.body;
+  if (!id || !userID) {
     return res
       .status(400)
       .json({ msg: 'Error setCompletedTicket, all fields must be complete ' });
@@ -196,7 +197,7 @@ router.put('/setCompletedTicket', (req, res) => {
 
   let query = { _id: id };
   let update = {
-    $set: { isCompleted: true, completed_by, last_Updated: new Date() },
+    $set: { isCompleted: true, userID, last_Updated: new Date() },
   };
   let options = { new: true, useFindAndModify: false };
 
@@ -208,7 +209,33 @@ router.put('/setCompletedTicket', (req, res) => {
       console.log('error: ', err);
     });
 });
+//  @route PUT api/tickets/setAssignedTo/
+//  @desc   Change ticket assignation
+//  @access public
+router.put('/setAssignedTo/:id', (req, res) => {
+  const { id } = req.params;
+  const { userID } = req.body;
 
+  if (!id || !userID) {
+    return res
+      .status(400)
+      .json({ msg: 'Error setCompletedTicket, all fields must be complete ' });
+  }
+
+  let query = { _id: id };
+  let update = {
+    $set: { assigned_to: userID, last_Updated: new Date() },
+  };
+  let options = { new: true, useFindAndModify: false };
+
+  Ticket.findOneAndUpdate(query, update, options)
+    .then((ticket) => {
+      res.json(ticket);
+    })
+    .catch((err) => {
+      console.log('error: ', err);
+    });
+});
 //  @route PUT api/tickets/:ticketID
 //  @desc   Update a ticket
 //  @access public
