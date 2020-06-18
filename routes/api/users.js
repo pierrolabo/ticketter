@@ -11,7 +11,7 @@ const User = require('../../models/User');
 //  @route GET api/users
 //  @desc   Get the list of all users
 //  @access private
-router.get('/', admin, async (req, res) => {
+router.get('/', async (req, res) => {
   User.find()
     .select('-password')
     .then((user) => res.json(user));

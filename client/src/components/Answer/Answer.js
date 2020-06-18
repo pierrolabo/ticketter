@@ -7,7 +7,8 @@ export const Answer = (props) => {
   return (
     <Card>
       <CardHeader>
-        Answer:{' '}
+        <span>{props.getUserFromId(answer.created_by)}</span>
+        <span>{new Date(answer.date).toUTCString()}</span>
         <th onClick={props.handleDelete} id={answer.replyID}>
           <FontAwesomeIcon id={answer.replyID} icon={faTrash}></FontAwesomeIcon>
         </th>

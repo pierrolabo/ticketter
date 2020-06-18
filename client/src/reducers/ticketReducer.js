@@ -15,6 +15,7 @@ import {
   ADD_REPLY_FAIL,
   DELETE_REPLY,
   DELETE_REPLY_FAIL,
+  CLEAR_TICKET,
 } from '../actions/types';
 
 const initialState = {
@@ -30,6 +31,11 @@ export default function (state = initialState, action) {
         ...state,
         ticket: action.payload,
       };
+    case CLEAR_TICKET:
+      return {
+        ...state,
+        ticket: [],
+      };
     case DELETE_REPLY_FAIL:
       return {
         ...state,
@@ -44,6 +50,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoading: true,
+        project: [],
       };
     case GET_TICKET_SUCCESS:
       return {
@@ -89,7 +96,6 @@ export default function (state = initialState, action) {
         ...state,
       };
     case ADD_REPLY:
-      console.log('reducer: ', action.payload);
       return {
         ...state,
         ticket: action.payload,
