@@ -16,10 +16,16 @@ import {
   ADD_REPLY_FAIL,
   DELETE_REPLY,
   DELETE_REPLY_FAIL,
+  CLEAR_TICKET,
 } from '../actions/types';
 import { history } from '../configureStore';
 import { returnErrors } from './errorActions';
 
+export const clearTicket = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_TICKET,
+  });
+};
 export const deleteReply = (ticketID, answerID) => (dispatch, getState) => {
   axios
     .delete('/api/reply', { data: { ticketID, answerID } })
@@ -42,7 +48,7 @@ export const deleteReply = (ticketID, answerID) => (dispatch, getState) => {
       });
     });
 };
-export const addReply = (reply, id) => (dispatch, getState) => {
+export const addReply = (reply, id, userID, status) => (dispatch, getState) => {
   //    Headers
   const config = {
     headers: {
@@ -52,6 +58,8 @@ export const addReply = (reply, id) => (dispatch, getState) => {
   // body request
   const body = JSON.stringify({
     reply,
+    userID,
+    status,
   });
   axios
     .post(`/api/reply/${id}`, body, config)
