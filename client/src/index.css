@@ -56,3 +56,8 @@ main {
   align-items: flex-start;
   height: 100%;
 }
+
+.viewsingleticket-container {
+  display: flex;
+  flex-basis: 40%;
+}

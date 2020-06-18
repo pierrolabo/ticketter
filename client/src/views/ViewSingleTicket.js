@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Card, CardHeader, CardBody, Badge } from 'reactstrap';
+import {
+  Container,
+  Card,
+  CardHeader,
+  CardBody,
+  Badge,
+  Col,
+  Row,
+  Button,
+} from 'reactstrap';
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -9,6 +18,8 @@ import { getTicket } from '../actions/ticketActions';
 import { addReply } from '../actions/ticketActions';
 import { clearTicket } from '../actions/ticketActions';
 import { deleteReply } from '../actions/ticketActions';
+import { setCompletedTicket } from '../actions/ticketActions';
+import { setAssignedTo } from '../actions/ticketActions';
 import { Answer } from '../components/Answer/Answer';
 import { AddAnswer } from '../components/Answer/AddAnswer';
 import SelectSingleUser from '../components/Select/SelectSingleUser';
@@ -19,6 +30,10 @@ class ViewSingleTicket extends Component {
     user: PropTypes.object.isRequired,
     getTicket: PropTypes.func.isRequired,
     clearTicket: PropTypes.func.isRequired,
+    setCompletedTicket: PropTypes.func.isRequired,
+  };
+  state = {
+    nextAssignedUser: null,
   };
   componentWillMount() {
     //  Get the params in url
@@ -58,7 +73,22 @@ class ViewSingleTicket extends Component {
     return 'User not Found';
   };
   handleChangeSelectUser = (event) => {
-    console.log('handlechangeqelectuser: ', event.value);
+    this.setState({
+      nextAssignedUser: event.value,
+    });
+  };
+  handleSaveSelectUser = () => {
+    const ticketID = this.props.ticket.ticket._id;
+    const userID = this.state.nextAssignedUser;
+    this.props.setAssignedTo(ticketID, userID);
+    this.setState({
+      nextAssignedUser: null,
+    });
+  };
+  handleMarkAsCompleted = () => {
+    const ticketID = this.props.ticket.ticket._id;
+    const { user } = this.props.auth;
+    this.props.setCompletedTicket(ticketID, user.id);
   };
   render() {
     const ticket = this.props.ticket.ticket;
@@ -67,44 +97,89 @@ class ViewSingleTicket extends Component {
     const created_by = this.getUserFromID(ticket.created_by);
     const assigned_to = this.getUserFromID(ticket.assigned_to);
     const loading = this.props.ticket.isLoading;
-    console.log('RENDER: ');
-    console.log('loading: ', loading);
     return (
-      <Container>
-        <Card>
-          <CardHeader>
-            Title: {ticket.title}
-            <span>Created_by: {created_by}</span>
-            <span>Assigned_to: {assigned_to}</span>
-            <span>{new Date(ticket.date).toUTCString()}</span>
-            <Badge color='danger'>{ticket.status}</Badge>
-          </CardHeader>
-          <CardBody>{ticket.description}</CardBody>
-        </Card>
-        {answers.map((answer) => {
-          return (
-            <Answer
-              getUserFromId={this.getUserFromID}
-              answer={answer}
-              handleDelete={this.handleDelete}
-            />
-          );
-        })}
+      <Container className='viewsingleticket-container'>
+        <Row>
+          <Col>
+            <Container className='viewsingleticket-display-ticket'>
+              <Card>
+                <CardHeader>
+                  <Row>
+                    <Col className='text-center'>{ticket.title}</Col>
+                  </Row>
+                </CardHeader>
+                <CardHeader>
+                  <Container className='themed-container'>
+                    <Row>
+                      <Col>
+                        <span>Created_by: {created_by}</span>
+                      </Col>
+                      <Col>
+                        <span>Assigned_to: {assigned_to}</span>
+                      </Col>
+                      <Col>
+                        <span>{new Date(ticket.date).toUTCString()}</span>
+                      </Col>
+                      {ticket.isCompleted ? (
+                        <Col xs='1' sm='3' md='2'>
+                          <Badge color='danger'>Completed</Badge>
+                        </Col>
+                      ) : (
+                        <Col xs='1' sm='3' md='2'>
+                          <Badge color='danger'>{ticket.status}</Badge>
+                        </Col>
+                      )}
+                    </Row>
+                  </Container>
+                </CardHeader>
+                <CardBody>{ticket.description}</CardBody>
+              </Card>
 
-        <AddAnswer handleAddReply={this.handleAddReply} />
-        {/*
+              {answers.map((answer) => {
+                return (
+                  <Answer
+                    getUserFromId={this.getUserFromID}
+                    answer={answer}
+                    handleDelete={this.handleDelete}
+                  />
+                );
+              })}
+
+              <AddAnswer handleAddReply={this.handleAddReply} />
+            </Container>
+          </Col>
+          <Col xs='1' sm='3'>
+            <Container className='viewsingleticketcontainer-optionsContainer'>
+              {ticket.isCompleted ? (
+                ''
+              ) : (
+                <Button color='danger' onClick={this.handleMarkAsCompleted}>
+                  Mark as Completed
+                </Button>
+              )}
+              {/*
           We render the only if the ticket is loaded
           its doesnt update if the props change :(
         */}
-        {!loading ? (
-          <SelectSingleUser
-            users={users}
-            assigned_to={ticket.assigned_to}
-            handleChange={this.handleChangeSelectUser}
-          />
-        ) : (
-          ''
-        )}
+              {!loading ? (
+                <SelectSingleUser
+                  users={users}
+                  assigned_to={ticket.assigned_to}
+                  handleChange={this.handleChangeSelectUser}
+                />
+              ) : (
+                ''
+              )}
+              {this.state.nextAssignedUser ? (
+                <Button color='success' onClick={this.handleSaveSelectUser}>
+                  Reassign
+                </Button>
+              ) : (
+                ''
+              )}
+            </Container>
+          </Col>
+        </Row>
       </Container>
     );
   }
@@ -122,4 +197,6 @@ export default connect(mapStateToProps, {
   addReply,
   deleteReply,
   clearTicket,
+  setCompletedTicket,
+  setAssignedTo,
 })(ViewSingleTicket);
