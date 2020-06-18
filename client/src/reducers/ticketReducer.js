@@ -16,6 +16,8 @@ import {
   DELETE_REPLY,
   DELETE_REPLY_FAIL,
   CLEAR_TICKET,
+  COMPLETED_TICKET,
+  UPDATE_ASSIGNED_TO,
 } from '../actions/types';
 
 const initialState = {
@@ -26,6 +28,16 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case UPDATE_ASSIGNED_TO:
+      return {
+        ...state,
+        ticket: action.payload,
+      };
+    case COMPLETED_TICKET:
+      return {
+        ...state,
+        ticket: action.payload,
+      };
     case DELETE_REPLY:
       return {
         ...state,

@@ -43,6 +43,8 @@ export const ADD_REPLY_FAIL = 'ADD_REPLY_FAIL';
 export const DELETE_REPLY = 'DELETE_REPLY';
 export const DELETE_REPLY_FAIL = 'DELETE_REPLY_FAIL';
 export const CLEAR_TICKET = 'CLEAR_TICKET';
+export const COMPLETED_TICKET = 'COMPLETED_TICKET';
+export const UPDATE_ASSIGNED_TO = 'UPDATE_ASSIGNED_TO';
 //  Projects Management
 export const GET_PROJECTS = 'GET_PROJECTS';
 export const PROJECTS_LOADING = 'PROJECTS_LOADING';
