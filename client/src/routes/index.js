@@ -20,6 +20,7 @@ import Tickets from '../views/Tickets';
 import CreateTicket from '../views/CreateTicket';
 import Projects from '../views/Projects';
 import CreateProject from '../views/CreateProject';
+import ViewSingleTicket from '../views/ViewSingleTicket';
 
 const Routes = (props) => {
   const location = history.location;
@@ -66,6 +67,12 @@ const Routes = (props) => {
             >
               <Projects />
             </AdminRoute>
+            <AdminRoute
+              path='/tickets/view/:id'
+              auth={props.auth}
+              role={props.auth.role}
+              component={ViewSingleTicket}
+            ></AdminRoute>
             <AdminRoute
               path='/projects/create'
               auth={props.auth}

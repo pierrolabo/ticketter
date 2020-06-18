@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 
 import { Card, CardBody, CardHeader, Container, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEye } from '@fortawesome/free-solid-svg-icons';
 
 import EditTicketModal from '../modals/EditTicketModal';
 
 import { getTickets } from '../../actions/ticketActions';
 import { getProjects } from '../../actions/projectActions';
 import { getUsers } from '../../actions/userActions';
+import { history } from '../../configureStore';
 
 export class Tickets extends Component {
   state = {
@@ -85,6 +86,16 @@ export class Tickets extends Component {
       }
     }
   };
+  handleView = (event) => {
+    //  The modal is close
+    let id = event.target.parentNode.id;
+    //  If svg or <th> is clicked, sometimes we dont get id
+    //  this fix the bug
+    if (!id) {
+      id = event.target.id;
+    }
+    history.push(`/tickets/view/${id}`);
+  };
   render() {
     const { tickets } = this.props.ticket;
     const { projects } = this.props.project;
@@ -115,6 +126,7 @@ export class Tickets extends Component {
                   <th>status</th>
                   <th>Project</th>
                   <th>Edit</th>
+                  <th>View</th>
                 </tr>
               </thead>
               <tbody>
@@ -129,6 +141,12 @@ export class Tickets extends Component {
                       <th>{this.getProjectNameFromTicket(projects, ticket)}</th>
                       <th id={ticket._id} onClick={this.handleEdit}>
                         <FontAwesomeIcon id={ticket._id} icon={faEdit} />
+                      </th>
+                      <th onClick={this.handleView} id={ticket._id}>
+                        <FontAwesomeIcon
+                          id={ticket._id}
+                          icon={faEye}
+                        ></FontAwesomeIcon>
                       </th>
                     </tr>
                   );
