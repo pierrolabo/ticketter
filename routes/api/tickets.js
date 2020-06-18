@@ -18,6 +18,13 @@ router.get('/', (req, res) => {
     .sort({ date: -1 })
     .then((tickets) => res.json(tickets));
 });
+//  @route GET api/tickets
+//  @desc   Get single ticket
+//  @access Public
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  Ticket.find({ _id: id }).then((tickets) => res.json(tickets));
+});
 
 //  @route POST api/tickets
 //  @desc   Create a ticket without a project assigned (general ticket)
