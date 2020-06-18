@@ -74,11 +74,9 @@ class UserList extends Component {
     if (projects) {
       nextProjects = projects.map((project) => project.value);
     }
-    console.log('change projects: ', projects);
     this.setState({
       nextProjects,
     });
-    console.log('filtered: ', nextProjects);
   };
   handleSubmit = (e) => {
     e.preventDefault();

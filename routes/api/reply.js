@@ -10,7 +10,7 @@ const Ticket = require('../../models/Ticket');
 //  @access public
 router.post('/:id', async (req, res) => {
   const { id } = req.params;
-  const { reply } = req.body;
+  const { reply, userID, status } = req.body;
   if (!reply || !id) {
     return res.status(400).json({ msg: 'All fields must be completed!' });
   }
@@ -18,9 +18,25 @@ router.post('/:id', async (req, res) => {
   const newReply = {
     replyID: mongoose.Types.ObjectId(),
     reply,
-    created_by: 'BLANK',
+    created_by: userID,
     date: Date.now(),
   };
+  //  We set the ticket to status IN_Progress
+  //  Only if the status isnt URGENT
+  if (status !== 'URGENT') {
+    let queryStatus = { _id: id };
+    let updateStatus = {
+      $set: { status: 'PROGRESS', last_Updated: new Date() },
+    };
+    let optionsStatus = { new: true, useFindAndModify: false };
+    try {
+      await Ticket.findOneAndUpdate(queryStatus, updateStatus, optionsStatus);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  //  Then we update answers
   let query = { _id: id };
   let update = { $push: { answers: newReply } };
   let options = { new: true, useFindAndModify: false };

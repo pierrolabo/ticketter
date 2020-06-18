@@ -27,8 +27,7 @@ export class Tickets extends Component {
     getProjects: PropTypes.func.isRequired,
     getUsers: PropTypes.func.isRequired,
   };
-  componentWillMount() {}
-  componentDidMount() {
+  componentWillMount() {
     this.props.getProjects();
     this.props.getTickets();
     this.props.getUsers();
@@ -65,15 +64,18 @@ export class Tickets extends Component {
     });
   };
 
-  getUserFromID = (users, id) => {
-    //  if is unassigned
+  getUserFromID = (id) => {
+    //  If ID is null then te ticket is unassigned
     if (id === '') {
-      return 'UNASSIGNED';
+      return 'Unassigned';
     }
-    if (users.length > 0) {
-      let userAssigned = users.filter((user) => user._id === id)[0];
-      return `${userAssigned.name} ${userAssigned.lastname}`;
+    const { users } = this.props.user;
+    const filteredUser = users.filter((user) => user._id === id);
+    //  If no user has been found, return default
+    if (filteredUser.length !== 0) {
+      return filteredUser[0].email;
     }
+    return 'User not Found';
   };
 
   getProjectNameFromTicket = (projects, ticket) => {
@@ -135,8 +137,8 @@ export class Tickets extends Component {
                     <tr key={ticket._id} id={ticket._id} scope='row'>
                       <th>{ticket._id}</th>
                       <th>{ticket.title}</th>
-                      <th>{ticket.created_by}</th>
-                      <th>{this.getUserFromID(users, ticket.assigned_to)}</th>
+                      <th>{this.getUserFromID(ticket.created_by)}</th>
+                      <th>{this.getUserFromID(ticket.assigned_to)}</th>
                       <th>{ticket.status}</th>
                       <th>{this.getProjectNameFromTicket(projects, ticket)}</th>
                       <th id={ticket._id} onClick={this.handleEdit}>
