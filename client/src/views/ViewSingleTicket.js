@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { useParams } from 'react-router-dom';
 import {
   Container,
   Card,
@@ -35,12 +34,24 @@ class ViewSingleTicket extends Component {
   state = {
     nextAssignedUser: null,
   };
-  componentWillMount() {
+  componentDidMount() {
     //  Get the params in url
     const {
       match: { params },
     } = this.props;
     this.props.getTicket(params.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    //  If the key in history has change, it means the location has changed
+    //  So we update the ticket
+    if (prevProps.location.key !== this.props.location.key) {
+      //  Get the params in url
+      const {
+        match: { params },
+      } = this.props;
+      this.props.getTicket(params.id);
+    }
   }
   handleAddReply = (reply) => {
     const {
