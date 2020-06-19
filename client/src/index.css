@@ -43,11 +43,11 @@ main {
   margin-top: 2%;
 }
 .sideBar-container {
-  width: 200px;
+  width: 270px;
   min-height: calc(100vh - 50px);
 }
 .sidebar-position {
-  top: 400px;
+  top: 200px;
 }
 .sideBar-container nav {
   display: flex;
@@ -60,4 +60,17 @@ main {
 .viewsingleticket-container {
   display: flex;
   flex-basis: 40%;
+}
+
+.sidebar-container {
+  max-width: 270px !important;
+  min-width: 270px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  min-height: calc(100vh - 50px);
+  background: #30336b;
+}
+
+.detailsproject-options-container {
+  max-width: 30% !important;
 }

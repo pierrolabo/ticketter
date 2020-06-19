@@ -134,7 +134,7 @@ export class Tickets extends Component {
               <tbody>
                 {tickets.map((ticket) => {
                   return (
-                    <tr key={ticket._id} id={ticket._id} scope='row'>
+                    <tr key={ticket._id} id={ticket._id}>
                       <th>{ticket._id}</th>
                       <th>{ticket.title}</th>
                       <th>{this.getUserFromID(ticket.created_by)}</th>
