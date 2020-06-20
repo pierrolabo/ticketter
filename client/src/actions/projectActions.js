@@ -155,8 +155,6 @@ export const tokenConfig = () => {
   // if tooken, add to headers
   if (token) {
     config.headers['x-auth-token'] = token;
-    console.log('we have a token: ', token);
   }
-  console.log('config: ', config);
   return config;
 };

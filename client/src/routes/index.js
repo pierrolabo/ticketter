@@ -28,31 +28,18 @@ import DetailsProject from '../views/DetailsProject';
 
 class Routes extends Component {
   commponentDidMount() {
-    console.log('MOUNT');
     this.props.getTickets();
     this.props.getProjects();
   }
 
   componentWillReceiveProps(nextProps) {
     //  If a user just logged in
-    console.log(
-      'shouldupt: ',
-      nextProps.auth.isAuthenticated,
-      this.props.isAuthenticated
-    );
     if (
       nextProps.auth.isAuthenticated !== this.props.auth.isAuthenticated &&
       nextProps.auth.isAuthenticated
     ) {
       this.props.getProjects();
       this.props.getTickets();
-      console.log('==================');
-      console.log(
-        'shouldupt: ',
-        nextProps.auth.isAuthenticated,
-        this.props.isAuthenticated
-      );
-      console.log('==================');
     }
   }
   render() {
