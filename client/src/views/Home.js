@@ -10,7 +10,6 @@ class Home extends Component {
     auth: PropTypes.object.isRequired,
   };
   commponentDidMount() {
-    console.log('MOUNT');
     this.props.getTickets();
     this.props.getProjects();
   }

@@ -11,11 +11,9 @@ const Project = require('../../models/Project');
 const Ticket = require('../../models/Ticket');
 getRoleFromToken = (token) => {
   try {
-    console.log('get role: ', token);
     //Verify token
     const decoded = jwt.verify(token, config.get('jwtSecret'));
     //add user from payload
-    console.log('decoded: ', decoded);
     return decoded;
   } catch (e) {}
 };
@@ -25,7 +23,6 @@ getRoleFromToken = (token) => {
 //  @access public
 router.get('/', (req, res) => {
   const token = req.header('x-auth-token');
-  console.log('first');
   const { role, id } = getRoleFromToken(token);
 
   //  If is admin => all the tickets
