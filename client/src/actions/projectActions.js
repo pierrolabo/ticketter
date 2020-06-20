@@ -12,15 +12,25 @@ import {
   DELETE_PROJECT,
   DELETE_PROJECT_SUCCESS,
   DELETE_PROJECT_FAIL,
+  CLEAR_PROJECTS,
 } from '../actions/types';
 
 import { returnErrors } from './errorActions';
 import { history } from '../configureStore';
 
+//  We cant use thunk to getState()
+//  So we import it manually
+import { store } from '../configureStore';
+
+export const clearProjects = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_PROJECTS,
+  });
+};
 export const getProjects = () => (dispatch, getState) => {
   dispatch(setProjectsLoading());
   axios
-    .get('/api/projects')
+    .get('/api/projects', tokenConfig())
     .then((res) => {
       dispatch({
         type: GET_PROJECTS,
@@ -129,4 +139,24 @@ export const setProjectsLoading = () => {
   return {
     type: PROJECTS_LOADING,
   };
+};
+
+//  Setup config/headers and token
+export const tokenConfig = () => {
+  //get token from localstorage
+  const token = store.getState().auth.token;
+  //Headers
+  const config = {
+    headers: {
+      'Content-type': 'application/json',
+    },
+  };
+
+  // if tooken, add to headers
+  if (token) {
+    config.headers['x-auth-token'] = token;
+    console.log('we have a token: ', token);
+  }
+  console.log('config: ', config);
+  return config;
 };

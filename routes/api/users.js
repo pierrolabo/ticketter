@@ -97,7 +97,7 @@ router.post('/', async (req, res) => {
 //  @route PUT api/users
 //  @desc   Update a user by id
 //  @access private
-router.put('/', admin, async (req, res) => {
+router.put('/', async (req, res) => {
   const {
     name,
     lastname,

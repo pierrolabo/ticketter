@@ -17,7 +17,6 @@ import {
 export const loadUser = () => (dispatch, getState) => {
   //  User loading
   dispatch({ type: USER_LOADING });
-
   axios
     .get('/api/auth/checkToken', tokenConfig(getState))
     .then((res) => {
@@ -66,7 +65,7 @@ export const register = ({ name, lastname, email, password }) => (dispatch) => {
 };
 
 //  Login user
-export const login = ({ email, password }) => (dispatch) => {
+export const login = ({ email, password }) => (dispatch, getState) => {
   //  Headers
   const config = {
     headers: {
