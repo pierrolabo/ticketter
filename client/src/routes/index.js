@@ -32,12 +32,28 @@ class Routes extends Component {
     this.props.getTickets();
     this.props.getProjects();
   }
-  componentWillUnmount() {
-    console.log('UNMOUNT');
-  }
-  componentDidUpdate(prevProps, nextProps) {
-    console.log('prev: ', prevProps);
-    console.log('next: ', nextProps);
+
+  componentWillReceiveProps(nextProps) {
+    //  If a user just logged in
+    console.log(
+      'shouldupt: ',
+      nextProps.auth.isAuthenticated,
+      this.props.isAuthenticated
+    );
+    if (
+      nextProps.auth.isAuthenticated !== this.props.auth.isAuthenticated &&
+      nextProps.auth.isAuthenticated
+    ) {
+      this.props.getProjects();
+      this.props.getTickets();
+      console.log('==================');
+      console.log(
+        'shouldupt: ',
+        nextProps.auth.isAuthenticated,
+        this.props.isAuthenticated
+      );
+      console.log('==================');
+    }
   }
   render() {
     const location = history.location;
