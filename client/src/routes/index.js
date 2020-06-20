@@ -23,11 +23,21 @@ import Projects from '../views/Projects';
 import CreateProject from '../views/CreateProject';
 import ViewSingleTicket from '../views/ViewSingleTicket';
 import { getTickets } from '../actions/ticketActions';
+import { getProjects } from '../actions/projectActions';
 import DetailsProject from '../views/DetailsProject';
 
 class Routes extends Component {
   commponentDidMount() {
+    console.log('MOUNT');
     this.props.getTickets();
+    this.props.getProjects();
+  }
+  componentWillUnmount() {
+    console.log('UNMOUNT');
+  }
+  componentDidUpdate(prevProps, nextProps) {
+    console.log('prev: ', prevProps);
+    console.log('next: ', nextProps);
   }
   render() {
     const location = history.location;
@@ -124,5 +134,5 @@ const mapStateToprops = (state) => ({
   ticket: state.ticket,
 });
 
-export default connect(mapStateToprops, getTickets)(Routes);
+export default connect(mapStateToprops, { getTickets, getProjects })(Routes);
 //export default withRouter(connect(mapStateTothis.props)(Routes));
