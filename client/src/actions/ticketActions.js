@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+//  We cant use thunk to getState()
+//  So we import it manually
+import { store } from '../configureStore';
 import {
   GET_TICKET,
   GET_TICKET_SUCCESS,
@@ -141,8 +144,9 @@ export const addReply = (reply, id, userID, status) => (dispatch, getState) => {
 };
 export const getTickets = () => (dispatch, getState) => {
   dispatch(setTicketsLoading());
+
   axios
-    .get('/api/tickets')
+    .get('/api/tickets', tokenConfig())
     .then((res) => {
       dispatch({
         type: GET_TICKETS,
@@ -274,4 +278,24 @@ export const setTicketsLoading = () => {
   return {
     type: TICKETS_LOADING,
   };
+};
+
+//  Setup config/headers and token
+export const tokenConfig = () => {
+  //get token from localstorage
+  const token = store.getState().auth.token;
+  //Headers
+  const config = {
+    headers: {
+      'Content-type': 'application/json',
+    },
+  };
+
+  // if tooken, add to headers
+  if (token) {
+    config.headers['x-auth-token'] = token;
+    console.log('we have a token: ', token);
+  }
+  console.log('config: ', config);
+  return config;
 };

@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
           role: user.role,
         },
         config.get('jwtSecret'),
-        { expiresIn: 3600 },
+        { expiresIn: '365d' },
         (err, token) => {
           if (err) throw err;
 

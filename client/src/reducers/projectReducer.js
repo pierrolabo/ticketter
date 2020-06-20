@@ -11,6 +11,7 @@ import {
   DELETE_PROJECT,
   DELETE_PROJECT_SUCCESS,
   DELETE_PROJECT_FAIL,
+  CLEAR_PROJECTS,
 } from '../actions/types';
 
 const initialState = {
@@ -73,6 +74,11 @@ export default function (state = initialState, action) {
         projects: state.projects.filter(
           (project) => project._id !== action.payload.id
         ),
+      };
+    case CLEAR_PROJECTS:
+      return {
+        ...state,
+        projects: [],
       };
     default:
       return state;
