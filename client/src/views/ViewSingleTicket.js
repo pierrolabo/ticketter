@@ -34,15 +34,20 @@ class ViewSingleTicket extends Component {
   state = {
     nextAssignedUser: null,
   };
-  componentDidMount() {
+  async componentWillMount() {
+    console.log('MOUNT singleticket');
     //  Get the params in url
     const {
       match: { params },
     } = this.props;
-    this.props.getTicket(params.id);
+    await this.props.getTicket(params.id);
   }
-
+  componentWillReceiveProps(prevProps) {
+    console.log('prevProps: ', prevProps);
+    console.log('prevProps: ', prevProps);
+  }
   componentDidUpdate(prevProps) {
+    console.log('didupdate');
     //  If the key in history has change, it means the location has changed
     //  So we update the ticket
     if (prevProps.location.key !== this.props.location.key) {
