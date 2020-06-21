@@ -24,6 +24,7 @@ import CreateProject from '../views/CreateProject';
 import ViewSingleTicket from '../views/ViewSingleTicket';
 import { getTickets } from '../actions/ticketActions';
 import { getProjects } from '../actions/projectActions';
+import { getUsers } from '../actions/userActions';
 import DetailsProject from '../views/DetailsProject';
 
 class Routes extends Component {
@@ -40,6 +41,7 @@ class Routes extends Component {
     ) {
       this.props.getProjects();
       this.props.getTickets();
+      this.props.getUsers();
     }
   }
   render() {
@@ -137,5 +139,7 @@ const mapStateToprops = (state) => ({
   ticket: state.ticket,
 });
 
-export default connect(mapStateToprops, { getTickets, getProjects })(Routes);
+export default connect(mapStateToprops, { getTickets, getProjects, getUsers })(
+  Routes
+);
 //export default withRouter(connect(mapStateTothis.props)(Routes));
