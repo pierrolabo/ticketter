@@ -23,11 +23,26 @@ import Projects from '../views/Projects';
 import CreateProject from '../views/CreateProject';
 import ViewSingleTicket from '../views/ViewSingleTicket';
 import { getTickets } from '../actions/ticketActions';
+import { getProjects } from '../actions/projectActions';
+import { getUsers } from '../actions/userActions';
 import DetailsProject from '../views/DetailsProject';
 
 class Routes extends Component {
   commponentDidMount() {
     this.props.getTickets();
+    this.props.getProjects();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    //  If a user just logged in
+    if (
+      nextProps.auth.isAuthenticated !== this.props.auth.isAuthenticated &&
+      nextProps.auth.isAuthenticated
+    ) {
+      this.props.getProjects();
+      this.props.getTickets();
+      this.props.getUsers();
+    }
   }
   render() {
     const location = history.location;
@@ -124,5 +139,7 @@ const mapStateToprops = (state) => ({
   ticket: state.ticket,
 });
 
-export default connect(mapStateToprops, getTickets)(Routes);
+export default connect(mapStateToprops, { getTickets, getProjects, getUsers })(
+  Routes
+);
 //export default withRouter(connect(mapStateTothis.props)(Routes));

@@ -34,12 +34,12 @@ class ViewSingleTicket extends Component {
   state = {
     nextAssignedUser: null,
   };
-  componentDidMount() {
+  async componentWillMount() {
     //  Get the params in url
     const {
       match: { params },
     } = this.props;
-    this.props.getTicket(params.id);
+    await this.props.getTicket(params.id);
   }
 
   componentDidUpdate(prevProps) {

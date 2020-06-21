@@ -2,17 +2,35 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 var mongoose = require('mongoose');
+const config = require('config');
+const jwt = require('jsonwebtoken');
 //TODO: Add route permissions + data validations for ID
 
 //const admin = require('../../middleware/permissions/admin');
 const Project = require('../../models/Project');
 const Ticket = require('../../models/Ticket');
+getRoleFromToken = (token) => {
+  try {
+    //Verify token
+    const decoded = jwt.verify(token, config.get('jwtSecret'));
+    //add user from payload
+    return decoded;
+  } catch (e) {}
+};
 
 //  @route GET api/projects
 //  @desc   Get the list of all projects
 //  @access public
 router.get('/', (req, res) => {
-  Project.find().then((projects) => res.json(projects));
+  const token = req.header('x-auth-token');
+  const { role, id } = getRoleFromToken(token);
+
+  //  If is admin => all the tickets
+  if (role === 'ADMIN') {
+    Project.find().then((projects) => res.json(projects));
+  } else {
+    Project.find({ userList: id }).then((projects) => res.json(projects));
+  }
 });
 
 //  @route POST api/projects

@@ -10,14 +10,18 @@ import {
   GET_USER_FAIL,
 } from './types';
 
-import { tokenConfig } from './authActions';
+//import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
 import { getProjects } from '../actions/projectActions';
+
+//  We cant use thunk to getState()
+//  So we import it manually
+import { store } from '../configureStore';
 
 export const getUsers = () => (dispatch, getState) => {
   dispatch(setUsersLoading());
   axios
-    .get('/api/users', tokenConfig(getState))
+    .get('/api/users', tokenConfig())
     .then((res) => {
       dispatch({
         type: GET_USERS,
@@ -77,4 +81,21 @@ export const updateUser = (user) => (dispatch, getState) => {
         type: UPDATE_USER_FAIL,
       });
     });
+};
+//  Setup config/headers and token
+export const tokenConfig = () => {
+  //get token from localstorage
+  const token = store.getState().auth.token;
+  //Headers
+  const config = {
+    headers: {
+      'Content-type': 'application/json',
+    },
+  };
+
+  // if tooken, add to headers
+  if (token) {
+    config.headers['x-auth-token'] = token;
+  }
+  return config;
 };
