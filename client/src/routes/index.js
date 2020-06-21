@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //  Router
 import { Route, Switch } from 'react-router-dom';
 import { history } from '../configureStore';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Container } from 'reactstrap';
 //  Routes
 import PrivateRoute from './PrivateRoute';
 import AdminRoute from './AdminRoute';
@@ -66,7 +66,7 @@ class Routes extends Component {
           <Col>
             <div className='main-container'>
               <Switch>
-                <main>
+                <Container>
                   <Route exact path='/' component={Index} />
                   <Route path='/register' component={Register} />
                   <Route path='/login' component={Login} />
@@ -121,7 +121,7 @@ class Routes extends Component {
                     role={this.props.auth.role}
                     component={DetailsProject}
                   ></PrivateRoute>
-                </main>
+                </Container>
               </Switch>
             </div>
           </Col>
