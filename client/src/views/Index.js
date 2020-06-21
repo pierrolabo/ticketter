@@ -6,7 +6,7 @@ import { Jumbotron, Container } from 'reactstrap';
 class Index extends Component {
   render() {
     return (
-      <div>
+      <Container>
         <Jumbotron fluid>
           <Container fluid>
             <h1 className='display-3'>Ticketter</h1>
@@ -14,7 +14,7 @@ class Index extends Component {
           </Container>
         </Jumbotron>
         <h2>Functionnalities</h2>
-      </div>
+      </Container>
     );
   }
 }
