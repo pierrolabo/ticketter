@@ -66,7 +66,7 @@ class Routes extends Component {
           <Col>
             <div className='main-container'>
               <Switch>
-                <main>
+                <div>
                   <Route exact path='/' component={Index} />
                   <Route path='/register' component={Register} />
                   <Route path='/login' component={Login} />
@@ -121,7 +121,7 @@ class Routes extends Component {
                     role={this.props.auth.role}
                     component={DetailsProject}
                   ></PrivateRoute>
-                </main>
+                </div>
               </Switch>
             </div>
           </Col>
