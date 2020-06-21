@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 var mongoose = require('mongoose');
-
+const config = require('config');
+const jwt = require('jsonwebtoken');
 //TODO: Add route permissions + data validations for ID
 
 //const auth = require('../../middleware/auth');
@@ -9,14 +10,39 @@ var mongoose = require('mongoose');
 //  Tickets Model
 const Ticket = require('../../models/Ticket');
 const Project = require('../../models/Project');
-
+getRoleFromToken = (token) => {
+  try {
+    //Verify token
+    const decoded = jwt.verify(token, config.get('jwtSecret'));
+    //add user from payload
+    return decoded;
+  } catch (e) {}
+};
 //  @route GET api/tickets
 //  @desc   Get All tickets
 //  @access Public
-router.get('/', (req, res) => {
-  Ticket.find()
-    .sort({ date: -1 })
-    .then((tickets) => res.json(tickets));
+router.get('/', async (req, res) => {
+  const token = req.header('x-auth-token');
+  const { role, id } = getRoleFromToken(token);
+  //  If is admin => all the tickets
+  if (role === 'ADMIN') {
+    Ticket.find()
+      .sort({ date: -1 })
+      .then((tickets) => res.json(tickets));
+  } else {
+    //  We get the projects where the user is
+    const projects = await Project.find({ userList: id });
+    //  We get the tickets from those projects
+    const projectsID = projects.map((project) => project._id);
+    let tickets = await Ticket.find({ projectID: { $in: projectsID } });
+    {
+      _id: {
+        $in: projectsID;
+      }
+    }
+    res.json(tickets);
+  }
+  // else return tickets in project where the user is assigned
 });
 //  @route GET api/tickets
 //  @desc   Get single ticket

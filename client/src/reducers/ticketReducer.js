@@ -22,7 +22,19 @@ import {
 
 const initialState = {
   tickets: [],
-  ticket: {},
+  ticket: {
+    _id: 1,
+    status: 'loading',
+    assigned_to: 1,
+    completed_by: 'fake',
+    isCompleted: false,
+    projectID: 1,
+    title: 'fake',
+    description: 'fake',
+    created_by: 'fake',
+    date: Date.now,
+    answers: [],
+  },
   isLoading: false,
 };
 

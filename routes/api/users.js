@@ -7,14 +7,36 @@ const auth = require('../../middleware/auth');
 const admin = require('../../middleware/permissions/admin');
 
 const User = require('../../models/User');
-
+getRoleFromToken = (token) => {
+  try {
+    //Verify token
+    const decoded = jwt.verify(token, config.get('jwtSecret'));
+    //add user from payload
+    return decoded;
+  } catch (e) {}
+};
 //  @route GET api/users
 //  @desc   Get the list of all users
 //  @access private
 router.get('/', async (req, res) => {
-  User.find()
-    .select('-password')
-    .then((user) => res.json(user));
+  const token = req.header('x-auth-token');
+  const { role, id } = getRoleFromToken(token);
+  //  If is admin => all the tickets
+  if (role === 'ADMIN') {
+    User.find()
+      .select('-password')
+      .then((user) => res.json(user));
+  } else {
+    //  Find the project where the user is in
+    const projects = await Project.find({ userList: id });
+    //  Then find the users from those projects
+    let userList = projects
+      .map((project) => project.userList)
+      .reduce((acc, val) => {
+        return [...acc, ...val];
+      }, []);
+    User.find({ _id: { $in: userList } }).then((users) => res.json(users));
+  }
 });
 //  @route GET api/user:id
 //  @desc   Get user by id
@@ -97,7 +119,7 @@ router.post('/', async (req, res) => {
 //  @route PUT api/users
 //  @desc   Update a user by id
 //  @access private
-router.put('/', admin, async (req, res) => {
+router.put('/', async (req, res) => {
   const {
     name,
     lastname,
