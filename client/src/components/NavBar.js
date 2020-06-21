@@ -14,6 +14,7 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { clearProjects } from '../actions/projectActions';
 import { logout } from '../actions/authActions';
 
 class NavBar extends Component {
@@ -31,7 +32,10 @@ class NavBar extends Component {
       isOpen: !this.state.isOpen,
     });
   };
-
+  handleClick = () => {
+    this.props.clearProjects();
+    this.props.logout();
+  };
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
@@ -44,7 +48,7 @@ class NavBar extends Component {
           </span>
         </NavItem>
         <NavItem>
-          <NavLink onClick={this.props.logout} href='#'>
+          <NavLink onClick={this.handleClick} href='#'>
             Logout
           </NavLink>
         </NavItem>
@@ -85,4 +89,4 @@ class NavBar extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, { logout })(NavBar);
+export default connect(mapStateToProps, { clearProjects, logout })(NavBar);
