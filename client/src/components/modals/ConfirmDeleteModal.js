@@ -12,7 +12,7 @@ const ConfirmDeleteModal = (props) => {
     toggle();
   };
   return (
-    <div>
+    <>
       <th onClick={toggle}>
         <FontAwesomeIcon icon={faTrash} />
       </th>
@@ -32,7 +32,7 @@ const ConfirmDeleteModal = (props) => {
           </Button>
         </ModalFooter>
       </Modal>
-    </div>
+    </>
   );
 };
 

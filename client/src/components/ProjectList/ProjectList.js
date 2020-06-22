@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Card, CardBody, CardHeader, Container, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEye } from '@fortawesome/free-solid-svg-icons';
 
 import { getUsers } from '../../actions/userActions';
 import { getProjects } from '../../actions/projectActions';
@@ -12,7 +12,7 @@ import { deleteProject } from '../../actions/projectActions';
 
 import EditProjectModal from '../modals/EditProjectModal';
 import ConfirmDeleteModal from '../modals/ConfirmDeleteModal';
-
+import { history } from '../../configureStore';
 export class ProjectList extends Component {
   state = {
     modal: false,
@@ -54,8 +54,13 @@ export class ProjectList extends Component {
   handleDelete = (id) => {
     this.props.deleteProject(id);
   };
+  handleClick = (e) => history.push(`/project/view/${e.target.id}`);
+
   render() {
     const { projects } = this.props.project;
+    const hasRightToModify =
+      this.props.auth.role === 'ADMIN' ||
+      this.props.auth.role === 'PROJECT_MANAGER';
     return (
       <Container>
         {this.state.modal ? (
@@ -79,8 +84,9 @@ export class ProjectList extends Component {
                   <th>Name</th>
                   <th>Description</th>
                   <th>Tickets</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                  <th>View</th>
+                  {hasRightToModify ? <th>Edit</th> : ''}
+                  {hasRightToModify ? <th>Delete</th> : ''}
                 </tr>
               </thead>
               <tbody>
@@ -92,18 +98,27 @@ export class ProjectList extends Component {
                       <th>{project.name}</th>
                       <th>{project.description}</th>
                       <th>{projectNbr}</th>
-                      <th id={project._id} onClick={this.toggleModal}>
-                        <FontAwesomeIcon id={project._id} icon={faEdit} />
+                      <th id={project._id} onClick={this.handleClick}>
+                        <FontAwesomeIcon
+                          id={project._id}
+                          icon={faEye}
+                        ></FontAwesomeIcon>
                       </th>
-                      {/*
-                      <th id={project._id} onClick={this.handleDelete}>
-                        <FontAwesomeIcon id={project._id} icon={faTrash} />
-                      </th>
-                        */}
-                      <ConfirmDeleteModal
-                        projectID={project._id}
-                        delete={this.handleDelete}
-                      />
+                      {hasRightToModify ? (
+                        <th id={project._id} onClick={this.toggleModal}>
+                          <FontAwesomeIcon id={project._id} icon={faEdit} />
+                        </th>
+                      ) : (
+                        ''
+                      )}
+                      {hasRightToModify ? (
+                        <ConfirmDeleteModal
+                          projectID={project._id}
+                          delete={this.handleDelete}
+                        />
+                      ) : (
+                        ''
+                      )}
                     </tr>
                   );
                 })}

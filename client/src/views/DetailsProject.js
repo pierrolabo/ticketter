@@ -21,7 +21,7 @@ class DetailsProject extends Component {
       project.userList.includes(user._id)
     );
     return (
-      <Row>
+      <Row className='detailsproject-container'>
         <Col>
           <Container>
             <Card>

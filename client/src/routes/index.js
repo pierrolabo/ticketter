@@ -28,7 +28,7 @@ import { getUsers } from '../actions/userActions';
 import DetailsProject from '../views/DetailsProject';
 
 class Routes extends Component {
-  commponentDidMount() {
+  componentDidMount() {
     this.props.getTickets();
     this.props.getProjects();
   }
@@ -51,7 +51,7 @@ class Routes extends Component {
         <Row>
           <NavBar />
         </Row>
-        <Row>
+        <Row className='main-container'>
           {this.props.auth.isAuthenticated && location.pathname !== '/' ? (
             <Col className='sidebar-container'>
               <SideBar
@@ -63,65 +63,54 @@ class Routes extends Component {
           ) : (
             ''
           )}
-          <Col>
-            <div className='main-container'>
-              <Switch>
-                <Route exact path='/' component={Index} />
-                <Route path='/register' component={Register} />
-                <Route path='/login' component={Login} />
-                <PrivateRoute exact path='/home' auth={this.props.auth}>
-                  <Home />
-                </PrivateRoute>
-                <PrivateRoute exact path='/tickets' auth={this.props.auth}>
-                  <Tickets />
-                </PrivateRoute>
-                <AdminRoute
-                  path='/users'
-                  auth={this.props.auth}
-                  role={this.props.auth.role}
-                >
-                  <Users />
-                </AdminRoute>
-                <AdminRoute
-                  path='/tickets/create'
-                  auth={this.props.auth}
-                  role={this.props.auth.role}
-                >
-                  <CreateTicket />
-                </AdminRoute>
-                <AdminRoute
-                  path='/projects'
-                  auth={this.props.auth}
-                  role={this.props.auth.role}
-                ></AdminRoute>
-                <AdminRoute
-                  path='/projects/view'
-                  auth={this.props.auth}
-                  role={this.props.auth.role}
-                >
-                  <Projects />
-                </AdminRoute>
-                <AdminRoute
-                  path='/tickets/view/:id'
-                  auth={this.props.auth}
-                  role={this.props.auth.role}
-                  component={ViewSingleTicket}
-                ></AdminRoute>
-                <AdminRoute
-                  path='/projects/create'
-                  auth={this.props.auth}
-                  role={this.props.auth.role}
-                >
-                  <CreateProject />
-                </AdminRoute>
-                <PrivateRoute
-                  path='/project/view/:id'
-                  auth={this.props.auth}
-                  role={this.props.auth.role}
-                  component={DetailsProject}
-                ></PrivateRoute>
-              </Switch>
-            </div>
+          <Col className='main'>
+            <Switch className='switch'>
+              <Route exact path='/' component={Index} />
+              <Route path='/register' component={Register} />
+              <Route path='/login' component={Login} />
+              <PrivateRoute exact path='/home' auth={this.props.auth}>
+                <Home />
+              </PrivateRoute>
+              <PrivateRoute exact path='/tickets' auth={this.props.auth}>
+                <Tickets />
+              </PrivateRoute>
+              <AdminRoute
+                path='/users'
+                auth={this.props.auth}
+                role={this.props.auth.role}
+                component={Users}
+              ></AdminRoute>
+              <AdminRoute
+                path='/tickets/create'
+                auth={this.props.auth}
+                role={this.props.auth.role}
+                component={CreateTicket}
+              ></AdminRoute>
+              <AdminRoute
+                path='/projects/create/'
+                auth={this.props.auth}
+                role={this.props.auth.role}
+                component={CreateProject}
+              ></AdminRoute>
+              <PrivateRoute
+                path='/projects'
+                auth={this.props.auth}
+                role={this.props.auth.role}
+                component={Projects}
+              ></PrivateRoute>
+              <AdminRoute
+                path='/tickets/view/:id'
+                auth={this.props.auth}
+                role={this.props.auth.role}
+                component={ViewSingleTicket}
+              ></AdminRoute>
+              <PrivateRoute
+                path='/project/view/:id'
+                auth={this.props.auth}
+                role={this.props.auth.role}
+                component={DetailsProject}
+              ></PrivateRoute>
+            </Switch>
           </Col>
         </Row>
       </div>

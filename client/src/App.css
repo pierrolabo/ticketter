@@ -1,0 +1,46 @@
+body {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #2d2d35;
+}
+
+.dashboard,
+.tickets-container,
+.viewsingleticket-container,
+.createticket-container,
+.projects-container,
+.detailsproject-container,
+.register-container,
+.dashboard-container,
+.login-row {
+  margin-top: 50px;
+}
+
+.login-row {
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-row {
+  height: 70vh;
+}
+.login-container {
+  background: #fff;
+  padding: 40px;
+}
+.login-as-container-login-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.login-as-container-login-buttons button {
+  margin: 8px;
+  width: 150px;
+}
