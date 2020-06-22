@@ -12,11 +12,13 @@ class Index extends Component {
       <Container className='dashboard-container'>
         <Jumbotron fluid>
           <Container fluid>
-            <h1 className='display-3'>Ticketter</h1>
+            <h1 className='display-3 text-center'>Ticketter</h1>
             <p className='lead'>The simplest ticket manager for your team :)</p>
           </Container>
         </Jumbotron>
-        <h2>Functionnalities</h2>
+        <h2 className='text-center'>
+          Remote DB is slow, think to refresh if you have no data
+        </h2>
       </Container>
     );
   }

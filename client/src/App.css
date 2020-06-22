@@ -48,3 +48,6 @@ body {
 .sorry-no-projects {
   margin-top: 150px;
 }
+.dashboard-container h2 {
+  color: #fff;
+}
