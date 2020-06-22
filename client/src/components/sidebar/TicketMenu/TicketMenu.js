@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTicketAlt } from '@fortawesome/free-solid-svg-icons';
 import { history } from '../../../configureStore';
 const TicketMenu = (props) => {
-  const { tickets } = props;
+  const { tickets, projects } = props;
   const handleClick = (e) => history.push(`/tickets/view/${e.target.id}`);
   const handleClickMenu = () => history.push(`/tickets`);
   const handleClickCreate = () => history.push(`/tickets/create`);
-
+  const hasRightToCreate = projects.length > 0;
   return (
     <ListGroup>
       <ListGroupItem
