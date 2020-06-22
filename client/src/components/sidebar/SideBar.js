@@ -7,14 +7,20 @@ import GeneralMenu from './GeneralMenu/GeneralMenu';
 import './SideBar.css';
 const SideBar = (props) => {
   const { tickets, projects, role } = props;
-
+  const hasAtLeastOneProject = projects.length > 0;
   return (
     <div className='sidebar'>
       <GeneralMenu />
       {props.role !== 'ADMIN' ? (
         <>
-          <TicketMenu tickets={tickets} role={role} />
-          <ProjectMenu projects={projects} role={role} />
+          {hasAtLeastOneProject ? (
+            <>
+              <TicketMenu tickets={tickets} role={role} projects={projects} />
+              <ProjectMenu projects={projects} role={role} />
+            </>
+          ) : (
+            ''
+          )}
         </>
       ) : (
         ''
