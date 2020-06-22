@@ -78,7 +78,10 @@ export const updateProject = ({ name, description, _id, nextUsers }) => (
       });
     });
 };
-export const addProject = ({ name, description }) => (dispatch, getState) => {
+export const addProject = ({ name, description, created_by }) => (
+  dispatch,
+  getState
+) => {
   dispatch({ type: ADD_PROJECT });
   //    Headers
   const config = {
@@ -90,6 +93,7 @@ export const addProject = ({ name, description }) => (dispatch, getState) => {
   const body = JSON.stringify({
     name,
     description,
+    created_by,
   });
 
   axios

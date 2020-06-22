@@ -13,7 +13,7 @@ import {
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import { history } from '../configureStore';
 import { clearProjects } from '../actions/projectActions';
 import { logout } from '../actions/authActions';
 
@@ -36,6 +36,10 @@ class NavBar extends Component {
     this.props.clearProjects();
     this.props.logout();
   };
+  handleLogin = () => {
+    history.push('/login');
+  };
+  handleRegister = () => history.push('/register');
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
@@ -58,10 +62,14 @@ class NavBar extends Component {
     const guestLinks = (
       <Fragment>
         <NavItem>
-          <NavLink href='/register'>Register</NavLink>
+          <NavLink onClick={this.handleRegister} href='#'>
+            Register
+          </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href='/login'>Login</NavLink>
+          <NavLink onClick={this.handleLogin} href='#'>
+            Login
+          </NavLink>
         </NavItem>
       </Fragment>
     );

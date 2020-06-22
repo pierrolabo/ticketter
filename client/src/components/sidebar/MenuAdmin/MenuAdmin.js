@@ -4,30 +4,45 @@ import { history } from '../../../configureStore';
 const MenuAdmin = () => {
   const handleClickCreateTicket = () => history.push(`/tickets/create`);
   const handleClickMenuTicket = () => history.push(`/tickets`);
-  const handleClickMenuProject = () => history.push(`/projects/view`);
+  const handleClickMenuProject = () => history.push(`/projects`);
   const handleClickCreateProject = () => history.push(`/projects/create`);
-  const handleClickMenuUser = () => history.push(`/users/create`);
+  const handleClickMenuUser = () => history.push(`/users/`);
 
   return (
     <>
       <ListGroup>
-        <ListGroupItem active tag='button' onClick={handleClickMenuTicket}>
-          Tickets
+        <ListGroupItem
+          className='menu-head'
+          active
+          tag='button'
+          onClick={handleClickMenuTicket}
+        >
+          All Tickets
         </ListGroupItem>
-        <ListGroupItem onClick={handleClickCreateTicket}>
+        <ListGroupItem className='menu-head' onClick={handleClickCreateTicket}>
           Create Ticket
         </ListGroupItem>
       </ListGroup>
       <ListGroup>
-        <ListGroupItem active tag='button' onClick={handleClickMenuProject}>
-          Projects
+        <ListGroupItem
+          className='menu-head'
+          active
+          tag='button'
+          onClick={handleClickMenuProject}
+        >
+          All Projects
         </ListGroupItem>
-        <ListGroupItem onClick={handleClickCreateProject}>
+        <ListGroupItem className='menu-head' onClick={handleClickCreateProject}>
           Create Projects
         </ListGroupItem>
       </ListGroup>
       <ListGroup>
-        <ListGroupItem active tag='button' onClick={handleClickMenuUser}>
+        <ListGroupItem
+          className='menu-head'
+          active
+          tag='button'
+          onClick={handleClickMenuUser}
+        >
           User Roles
         </ListGroupItem>
       </ListGroup>
