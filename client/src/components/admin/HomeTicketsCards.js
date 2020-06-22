@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Jumbotron } from 'reactstrap';
 import { getTickets } from '../../actions/ticketActions';
 
 import TicketCard from '../TicketsCards/TicketCard';
@@ -48,6 +48,7 @@ export class HomeTicketsCards extends Component {
         return ticket.status !== 'UNRESOLVED';
       }).length;
     }
+    const noProjectForUser = this.props.project.projects.length > 0;
     return (
       <Container className='dashboard'>
         <Row>
@@ -64,6 +65,22 @@ export class HomeTicketsCards extends Component {
             <TicketCard ticketInfo={unresolvedTicket} />
           </Col>
         </Row>
+        <Row className='sorry-no-projects'>
+          {!noProjectForUser ? (
+            <Container>
+              <Jumbotron fluid>
+                <Container fluid>
+                  <p className='lead text-center'>
+                    You have no project assigned :( Contact your administrator
+                    to be part of a project
+                  </p>
+                </Container>
+              </Jumbotron>
+            </Container>
+          ) : (
+            ''
+          )}
+        </Row>
       </Container>
     );
   }
@@ -72,5 +89,6 @@ export class HomeTicketsCards extends Component {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   ticket: state.ticket,
+  project: state.project,
 });
 export default connect(mapStateToProps, { getTickets })(HomeTicketsCards);
