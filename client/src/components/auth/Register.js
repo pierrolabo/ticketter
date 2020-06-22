@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import {
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Alert,
+  Container,
+  Col,
+} from 'reactstrap';
 
 //Redux utilities
 import { connect } from 'react-redux';
@@ -57,52 +66,54 @@ class Register extends Component {
 
   render() {
     return (
-      <div className='register'>
-        <h1>msg: {this.state.msg}</h1>
-        <Form onSubmit={this.onSubmit}>
-          <FormGroup>
-            <Label for='name'>Name</Label>
-            <Input
-              type='text'
-              name='name'
-              id='name'
-              placeholder='Name'
-              className='mb-3'
-              onChange={this.onChange}
-            />
-            <Label for='lastname'>Lastname</Label>
-            <Input
-              type='text'
-              name='lastname'
-              id='lastname'
-              placeholder='lastname'
-              className='mb-3'
-              onChange={this.onChange}
-            />
-            <Label for='email'>Email</Label>
-            <Input
-              type='email'
-              name='email'
-              id='email'
-              placeholder='Email'
-              className='mb-3'
-              onChange={this.onChange}
-            />
-            <Label for='Password'>Password</Label>
-            <Input
-              type='password'
-              name='password'
-              id='password'
-              placeholder='Password'
-              className='mb-3'
-              onChange={this.onChange}
-            />
-            <Button color='dark' block>
-              Register
-            </Button>
-          </FormGroup>
-        </Form>
-      </div>
+      <Col className='register-container'>
+        <Container className='login-container'>
+          {this.state.msg ? <Alert color='danger'>{this.state.msg}</Alert> : ''}
+          <Form onSubmit={this.onSubmit}>
+            <FormGroup>
+              <Label for='name'>Name</Label>
+              <Input
+                type='text'
+                name='name'
+                id='name'
+                placeholder='Name'
+                className='mb-3'
+                onChange={this.onChange}
+              />
+              <Label for='lastname'>Lastname</Label>
+              <Input
+                type='text'
+                name='lastname'
+                id='lastname'
+                placeholder='lastname'
+                className='mb-3'
+                onChange={this.onChange}
+              />
+              <Label for='email'>Email</Label>
+              <Input
+                type='email'
+                name='email'
+                id='email'
+                placeholder='Email'
+                className='mb-3'
+                onChange={this.onChange}
+              />
+              <Label for='Password'>Password</Label>
+              <Input
+                type='password'
+                name='password'
+                id='password'
+                placeholder='Password'
+                className='mb-3'
+                onChange={this.onChange}
+              />
+              <Button color='dark' block>
+                Register
+              </Button>
+            </FormGroup>
+          </Form>
+        </Container>
+      </Col>
     );
   }
 }
