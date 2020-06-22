@@ -3,7 +3,9 @@ import { returnErrors } from './errorActions.js';
 
 //Required to push the user to home after login
 import { history } from '../configureStore';
-
+//  We cant use thunk to getState()
+//  So we import it manually
+import { store } from '../configureStore';
 import {
   USER_LOADED,
   USER_LOADING,
@@ -18,12 +20,13 @@ export const loadUser = () => (dispatch, getState) => {
   //  User loading
   dispatch({ type: USER_LOADING });
   axios
-    .get('/api/auth/checkToken', tokenConfig(getState))
+    .get('/api/auth/checkToken', tokenConfig())
     .then((res) => {
       dispatch({
         type: USER_LOADED,
         payload: res.data,
       });
+      history.push('/home');
     })
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
@@ -97,10 +100,18 @@ export const login = ({ email, password }) => (dispatch, getState) => {
     });
 };
 
+//LOGOUT User
+export const logout = () => {
+  history.push('/');
+  return {
+    type: LOGOUT_SUCCESS,
+  };
+};
+
 //  Setup config/headers and token
-export const tokenConfig = (getState) => {
+export const tokenConfig = () => {
   //get token from localstorage
-  const token = getState().auth.token;
+  const token = store.getState().auth.token;
   //Headers
   const config = {
     headers: {
@@ -108,17 +119,9 @@ export const tokenConfig = (getState) => {
     },
   };
 
-  //  if tooken, add to headers
+  // if tooken, add to headers
   if (token) {
     config.headers['x-auth-token'] = token;
   }
   return config;
-};
-
-//LOGOUT User
-export const logout = () => {
-  history.push('/');
-  return {
-    type: LOGOUT_SUCCESS,
-  };
 };

@@ -22,27 +22,29 @@ getRoleFromToken = (token) => {
 //  @desc   Get All tickets
 //  @access Public
 router.get('/', async (req, res) => {
-  const token = req.header('x-auth-token');
-  const { role, id } = getRoleFromToken(token);
-  //  If is admin => all the tickets
-  if (role === 'ADMIN') {
-    Ticket.find()
-      .sort({ date: -1 })
-      .then((tickets) => res.json(tickets));
-  } else {
-    //  We get the projects where the user is
-    const projects = await Project.find({ userList: id });
-    //  We get the tickets from those projects
-    const projectsID = projects.map((project) => project._id);
-    let tickets = await Ticket.find({ projectID: { $in: projectsID } });
-    {
-      _id: {
-        $in: projectsID;
+  try {
+    const token = req.header('x-auth-token');
+    const { role, id } = getRoleFromToken(token);
+    //  If is admin => all the tickets
+    if (role === 'ADMIN') {
+      Ticket.find()
+        .sort({ date: -1 })
+        .then((tickets) => res.json(tickets));
+    } else {
+      //  We get the projects where the user is
+      const projects = await Project.find({ userList: id });
+      //  We get the tickets from those projects
+      const projectsID = projects.map((project) => project._id);
+      let tickets = await Ticket.find({ projectID: { $in: projectsID } });
+      {
+        _id: {
+          $in: projectsID;
+        }
       }
+      res.json(tickets);
     }
-    res.json(tickets);
-  }
-  // else return tickets in project where the user is assigned
+    // else return tickets in project where the user is assigned
+  } catch (err) {}
 });
 //  @route GET api/tickets
 //  @desc   Get single ticket

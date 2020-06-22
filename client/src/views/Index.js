@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
+import { loadUser } from '../actions/authActions';
 //  Bootstrap Elm
 import { Jumbotron, Container } from 'reactstrap';
-
 class Index extends Component {
+  componentDidMount() {
+    this.props.loadUser();
+  }
   render() {
     return (
-      <Container>
+      <Container className='dashboard-container'>
         <Jumbotron fluid>
           <Container fluid>
             <h1 className='display-3'>Ticketter</h1>
@@ -19,4 +22,7 @@ class Index extends Component {
   }
 }
 
-export default Index;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { loadUser })(Index);

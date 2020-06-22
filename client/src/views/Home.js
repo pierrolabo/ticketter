@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTickets } from '../actions/ticketActions';
 import { getProjects } from '../actions/projectActions';
 import HomeTicketsCards from '../components/admin/HomeTicketsCards';
+import './css/Index.css';
 
 class Home extends Component {
   static propTypes = {
@@ -15,12 +15,7 @@ class Home extends Component {
     this.props.getProjects();
   }
   render() {
-    const { role } = this.props.auth;
-    return (
-      <Container>
-        <HomeTicketsCards />
-      </Container>
-    );
+    return <HomeTicketsCards />;
   }
 }
 
