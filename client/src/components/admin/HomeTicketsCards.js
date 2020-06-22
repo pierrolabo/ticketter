@@ -7,7 +7,7 @@ import { getTickets } from '../../actions/ticketActions';
 import TicketCard from '../TicketsCards/TicketCard';
 //import ChartComponent from '../chart/ChartComponent';
 
-export class DashboardAdmin extends Component {
+export class HomeTicketsCards extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
     ticket: PropTypes.object.isRequired,
@@ -49,23 +49,21 @@ export class DashboardAdmin extends Component {
       }).length;
     }
     return (
-      <Container>
-        <Container className='dashboard'>
-          <Row>
-            <Col>
-              <TicketCard ticketInfo={newTicket} />
-            </Col>
-            <Col>
-              <TicketCard ticketInfo={progressTicket} />
-            </Col>
-            <Col>
-              <TicketCard ticketInfo={urgentTicket} />
-            </Col>
-            <Col>
-              <TicketCard ticketInfo={unresolvedTicket} />
-            </Col>
-          </Row>
-        </Container>
+      <Container className='dashboard'>
+        <Row>
+          <Col>
+            <TicketCard ticketInfo={newTicket} />
+          </Col>
+          <Col>
+            <TicketCard ticketInfo={progressTicket} />
+          </Col>
+          <Col>
+            <TicketCard ticketInfo={urgentTicket} />
+          </Col>
+          <Col>
+            <TicketCard ticketInfo={unresolvedTicket} />
+          </Col>
+        </Row>
       </Container>
     );
   }
@@ -75,4 +73,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   ticket: state.ticket,
 });
-export default connect(mapStateToProps, { getTickets })(DashboardAdmin);
+export default connect(mapStateToProps, { getTickets })(HomeTicketsCards);
