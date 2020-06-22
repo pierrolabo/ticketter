@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //  Router
 import { Route, Switch } from 'react-router-dom';
 import { history } from '../configureStore';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Container } from 'reactstrap';
 //  Routes
 import PrivateRoute from './PrivateRoute';
 import AdminRoute from './AdminRoute';
