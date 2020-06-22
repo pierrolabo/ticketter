@@ -25,7 +25,8 @@ class CreateProject extends Component {
 
   handleSubmit = () => {
     const { name, description } = this.state;
-    const newProject = { name, description };
+    const created_by = this.props.auth.user.id;
+    const newProject = { name, description, created_by };
 
     this.props.addProject(newProject);
   };
@@ -67,4 +68,7 @@ class CreateProject extends Component {
     );
   }
 }
-export default connect(null, { addProject })(CreateProject);
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { addProject })(CreateProject);

@@ -98,7 +98,7 @@ class CreateTicket extends Component {
   };
   handleSave = () => {
     const { title, description, status, assigned_to, projectID } = this.state;
-    const created_by = this.props.auth.user.id;
+    const created_by = this.props.auth.user._id;
     const newTicket = {
       title,
       description,
@@ -112,8 +112,9 @@ class CreateTicket extends Component {
   render() {
     const { projects } = this.props.project;
     const { users } = this.props.user;
+    const role = this.props.auth.user.role;
     return (
-      <Container>
+      <Container className='createticket-container'>
         <Card>
           <CardHeader>Create a new ticket</CardHeader>
           <Form onSubmit={this.handleSubmit}>
@@ -155,15 +156,20 @@ class CreateTicket extends Component {
                 defaultValue={this.createDefaultProject()}
               />
             </FormGroup>
-            <FormGroup>
-              <Label for='assigned'>Assigned to</Label>
-              <Select
-                name='assignedSelect'
-                onChange={this.handleChangeSelectAssignedTo}
-                options={this.createOptionsUsers(users)}
-                defaultValue={DEFAULT_USER_ASSIGNED}
-              />
-            </FormGroup>
+            {role !== 'USER' ? (
+              <FormGroup>
+                <Label for='assigned'>Assigned to</Label>
+                <Select
+                  name='assignedSelect'
+                  onChange={this.handleChangeSelectAssignedTo}
+                  options={this.createOptionsUsers(users)}
+                  defaultValue={DEFAULT_USER_ASSIGNED}
+                />
+              </FormGroup>
+            ) : (
+              ''
+            )}
+
             <FormGroup>
               <Button color='secondary'>Cancel</Button>
               <Button onClick={this.handleSave} color='success'>

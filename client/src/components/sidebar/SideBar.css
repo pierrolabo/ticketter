@@ -1,0 +1,29 @@
+.sidebar ul {
+  background: #30336b;
+}
+.sidebar ul button {
+  background: #30336b;
+  color: #fff;
+}
+.sidebar ul li {
+  color: #fff;
+}
+.sidebar ul li:hover {
+  cursor: pointer;
+}
+.sidebar ul button {
+  background: #3a3fa0;
+  border: 0;
+}
+.sidebar {
+  margin-top: 50px;
+}
+.menu-head {
+  background: #3a3fa0 !important;
+  border-bottom: 1px solid #1c1f5e !important;
+  border-top: 1px solid #1c1f5e !important;
+}
+.menu-icon svg {
+  margin-right: 12px;
+  margin-left: 12px;
+}

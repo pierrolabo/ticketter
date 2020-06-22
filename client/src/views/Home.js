@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTickets } from '../actions/ticketActions';
 import { getProjects } from '../actions/projectActions';
-import DashboardAdmin from '../components/admin/DashboardAdmin';
+import HomeTicketsCards from '../components/admin/HomeTicketsCards';
+import './css/Index.css';
 
 class Home extends Component {
   static propTypes = {
@@ -14,12 +15,7 @@ class Home extends Component {
     this.props.getProjects();
   }
   render() {
-    const { role } = this.props.auth;
-    return (
-      <div className='home'>
-        {role === 'ADMIN' ? <DashboardAdmin /> : '<h1>lol</h1>'}
-      </div>
-    );
+    return <HomeTicketsCards />;
   }
 }
 
