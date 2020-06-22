@@ -22,22 +22,24 @@ getRoleFromToken = (token) => {
 //  @desc   Get the list of all projects
 //  @access public
 router.get('/', (req, res) => {
-  const token = req.header('x-auth-token');
-  const { role, id } = getRoleFromToken(token);
+  try {
+    const token = req.header('x-auth-token');
+    const { role, id } = getRoleFromToken(token);
 
-  //  If is admin => all the tickets
-  if (role === 'ADMIN') {
-    Project.find().then((projects) => res.json(projects));
-  } else {
-    Project.find({ userList: id }).then((projects) => res.json(projects));
-  }
+    //  If is admin => all the tickets
+    if (role === 'ADMIN') {
+      Project.find().then((projects) => res.json(projects));
+    } else {
+      Project.find({ userList: id }).then((projects) => res.json(projects));
+    }
+  } catch (err) {}
 });
 
 //  @route POST api/projects
 //  @desc   Create a new project
 //  @access private
 router.post('/', async (req, res) => {
-  const { name, description } = req.body;
+  const { name, description, created_by } = req.body;
   //  Quick data validations
   if (!name || !description) {
     return res.status(400).json({ msg: 'All fields must be complete!' });
@@ -57,6 +59,7 @@ router.post('/', async (req, res) => {
   const newProject = new Project({
     name,
     description,
+    userList: [created_by],
   });
 
   newProject
