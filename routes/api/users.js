@@ -7,6 +7,7 @@ const auth = require('../../middleware/auth');
 const admin = require('../../middleware/permissions/admin');
 
 const User = require('../../models/User');
+const Project = require('../../models/Project');
 getRoleFromToken = (token) => {
   try {
     //Verify token
@@ -87,7 +88,13 @@ router.post('/', async (req, res) => {
       if (err) throw err;
       newUser.password = hash;
 
-      newUser.save().then((user) => {
+      newUser.save().then(async (user) => {
+        //  Please remove this soon
+        //  When a user  register, we add him to the general project
+        let query = { _id: '5eefd1c778d78c2b8b128efd' };
+        let update = { $push: { userList: user._id.toString() } };
+        let options = { new: true, upsert: true, useFindAndModify: false };
+        await Project.findOneAndUpdate(query, update, options);
         //Sign the token
         jwt.sign(
           //  set the role in the token payload
