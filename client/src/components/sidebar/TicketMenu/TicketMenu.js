@@ -8,7 +8,6 @@ const TicketMenu = (props) => {
   const handleClick = (e) => history.push(`/tickets/view/${e.target.id}`);
   const handleClickMenu = () => history.push(`/tickets`);
   const handleClickCreate = () => history.push(`/tickets/create`);
-  const hasRightToCreate = projects.length > 0;
   return (
     <ListGroup>
       <ListGroupItem
@@ -23,6 +22,7 @@ const TicketMenu = (props) => {
       {tickets.map((ticket, index) => {
         return (
           <ListGroupItem
+            key={ticket._id}
             className='menu-icon'
             onClick={handleClick}
             id={ticket._id}

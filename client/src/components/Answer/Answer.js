@@ -17,6 +17,7 @@ export const Answer = (props) => {
           {role !== 'USER' ? (
             <Col md='1'>
               <th
+                key={answer.replyID}
                 className='row align-items-end'
                 onClick={props.handleDelete}
                 id={answer.replyID}
