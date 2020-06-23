@@ -1,6 +1,7 @@
 # Ticketter
 A simple ticket management system 
 
+![alt text](https://github.com/pierrolabo/bug_tracker/blob/develop/readme/ticketter-home.png?raw=true)
 ##  stack
   - Redux
   - NodeJS
