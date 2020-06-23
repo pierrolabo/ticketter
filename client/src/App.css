@@ -6,6 +6,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #2d2d35;
 }
+.navbar-container {
+  width: 100%;
+}
+.sideBar-container {
+  width: 270px;
+  min-height: calc(100vh - 50px);
+}
+.sidebar-container {
+  max-width: 270px !important;
+  min-width: 270px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  min-height: calc(100vh - 50px);
+  background: #3a3fa0;
+}
 
 .dashboard,
 .tickets-container,
@@ -51,7 +66,12 @@ body {
 .dashboard-container h2 {
   color: #fff;
 }
-
+.navbar-main {
+  display: flex;
+  min-width: 100% !important;
+  padding-left: 54px;
+  padding-right: 44px;
+}
 .navbar-container nav {
   background-color: #3a3fa0 !important;
 }
