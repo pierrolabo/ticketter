@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
+import { Container, Card, CardHeader, CardBody, Col, Row } from 'reactstrap';
 //  Redux
 import { connect } from 'react-redux';
-import { Container, Card, CardHeader, CardBody, Col, Row } from 'reactstrap';
+import { deleteTicket } from '../actions/ticketActions';
 //Components
 import TicketSingleUser from '../components/TicketList/TicketListSingleProject';
 import UserListSingleProject from '../components/UserList/UserListSingleProject';
 
 class DetailsProject extends Component {
+  handleDelete = (event) => {
+    const { projects } = this.props.project;
+
+    //  The modal is close
+    let id = event.target.parentNode.id;
+    //  If svg or <th> is clicked, sometimes we dont get id
+    //  this fix the bug
+    if (!id) {
+      id = event.target.id;
+    }
+    const projectID = projects.filter((project) =>
+      project.tickets.includes(id)
+    )[0];
+    this.props.deleteTicket(id, projectID._id);
+  };
   render() {
     //  Get the params in url
     const {
@@ -35,6 +51,7 @@ class DetailsProject extends Component {
               tickets={filteredTickets}
               users={users}
               role={role}
+              handleDelete={this.handleDelete}
             />
           </Container>
         </Col>
@@ -56,4 +73,4 @@ const mapStateToProps = (state) => ({
   project: state.project,
   ticket: state.ticket,
 });
-export default connect(mapStateToProps, null)(DetailsProject);
+export default connect(mapStateToProps, { deleteTicket })(DetailsProject);
