@@ -77,8 +77,12 @@ class NavBar extends Component {
     return (
       <div className='navbar-container '>
         <Navbar color='dark' dark expand='sm' className='mb-8'>
-          <Container>
-            <NavbarBrand className='d-xl-none' href='/'>
+          <Container className='navbar-main'>
+            <NavbarBrand
+              style={{ 'font-size': '34px' }}
+              className='text-align-left'
+              href='/'
+            >
               Ticketter
             </NavbarBrand>
             <NavbarToggler onClick={this.toggle}></NavbarToggler>
