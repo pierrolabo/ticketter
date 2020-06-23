@@ -55,18 +55,13 @@ code {
   height: 100%;
 }
 
-.viewsingleticket-container {
-  display: flex;
-  flex-basis: 40%;
-}
-
 .sidebar-container {
   max-width: 270px !important;
   min-width: 270px;
   padding-left: 0px !important;
   padding-right: 0px !important;
   min-height: calc(100vh - 50px);
-  background: #30336b;
+  background: #3a3fa0;
 }
 
 .detailsproject-options-container {

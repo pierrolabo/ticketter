@@ -22,10 +22,10 @@ class DetailsProject extends Component {
     );
     return (
       <Row className='detailsproject-container'>
-        <Col>
-          <Container>
+        <Col xs='8'>
+          <Container xs='8'>
             <Card>
-              <CardHeader>{project.name}</CardHeader>
+              <CardHeader className='text-center'>{project.name}</CardHeader>
               <CardBody>{project.description}</CardBody>
             </Card>
             <TicketSingleUser
@@ -35,14 +35,10 @@ class DetailsProject extends Component {
             />
           </Container>
         </Col>
-        <Col className='detailsproject-options-container'>
+        <Col className='detailsproject-options-container' md='1' xl='4'>
           <Row>
             {filteredUsers.map((user, i) => {
-              return (
-                <Col xs='2'>
-                  <UserListSingleProject user={user} index={i} />
-                </Col>
-              );
+              return <UserListSingleProject user={user} index={i} />;
             })}
           </Row>
         </Col>
