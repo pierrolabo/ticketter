@@ -33,8 +33,8 @@ const TicketListSingleProject = (props) => {
 
   const handleEdit = () => {};
   return (
-    <Card>
-      <CardHeader>Tickets List</CardHeader>
+    <Card xs='8'>
+      <CardHeader className='text-center'>Tickets List</CardHeader>
       <CardBody>
         <Table hover>
           <thead>

@@ -9,13 +9,16 @@ import {
   Input,
   CardHeader,
 } from 'reactstrap';
+import Select from 'react-select';
+
+//  Redux
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getTickets } from '../actions/ticketActions';
 import { getProjects } from '../actions/projectActions';
 import { createTicket } from '../actions/ticketActions';
 import { getUsers } from '../actions/userActions';
-import Select from 'react-select';
+import { history } from '../configureStore';
 
 const STATUS_TICKET = [
   { value: 'NEW', label: 'NEW' },
@@ -91,10 +94,10 @@ class CreateTicket extends Component {
     this.setState({ assigned_to: e.value });
   };
   handleChangeSelectAssignedProject = (e) => {
-    //  TODO
-    //  if user is not part of the next project
-    //  Assign ticket to undefined
     this.setState({ projectID: e.value });
+  };
+  handleCancel = () => {
+    history.push('/tickets');
   };
   handleSave = () => {
     const { title, description, status, assigned_to, projectID } = this.state;
@@ -116,7 +119,7 @@ class CreateTicket extends Component {
     return (
       <Container className='createticket-container'>
         <Card>
-          <CardHeader>Create a new ticket</CardHeader>
+          <CardHeader className='text-center'>Create a new ticket</CardHeader>
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
               <Label for='title'>Title</Label>
@@ -124,6 +127,7 @@ class CreateTicket extends Component {
                 type='title'
                 name='title'
                 id='title'
+                placeholder='What is the problem ?'
                 value={this.state.title}
                 onChange={this.handleChange}
               ></Input>
@@ -133,7 +137,7 @@ class CreateTicket extends Component {
               <Input
                 type='textarea'
                 name='description'
-                id='textarea'
+                placeholder='Describe the problem...'
                 value={this.state.description}
                 onChange={this.handleChange}
               />
@@ -170,8 +174,10 @@ class CreateTicket extends Component {
               ''
             )}
 
-            <FormGroup>
-              <Button color='secondary'>Cancel</Button>
+            <FormGroup className='formgroup-buttons-cancel-save'>
+              <Button color='danger' onClick={this.handleCancel}>
+                Cancel
+              </Button>
               <Button onClick={this.handleSave} color='success'>
                 Save
               </Button>

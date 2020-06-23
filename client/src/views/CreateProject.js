@@ -9,9 +9,11 @@ import {
   Label,
   Input,
 } from 'reactstrap';
+//  Redux
 import { connect } from 'react-redux';
 import { addProject } from '../actions/projectActions';
 
+import { history } from '../configureStore';
 class CreateProject extends Component {
   state = {
     name: '',
@@ -22,7 +24,9 @@ class CreateProject extends Component {
       [e.target.name]: e.target.value,
     });
   };
-
+  handleCancel = () => {
+    history.push('/projects');
+  };
   handleSubmit = () => {
     const { name, description } = this.state;
     const created_by = this.props.auth.user._id;
@@ -32,9 +36,9 @@ class CreateProject extends Component {
   };
   render() {
     return (
-      <Container>
+      <Container className='createproject-container'>
         <Card>
-          <CardHeader>Create a new project</CardHeader>
+          <CardHeader className='text-center'>Create a new project</CardHeader>
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
               <Label for='name'>name</Label>
@@ -44,6 +48,7 @@ class CreateProject extends Component {
                 id='name'
                 value={this.state.name}
                 onChange={this.handleChange}
+                placeholder='Project name...'
               ></Input>
             </FormGroup>
             <FormGroup>
@@ -54,10 +59,13 @@ class CreateProject extends Component {
                 id='textarea'
                 value={this.state.description}
                 onChange={this.handleChange}
+                placeholder='Describe the project..'
               />
             </FormGroup>
-            <FormGroup>
-              <Button color='secondary'>Cancel</Button>
+            <FormGroup className='formgroup-buttons-cancel-save'>
+              <Button color='danger' onClick={this.handleCancel}>
+                Cancel
+              </Button>
               <Button onClick={this.handleSubmit} color='success'>
                 Save
               </Button>

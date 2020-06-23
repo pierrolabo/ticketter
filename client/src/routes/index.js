@@ -6,6 +6,7 @@ import { Row, Col, Container } from 'reactstrap';
 //  Routes
 import PrivateRoute from './PrivateRoute';
 import AdminRoute from './AdminRoute';
+import AdminOrPGRoute from './AdminOrPGRoute';
 //  Redux
 import { connect } from 'react-redux';
 //  Components
@@ -74,36 +75,45 @@ class Routes extends Component {
               <PrivateRoute exact path='/tickets' auth={this.props.auth}>
                 <Tickets />
               </PrivateRoute>
-              <AdminRoute
+              <AdminOrPGRoute
                 path='/users'
                 auth={this.props.auth}
                 role={this.props.auth.role}
-                component={Users}
-              ></AdminRoute>
-              <AdminRoute
+              >
+                <Users />
+              </AdminOrPGRoute>
+              <PrivateRoute
                 path='/tickets/create'
                 auth={this.props.auth}
                 role={this.props.auth.role}
-                component={CreateTicket}
-              ></AdminRoute>
-              <AdminRoute
+              >
+                <CreateTicket />
+              </PrivateRoute>
+              <AdminOrPGRoute
                 path='/projects/create/'
                 auth={this.props.auth}
                 role={this.props.auth.role}
-                component={CreateProject}
-              ></AdminRoute>
+              >
+                <CreateProject />
+              </AdminOrPGRoute>
               <PrivateRoute
                 path='/projects'
                 auth={this.props.auth}
                 role={this.props.auth.role}
-                component={Projects}
-              ></PrivateRoute>
-              <AdminRoute
+              >
+                <Projects />
+              </PrivateRoute>
+              <PrivateRoute
                 path='/tickets/view/:id'
                 auth={this.props.auth}
                 role={this.props.auth.role}
-                component={ViewSingleTicket}
-              ></AdminRoute>
+              >
+                <ViewSingleTicket
+                  auth={this.props.auth}
+                  role={this.props.auth.role}
+                  router={this.props.router}
+                />
+              </PrivateRoute>
               <PrivateRoute
                 path='/project/view/:id'
                 auth={this.props.auth}

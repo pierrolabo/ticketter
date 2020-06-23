@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+//  Redux
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getTickets } from '../actions/ticketActions';
 import { getProjects } from '../actions/projectActions';
-import HomeTicketsCards from '../components/admin/HomeTicketsCards';
-import './css/Index.css';
+import { getTickets } from '../actions/ticketActions';
+
+import HomeTicketsCards from '../components/TicketsCard/HomeTicketsCards';
 
 class Home extends Component {
   static propTypes = {

@@ -21,7 +21,6 @@ class Users extends Component {
 
     return (
       <div className='users-container'>
-        <h1>User Roles</h1>
         <UserList users={users}></UserList>
       </div>
     );
