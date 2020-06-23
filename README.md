@@ -8,7 +8,13 @@ A simple ticket management system
   - React
   - JWT
   - Bootstrap (react-strap)
+# Try it
+ See the demo =>  https://ticketter-demo.herokuapp.com/
+ Go the the login section and log as a predefined user demo or register an account
 # How it works
+- The API built on express use JSON web token
+- The front is built on react with redux to manage the state and make API call
+
 ##  User Roles
 ### ADMIN
   - Can CREATE a Project
@@ -48,6 +54,7 @@ A simple ticket management system
   - If a ticket is set as URGENT, the status wont change if someone answer it
 ##  Installation
   - You need a mongoDB instance to run this project
+  - Update default.json in /config to set your Mongo Database address
   - Clone this repository then install the dependencies inside the "/" and "/client" with "npm install"
   - Start start with "npm run dev"
   - The first USER registered doesnt get the ADMIN role, so you need to connect to your mongoDB instance to reatribute the role to "ADMIN"
