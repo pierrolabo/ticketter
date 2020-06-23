@@ -18,6 +18,8 @@ import {
   CLEAR_TICKET,
   COMPLETED_TICKET,
   UPDATE_ASSIGNED_TO,
+  DELETE_TICKET_FAIL,
+  DELETE_TICKET,
 } from '../actions/types';
 
 const initialState = {
@@ -40,6 +42,17 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case DELETE_TICKET:
+      return {
+        ...state,
+        tickets: state.tickets.filter(
+          (ticket) => ticket._id !== action.payload
+        ),
+      };
+    case DELETE_TICKET_FAIL:
+      return {
+        ...state,
+      };
     case UPDATE_ASSIGNED_TO:
       return {
         ...state,

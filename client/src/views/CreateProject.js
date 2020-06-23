@@ -31,7 +31,6 @@ class CreateProject extends Component {
     const { name, description } = this.state;
     const created_by = this.props.auth.user._id;
     const newProject = { name, description, created_by };
-    console.log('creating project: ', newProject);
     this.props.addProject(newProject);
   };
   render() {
