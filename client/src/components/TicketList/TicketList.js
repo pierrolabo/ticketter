@@ -116,12 +116,11 @@ export class Tickets extends Component {
           ''
         )}
         <Card>
-          <CardHeader>Tickets List</CardHeader>
+          <CardHeader className='text-center'>Tickets List</CardHeader>
           <CardBody>
             <Table hover>
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>title</th>
                   <th>created by</th>
                   <th>assigned_to</th>
@@ -135,7 +134,6 @@ export class Tickets extends Component {
                 {tickets.map((ticket) => {
                   return (
                     <tr key={ticket._id} id={ticket._id}>
-                      <th>{ticket._id}</th>
                       <th>{ticket.title}</th>
                       <th>{this.getUserFromID(ticket.created_by)}</th>
                       <th>{this.getUserFromID(ticket.assigned_to)}</th>

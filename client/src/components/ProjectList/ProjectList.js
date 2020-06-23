@@ -75,12 +75,11 @@ export class ProjectList extends Component {
           ''
         )}
         <Card>
-          <CardHeader>Project List</CardHeader>
+          <CardHeader className='text-center'>Project List</CardHeader>
           <CardBody>
             <Table hover>
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>Name</th>
                   <th>Description</th>
                   <th>Tickets</th>
@@ -94,7 +93,6 @@ export class ProjectList extends Component {
                   let projectNbr = project.tickets ? project.tickets.length : 0;
                   return (
                     <tr key={project._id}>
-                      <th>{project._id}</th>
                       <th>{project.name}</th>
                       <th>{project.description}</th>
                       <th>{projectNbr}</th>
