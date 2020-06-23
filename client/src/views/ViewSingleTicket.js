@@ -36,30 +36,25 @@ class ViewSingleTicket extends Component {
   };
   async componentWillMount() {
     //  Get the params in url
-    const {
-      match: { params },
-    } = this.props;
-    await this.props.getTicket(params.id);
+    const id = this.props.router.location.pathname.slice(14);
+    await this.props.getTicket(id);
   }
 
   componentDidUpdate(prevProps) {
-    //  If the key in history has change, it means the location has changed
-    //  So we update the ticket
-    if (prevProps.location.key !== this.props.location.key) {
-      //  Get the params in url
-      const {
-        match: { params },
-      } = this.props;
-      this.props.getTicket(params.id);
-    }
+    try {
+      //  If the key in history has change, it means the location has changed
+      //  So we update the ticket
+      if (prevProps.router.location.key !== this.props.router.location.key) {
+        const id = this.props.router.location.pathname.slice(14);
+        this.props.getTicket(id);
+      }
+    } catch (err) {}
   }
   handleAddReply = (reply) => {
-    const {
-      match: { params },
-    } = this.props;
+    const ticketID = this.props.router.location.pathname.slice(14);
     const { user } = this.props.auth;
     const status = this.props.ticket.ticket.status;
-    this.props.addReply(reply, params.id, user.id, status);
+    this.props.addReply(reply, ticketID, user._id, status);
   };
   //  Delete a reply
   handleDelete = (event) => {
@@ -99,7 +94,7 @@ class ViewSingleTicket extends Component {
   handleMarkAsCompleted = () => {
     const ticketID = this.props.ticket.ticket._id;
     const { user } = this.props.auth;
-    this.props.setCompletedTicket(ticketID, user.id);
+    this.props.setCompletedTicket(ticketID, user._id);
   };
   render() {
     const ticket = this.props.ticket.ticket;
@@ -108,9 +103,10 @@ class ViewSingleTicket extends Component {
     const created_by = this.getUserFromID(ticket.created_by);
     const assigned_to = this.getUserFromID(ticket.assigned_to);
     const loading = this.props.ticket.isLoading;
+    const hasRightOptions = this.props.auth.role !== 'USER';
     return (
       <Row className='viewsingleticket-container'>
-        <Col>
+        <Col lg='8'>
           <Container className='viewsingleticket-display-ticket'>
             <Card>
               <CardHeader>
@@ -149,6 +145,7 @@ class ViewSingleTicket extends Component {
               return (
                 <Answer
                   getUserFromId={this.getUserFromID}
+                  role={this.props.auth.role}
                   answer={answer}
                   handleDelete={this.handleDelete}
                 />
@@ -158,9 +155,14 @@ class ViewSingleTicket extends Component {
             <AddAnswer handleAddReply={this.handleAddReply} />
           </Container>
         </Col>
-        <Col xs='1' sm='3'>
-          <Container className='viewsingleticketcontainer-optionsContainer'>
-            {ticket.isCompleted ? (
+        <Col
+          xs='1'
+          sm='3'
+          lg='2'
+          className='viewsingleticketcontainer-optionsContainer d-none d-md-block'
+        >
+          <Container className='viewsignelticketcontainer-options'>
+            {ticket.isCompleted || !hasRightOptions ? (
               ''
             ) : (
               <Button color='danger' onClick={this.handleMarkAsCompleted}>
@@ -171,7 +173,7 @@ class ViewSingleTicket extends Component {
           We render the only if the ticket is loaded
           its doesnt update if the props change :(
         */}
-            {!loading ? (
+            {!loading && hasRightOptions ? (
               <SelectSingleUser
                 users={users}
                 assigned_to={ticket.assigned_to}

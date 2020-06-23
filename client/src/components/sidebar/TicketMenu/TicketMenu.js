@@ -4,11 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTicketAlt } from '@fortawesome/free-solid-svg-icons';
 import { history } from '../../../configureStore';
 const TicketMenu = (props) => {
-  const { tickets, projects } = props;
+  const { tickets } = props;
   const handleClick = (e) => history.push(`/tickets/view/${e.target.id}`);
   const handleClickMenu = () => history.push(`/tickets`);
   const handleClickCreate = () => history.push(`/tickets/create`);
-  const hasRightToCreate = projects.length > 0;
   return (
     <ListGroup>
       <ListGroupItem
@@ -21,18 +20,21 @@ const TicketMenu = (props) => {
       </ListGroupItem>
 
       {tickets.map((ticket, index) => {
-        return (
-          <ListGroupItem
-            className='menu-icon'
-            onClick={handleClick}
-            id={ticket._id}
-            tag='button'
-            action
-          >
-            <FontAwesomeIcon icon={faTicketAlt}></FontAwesomeIcon>
-            {ticket.title}
-          </ListGroupItem>
-        );
+        if (!ticket.isCompleted) {
+          return (
+            <ListGroupItem
+              key={ticket._id}
+              className='menu-icon'
+              onClick={handleClick}
+              id={ticket._id}
+              tag='button'
+              action
+            >
+              <FontAwesomeIcon icon={faTicketAlt}></FontAwesomeIcon>
+              {ticket.title}
+            </ListGroupItem>
+          );
+        }
       })}
       <ListGroupItem
         className='menu-head'

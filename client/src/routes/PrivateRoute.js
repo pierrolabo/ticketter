@@ -5,9 +5,13 @@ const PrivateRoute = ({ children, auth, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={(location) =>
-        auth.isAuthenticated ? children : <Redirect to='/login' />
-      }
+      render={(location) => {
+        if (auth.isAuthenticated) {
+          return children;
+        } else {
+          return <Redirect to='/login' />;
+        }
+      }}
     />
   );
 };

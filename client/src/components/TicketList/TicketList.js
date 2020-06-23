@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 
 import { Card, CardBody, CardHeader, Container, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import EditTicketModal from '../modals/EditTicketModal';
 
 import { getTickets } from '../../actions/ticketActions';
 import { getProjects } from '../../actions/projectActions';
 import { getUsers } from '../../actions/userActions';
+import { deleteTicket } from '../../actions/ticketActions';
 import { history } from '../../configureStore';
 
 export class Tickets extends Component {
@@ -98,10 +99,28 @@ export class Tickets extends Component {
     }
     history.push(`/tickets/view/${id}`);
   };
+  handleDelete = (event) => {
+    const { projects } = this.props.project;
+
+    //  The modal is close
+    let id = event.target.parentNode.id;
+    //  If svg or <th> is clicked, sometimes we dont get id
+    //  this fix the bug
+    if (!id) {
+      id = event.target.id;
+    }
+    const projectID = projects.filter((project) =>
+      project.tickets.includes(id)
+    )[0];
+    console.log('delete: ', id, 'project: ', projectID._id);
+    this.props.deleteTicket(id, projectID._id);
+  };
   render() {
     const { tickets } = this.props.ticket;
     const { projects } = this.props.project;
     const { users } = this.props.user;
+    const { role } = this.props.auth;
+    const hasRightToDelete = role === 'ADMIN' || role === 'PROJECT_MANAGER';
     return (
       <Container className='tickets-list'>
         {this.state.modal ? (
@@ -116,12 +135,11 @@ export class Tickets extends Component {
           ''
         )}
         <Card>
-          <CardHeader>Tickets List</CardHeader>
+          <CardHeader className='text-center'>Tickets List</CardHeader>
           <CardBody>
             <Table hover>
               <thead>
                 <tr>
-                  <th>#</th>
                   <th>title</th>
                   <th>created by</th>
                   <th>assigned_to</th>
@@ -129,13 +147,13 @@ export class Tickets extends Component {
                   <th>Project</th>
                   <th>Edit</th>
                   <th>View</th>
+                  {hasRightToDelete ? <th>Delete</th> : ''}
                 </tr>
               </thead>
               <tbody>
                 {tickets.map((ticket) => {
                   return (
                     <tr key={ticket._id} id={ticket._id}>
-                      <th>{ticket._id}</th>
                       <th>{ticket.title}</th>
                       <th>{this.getUserFromID(ticket.created_by)}</th>
                       <th>{this.getUserFromID(ticket.assigned_to)}</th>
@@ -150,6 +168,13 @@ export class Tickets extends Component {
                           icon={faEye}
                         ></FontAwesomeIcon>
                       </th>
+                      {hasRightToDelete ? (
+                        <th id={ticket._id} onClick={this.handleDelete}>
+                          <FontAwesomeIcon id={ticket._id} icon={faTrash} />
+                        </th>
+                      ) : (
+                        ''
+                      )}
                     </tr>
                   );
                 })}
@@ -168,6 +193,9 @@ const mapStateToProps = (state) => ({
   ticket: state.ticket,
   user: state.user,
 });
-export default connect(mapStateToProps, { getTickets, getProjects, getUsers })(
-  Tickets
-);
+export default connect(mapStateToProps, {
+  getTickets,
+  getProjects,
+  getUsers,
+  deleteTicket,
+})(Tickets);
