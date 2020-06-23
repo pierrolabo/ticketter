@@ -94,7 +94,7 @@ class ViewSingleTicket extends Component {
   handleMarkAsCompleted = () => {
     const ticketID = this.props.ticket.ticket._id;
     const { user } = this.props.auth;
-    this.props.setCompletedTicket(ticketID, user.id);
+    this.props.setCompletedTicket(ticketID, user._id);
   };
   render() {
     const ticket = this.props.ticket.ticket;

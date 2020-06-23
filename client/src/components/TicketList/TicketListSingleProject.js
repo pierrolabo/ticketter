@@ -2,12 +2,14 @@ import React from 'react';
 
 import { Card, CardBody, CardHeader, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { history } from '../../configureStore';
 
 const TicketListSingleProject = (props) => {
   const { tickets, role, users } = props;
   const authorizedToEdit = role === 'ADMIN' || 'PROJECT_MANAGER';
+  const hasRightToDelete = role === 'ADMIN' || role === 'PROJECT_MANAGER';
+
   const getUserFromID = (id) => {
     //  If ID is null then te ticket is unassigned
     if (id === '') {
@@ -45,6 +47,7 @@ const TicketListSingleProject = (props) => {
               <th>status</th>
               {authorizedToEdit ? <th>Edit</th> : ''}
               <th>View</th>
+              {hasRightToDelete ? <th>Delete</th> : ''}
             </tr>
           </thead>
           <tbody>
@@ -69,6 +72,13 @@ const TicketListSingleProject = (props) => {
                       icon={faEye}
                     ></FontAwesomeIcon>
                   </th>
+                  {hasRightToDelete ? (
+                    <th id={ticket._id} onClick={props.handleDelete}>
+                      <FontAwesomeIcon id={ticket._id} icon={faTrash} />
+                    </th>
+                  ) : (
+                    ''
+                  )}
                 </tr>
               );
             })}
