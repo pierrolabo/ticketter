@@ -1,12 +1,25 @@
 body {
   height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #2d2d35;
+}
+.navbar-container {
+  width: 100%;
+}
+.sideBar-container {
+  width: 270px;
+  min-height: calc(100vh - 50px);
+}
+.sidebar-container {
+  max-width: 270px !important;
+  min-width: 270px;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  min-height: calc(100vh - 50px);
+  background: #3a3fa0;
 }
 
 .dashboard,
@@ -17,8 +30,10 @@ body {
 .detailsproject-container,
 .register-container,
 .dashboard-container,
-.login-row {
-  margin-top: 50px;
+.login-row,
+.createproject-container,
+.userlist-container {
+  margin-top: 150px;
 }
 
 .login-row {
@@ -47,4 +62,50 @@ body {
 
 .sorry-no-projects {
   margin-top: 150px;
+}
+.dashboard-container h2 {
+  color: #fff;
+}
+.navbar-main {
+  display: flex;
+  min-width: 100% !important;
+  padding-left: 54px;
+  padding-right: 44px;
+}
+.navbar-container nav {
+  background-color: #3a3fa0 !important;
+}
+.sidebar {
+  background-color: #3a3fa0 !important;
+}
+.viewsingleticketcontainer-optionsContainer {
+  margin-right: 50px;
+}
+.viewsingleticket-display-ticket .card {
+  margin-top: 2px;
+}
+.viewsignelticketcontainer-options label {
+  color: #fff;
+  margin: 12px 0;
+}
+.col span {
+  font-size: 16px;
+}
+.card {
+  padding: 14px;
+}
+.formgroup-buttons-cancel-save {
+  display: flex;
+  justify-content: space-between;
+}
+.formgroup-buttons-cancel-save button {
+  padding: 14px 24px;
+}
+
+.card label {
+  margin: 8px 0;
+}
+.card-header {
+  font-size: 22px;
+  font-weight: bold;
 }

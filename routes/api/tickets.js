@@ -196,10 +196,13 @@ router.delete('/:id', async (req, res) => {
     let options = { new: true, upsert: true, useFindAndModify: false };
 
     updatedProject = await Project.findByIdAndUpdate(query, update, options);
+    //Return the ticket ID so we can remove it from the reducer
+    res.json(id);
     //res.json(updatedProject);
   } catch (err) {
     res.status(400).json({ msg: 'Error deleting ticket from project' });
   }
+  /*
   //  Return all the tickets from the project
   try {
     let tickets = await Ticket.find().where('_id').in(updatedProject.tickets);
@@ -209,6 +212,7 @@ router.delete('/:id', async (req, res) => {
       .status(400)
       .json({ msg: 'Error returning tickets from the project' });
   }
+  */
 });
 
 //  @route PUT api/tickets/setCompleted/

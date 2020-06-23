@@ -22,10 +22,31 @@ import {
   CLEAR_TICKET,
   COMPLETED_TICKET,
   UPDATE_ASSIGNED_TO,
+  DELETE_TICKET,
 } from '../actions/types';
 import { history } from '../configureStore';
 import { returnErrors } from './errorActions';
 
+export const deleteTicket = (id, projectID) => (dispatch) => {
+  axios
+    .delete(`/api/tickets/${id}`, { data: { projectID } })
+    .then((res) => {
+      dispatch({
+        type: DELETE_TICKET,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log('err: ', err);
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          'DELETE_TICKET_FAIL'
+        )
+      );
+    });
+};
 export const setAssignedTo = (id, userID) => (dispatch) => {
   //    Headers
   const config = {

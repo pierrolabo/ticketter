@@ -21,7 +21,6 @@ class UserList extends Component {
     getUsers: PropTypes.func.isRequired,
     loadingUser: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
-    project: PropTypes.object.isRequired,
   };
   state = {
     modal: false,
@@ -172,7 +171,7 @@ class UserList extends Component {
   render() {
     const { users, projects } = this.props;
     return (
-      <Container>
+      <Container className='userlist-container'>
         <EditUserModal
           modal={this.state.modal}
           handleChange={this.handleChange}
@@ -195,7 +194,7 @@ class UserList extends Component {
           id={this.state.id}
         />
         <Card>
-          <CardHeader>User List</CardHeader>
+          <CardHeader className='text-center'>User List</CardHeader>
           <CardBody>
             <Table>
               <thead>
