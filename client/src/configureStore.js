@@ -19,10 +19,7 @@ const rootReducer = persistReducer(persistConfig, createRootReducer(history));
 
 const middleware = [thunk, routerMiddleware(history)];
 const middlewareEnhancer = applyMiddleware(...middleware);
-const composedEnhancer = compose(
-  middlewareEnhancer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const composedEnhancer = compose(middlewareEnhancer);
 const store = createStore(rootReducer, composedEnhancer);
 const persistor = persistStore(store);
 export { persistor, store };
