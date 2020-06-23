@@ -6,6 +6,7 @@ A simple ticket management system
   - NodeJS
   - MongoDB
   - React
+  - JWT
   - Bootstrap (react-strap)
 # How it works
 ##  User Roles
