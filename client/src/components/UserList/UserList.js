@@ -21,7 +21,6 @@ class UserList extends Component {
     getUsers: PropTypes.func.isRequired,
     loadingUser: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
-    project: PropTypes.object.isRequired,
   };
   state = {
     modal: false,

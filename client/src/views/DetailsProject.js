@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+//  Redux
 import { connect } from 'react-redux';
 import { Container, Card, CardHeader, CardBody, Col, Row } from 'reactstrap';
+//Components
 import TicketSingleUser from '../components/TicketList/TicketListSingleProject';
 import UserListSingleProject from '../components/UserList/UserListSingleProject';
+
 class DetailsProject extends Component {
   render() {
     //  Get the params in url

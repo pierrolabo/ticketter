@@ -7,7 +7,11 @@ const UserListSingleProject = (props) => {
 
   const toggle = () => setPopoverOpen(!popoverOpen);
   return (
-    <Card id={`popover${index}`} style={{ width: '50px', height: '50px' }}>
+    <Card
+      key={user._id}
+      id={`popover${index}`}
+      style={{ width: '50px', height: '50px' }}
+    >
       <CardImg
         top
         width='50%'
