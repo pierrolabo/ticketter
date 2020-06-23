@@ -68,6 +68,9 @@ body {
   color: #fff;
   margin: 12px 0;
 }
+.col span {
+  font-size: 16px;
+}
 .card {
   padding: 14px;
 }
