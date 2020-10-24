@@ -3,7 +3,7 @@ const router = express.Router();
 //const auth = require('../../middleware/auth');
 
 //  Tickets Model
-const Ticket = require('../../models/Ticket');
+const Ticket = require('../models/Ticket');
 
 //  @route PUT api/tickets/
 //  @desc   Set a ticket to completed
