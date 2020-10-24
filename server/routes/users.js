@@ -3,26 +3,26 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
-const auth = require('../../middleware/auth');
-const admin = require('../../middleware/permissions/admin');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/permissions/admin');
 
-const User = require('../../models/User');
-const Project = require('../../models/Project');
-getRoleFromToken = (token) => {
-  try {
-    //Verify token
-    const decoded = jwt.verify(token, config.get('jwtSecret'));
-    //add user from payload
-    return decoded;
-  } catch (e) {}
-};
+const User = require('../models/User');
+const Project = require('../models/Project');
+
+const { getRoleFromToken } = require('../helpers/AuthHelpers');
+const { getOrCreateGeneralProject } = require('../helpers/DbHelpers');
+
 //  @route GET api/users
-//  @desc   Get the list of all users
+//  @desc   Get the list of all users || users from project
 //  @access private
 router.get('/', async (req, res) => {
   const token = req.header('x-auth-token');
+  if (!token) return res.status(401).json({ msg: 'Unauthorized' });
+
   const { role, id } = getRoleFromToken(token);
-  //  If is admin => all the tickets
+
+  //  If is admin => all the users
+  //  If is user => Users from his project
   if (role === 'ADMIN') {
     User.find()
       .select('-password')
@@ -39,6 +39,7 @@ router.get('/', async (req, res) => {
     User.find({ _id: { $in: userList } }).then((users) => res.json(users));
   }
 });
+
 //  @route GET api/user:id
 //  @desc   Get user by id
 //  @access private
@@ -56,11 +57,13 @@ router.get('/:id', admin, async (req, res) => {
     return res.status(400).json({ msg: err });
   }
 });
+
 //  @route POST api/users
 //  @desc   Register new users
 //  @access Public
 router.post('/', async (req, res) => {
   const { name, lastname, email, password } = req.body;
+  console.log(req.body);
   //  Quick data validations
   if (!name || !lastname || !email || !password) {
     return res.status(400).json({ msg: 'All fields must be complete!' });
@@ -84,17 +87,18 @@ router.post('/', async (req, res) => {
 
   //  Create salt & hash
   bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(newUser.password, salt, (err, hash) => {
+    bcrypt.hash(newUser.password, salt, async (err, hash) => {
       if (err) throw err;
       newUser.password = hash;
 
       newUser.save().then(async (user) => {
-        //  Please remove this soon
-        //  When a user  register, we add him to the general project
-        let query = { _id: '5eefd1c778d78c2b8b128efd' };
+        //By default, new users are assigned to the general project
+        const generalProject = await getOrCreateGeneralProject();
+        let query = { _id: generalProject.id };
         let update = { $push: { userList: user._id.toString() } };
         let options = { new: true, upsert: true, useFindAndModify: false };
         await Project.findOneAndUpdate(query, update, options);
+
         //Sign the token
         jwt.sign(
           //  set the role in the token payload
@@ -123,6 +127,7 @@ router.post('/', async (req, res) => {
     });
   });
 });
+
 //  @route PUT api/users
 //  @desc   Update a user by id
 //  @access private

@@ -3,7 +3,7 @@ const router = express.Router();
 var mongoose = require('mongoose');
 
 //  Tickets Model
-const Ticket = require('../../models/Ticket');
+const Ticket = require('../models/Ticket');
 
 //  @route POST api/reply/:ticketID
 //  @desc   POST a reply in a ticket
