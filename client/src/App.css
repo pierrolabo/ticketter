@@ -33,7 +33,6 @@ body {
 .login-row,
 .createproject-container,
 .userlist-container {
-  margin-top: 150px;
 }
 
 .login-row {
@@ -108,4 +107,7 @@ body {
 .card-header {
   font-size: 22px;
   font-weight: bold;
+}
+
+.jumbotron-container {
 }
