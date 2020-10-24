@@ -1,0 +1,8 @@
+.jumbotron-landing {
+  border: 1px solid red;
+}
+
+.jumbotron-image {
+  display: flex;
+  max-width: 500px;
+}
