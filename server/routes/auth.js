@@ -3,9 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
-const auth = require('../../middleware/auth');
-const simpleUser = require('../../middleware/permissions/simpleUser');
-const User = require('../../models/User');
+const auth = require('../middleware/auth');
+const User = require('../models/User');
 
 //  @route POST api/auth
 //  @desc   Auth user

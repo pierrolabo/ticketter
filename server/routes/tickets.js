@@ -5,25 +5,21 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 //TODO: Add route permissions + data validations for ID
 
-//const auth = require('../../middleware/auth');
+const { getRoleFromToken } = require('../helpers/AuthHelpers');
+const { getOrCreateGeneralProject } = require('../helpers/DbHelpers');
 
 //  Tickets Model
-const Ticket = require('../../models/Ticket');
-const Project = require('../../models/Project');
-getRoleFromToken = (token) => {
-  try {
-    //Verify token
-    const decoded = jwt.verify(token, config.get('jwtSecret'));
-    //add user from payload
-    return decoded;
-  } catch (e) {}
-};
+const Ticket = require('../models/Ticket');
+const Project = require('../models/Project');
+
 //  @route GET api/tickets
 //  @desc   Get All tickets
 //  @access Public
 router.get('/', async (req, res) => {
   try {
     const token = req.header('x-auth-token');
+    if (!token) return res.status(401).json({ msg: 'Unauthorized' });
+
     const { role, id } = getRoleFromToken(token);
     //  If is admin => all the tickets
     if (role === 'ADMIN') {
@@ -46,8 +42,9 @@ router.get('/', async (req, res) => {
     // else return tickets in project where the user is assigned
   } catch (err) {}
 });
+
 //  @route GET api/tickets
-//  @desc   Get single ticket
+//  @desc   Get single ticket by ID
 //  @access Public
 router.get('/:id', (req, res) => {
   const { id } = req.params;
@@ -71,26 +68,12 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ msg: 'All fields must be completed!' });
   }
   //  First we need the "GENERAL" collection from project
-  let generalTicket = await Project.find({ name: 'GENERAL' });
+  let generalTicket = await getOrCreateGeneralProject();
 
-  //  If we cant find it we create one
-  if (generalTicket.length === 0) {
-    const newProject = new Project({
-      name: 'GENERAL',
-      description: 'The general project where all tickets unsassigned fall',
-    });
-    //  We create/save the general project
-    try {
-      await newProject.save();
-    } catch (err) {
-      return res
-        .status(400)
-        .json({ msg: 'Error creating the general project' });
-    }
-  } else {
+  if (generalTicket) {
     //  If projectID is defined, the ticket is assigned to a project
     //  else we use the general project,
-    const id = projectID ? projectID : generalTicket[0]._id;
+    const id = projectID ? projectID : generalTicket.id;
     const newTicket = new Ticket({
       projectID: id,
       title,

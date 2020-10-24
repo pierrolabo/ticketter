@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth');
+const auth = require('../middleware/auth');
 var mongoose = require('mongoose');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 //TODO: Add route permissions + data validations for ID
 
 //const admin = require('../../middleware/permissions/admin');
-const Project = require('../../models/Project');
-const Ticket = require('../../models/Ticket');
+const Project = require('../models/Project');
+const Ticket = require('../models/Ticket');
 getRoleFromToken = (token) => {
   try {
     //Verify token
@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
   //  Check if project exist in database
   let projectInDatabase = await Project.findOne({ name });
 
-  //  Email already in database
+  //  Project name already in database
   if (projectInDatabase) {
     return res
       .status(400)
