@@ -15,7 +15,7 @@ import Layout from '../components/layout/layout';
 
 //  Pages
 import Index from '../views/Index';
-import Home from '../views/Home';
+import Dashboard from '../views/Dashboard';
 import Register from '../components/auth/Register';
 import Login from '../components/auth/Login';
 import Users from '../views/Users';
@@ -67,8 +67,8 @@ class Routes extends Component {
               <Route exact path="/" component={Index} />
               <Route path="/register" component={Register} />
               <Route path="/login" component={Login} />
-              <PrivateRoute exact path="/home" auth={this.props.auth}>
-                <Home />
+              <PrivateRoute exact path="/dashboard" auth={this.props.auth}>
+                <Dashboard />
               </PrivateRoute>
               <PrivateRoute exact path="/tickets" auth={this.props.auth}>
                 <Tickets />

@@ -318,3 +318,53 @@ info: ::ffff:127.0.0.1 - - [24/Oct/2020:14:21:55 +0000] "GET /api/auth/checkToke
 
 info: ::ffff:127.0.0.1 - - [24/Oct/2020:14:22:12 +0000] "GET /api/auth/checkToken HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
 
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:32:32 +0000] "GET /api/projects HTTP/1.1" 304 - "http://localhost:3000/home" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:32:32 +0000] "GET /api/tickets HTTP/1.1" 304 - "http://localhost:3000/home" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:32:35 +0000] "GET /api/projects HTTP/1.1" 304 - "http://localhost:3000/home" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:32:35 +0000] "GET /api/tickets HTTP/1.1" 200 1285 "http://localhost:3000/home" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:32:39 +0000] "GET /api/tickets/5f9415f483593a644c9d3c8c HTTP/1.1" 304 - "http://localhost:3000/tickets/view/5f9415f483593a644c9d3c8c" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:33:29 +0000] "GET /api/tickets HTTP/1.1" 200 1285 "http://localhost:3000/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:42:45 +0000] "GET /api/tickets HTTP/1.1" - - "http://localhost:3000/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:42:45 +0000] "GET /api/tickets HTTP/1.1" - - "http://localhost:3000/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:42:45 +0000] "GET /api/projects HTTP/1.1" - - "http://localhost:3000/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:42:46 +0000] "GET /api/projects HTTP/1.1" 200 464 "http://localhost:3000/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:42:46 +0000] "GET /api/tickets HTTP/1.1" 200 1285 "http://localhost:3000/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:42:46 +0000] "GET /api/tickets HTTP/1.1" 200 1285 "http://localhost:3000/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:50:39 +0000] "GET /api/projects HTTP/1.1" 200 464 "http://localhost:3000/tickets" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:50:39 +0000] "GET /api/tickets HTTP/1.1" 200 1285 "http://localhost:3000/tickets" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:50:39 +0000] "GET /api/users HTTP/1.1" 304 - "http://localhost:3000/tickets" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:50:51 +0000] "GET /api/projects HTTP/1.1" 304 - "http://localhost:3000/projects" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:50:51 +0000] "GET /api/users HTTP/1.1" 304 - "http://localhost:3000/projects" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:50:54 +0000] "GET /api/projects HTTP/1.1" 304 - "http://localhost:3000/tickets" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:50:54 +0000] "GET /api/tickets HTTP/1.1" 304 - "http://localhost:3000/tickets" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:50:54 +0000] "GET /api/users HTTP/1.1" 304 - "http://localhost:3000/tickets" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:50:55 +0000] "GET /api/tickets/5f9415f483593a644c9d3c8c HTTP/1.1" 304 - "http://localhost:3000/tickets/view/5f9415f483593a644c9d3c8c" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:50:59 +0000] "GET /api/tickets HTTP/1.1" 304 - "http://localhost:3000/dashboard" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:51:22 +0000] "GET /api/projects HTTP/1.1" 304 - "http://localhost:3000/tickets" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:51:23 +0000] "GET /api/tickets HTTP/1.1" 304 - "http://localhost:3000/tickets" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+
+info: ::ffff:127.0.0.1 - - [25/Oct/2020:14:51:23 +0000] "GET /api/users HTTP/1.1" 304 - "http://localhost:3000/tickets" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0"
+

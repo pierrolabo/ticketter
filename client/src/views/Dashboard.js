@@ -7,7 +7,7 @@ import { getTickets } from '../actions/ticketActions';
 
 import HomeTicketsCards from '../components/TicketsCard/HomeTicketsCards';
 
-class Home extends Component {
+class Dashboard extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
   };
@@ -27,4 +27,4 @@ const mapStateToProps = (state) => ({
   project: state.project,
   ticket: state.ticket,
 });
-export default connect(mapStateToProps, { getTickets, getProjects })(Home);
+export default connect(mapStateToProps, { getTickets, getProjects })(Dashboard);

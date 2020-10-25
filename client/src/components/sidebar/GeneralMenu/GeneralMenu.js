@@ -2,17 +2,17 @@ import React from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import { history } from '../../../configureStore';
 const GeneralMenu = () => {
-  const handleClick = (e) => history.push(`/home`);
+  const handleClick = (e) => history.push(`/dashboard`);
 
   return (
     <ListGroup>
       <ListGroupItem
-        className='menu-head'
+        className="menu-head"
         active
-        tag='button'
+        tag="button"
         onClick={handleClick}
       >
-        Menu
+        Dashboard
       </ListGroupItem>
     </ListGroup>
   );
