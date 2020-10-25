@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loadUser } from '../actions/authActions';
 //  Bootstrap Elm
-import { Jumbotron, Container } from 'reactstrap';
-import JumbotronLanding from '../components/jumbotron/index';
+import { Container } from 'reactstrap';
+import JumbotronLanding from '../components/jumbotron/jumbotron';
+import Features from '../components/features/features';
 
 class Index extends Component {
   componentDidMount() {
@@ -11,11 +12,9 @@ class Index extends Component {
   }
   render() {
     return (
-      <div className="jumbotron-container">
+      <div className="index__container">
         <JumbotronLanding />
-        <h2 className="text-center">
-          Remote DB is slow, think to refresh if you have no data
-        </h2>
+        <Features />
       </div>
     );
   }

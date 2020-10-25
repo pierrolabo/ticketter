@@ -12,9 +12,9 @@ const SideBar = (props) => {
   const handleClickMenuUser = () => history.push(`/users/`);
 
   const { tickets, projects, role } = props;
-  const hasAtLeastOneProject = projects.length > 0;
+  const hasAtLeastOneProject = projects?.length > 0;
   return (
-    <div className='sidebar'>
+    <div className="sidebar">
       <GeneralMenu />
       {props.role !== 'ADMIN' ? (
         <>
@@ -34,9 +34,9 @@ const SideBar = (props) => {
       {props.role === 'PROJECT_MANAGER' ? (
         <ListGroup>
           <ListGroupItem
-            className='menu-head'
+            className="menu-head"
             active
-            tag='button'
+            tag="button"
             onClick={handleClickMenuUser}
           >
             User Roles
