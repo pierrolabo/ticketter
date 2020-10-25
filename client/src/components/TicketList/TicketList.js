@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Card, CardBody, CardHeader, Container, Table } from 'reactstrap';
+import { Card, CardBody, CardHeader, Container, Table, Col } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 
@@ -122,66 +122,86 @@ export class Tickets extends Component {
     const { role } = this.props.auth;
     const hasRightToDelete = role === 'ADMIN' || role === 'PROJECT_MANAGER';
     return (
-      <Container className='tickets-list'>
-        {this.state.modal ? (
-          <EditTicketModal
-            modal={this.state.modal}
-            users={users}
-            projects={projects}
-            editTicket={this.state.editTicket}
-            toggleModal={this.toggleModal}
-          />
-        ) : (
-          ''
-        )}
-        <Card>
-          <CardHeader className='text-center'>Tickets List</CardHeader>
-          <CardBody>
-            <Table hover>
-              <thead>
-                <tr>
-                  <th>title</th>
-                  <th>created by</th>
-                  <th>assigned_to</th>
-                  <th>status</th>
-                  <th>Project</th>
-                  <th>Edit</th>
-                  <th>View</th>
-                  {hasRightToDelete ? <th>Delete</th> : ''}
-                </tr>
-              </thead>
-              <tbody>
-                {tickets.map((ticket) => {
-                  return (
-                    <tr key={ticket._id} id={ticket._id}>
-                      <th>{ticket.title}</th>
-                      <th>{this.getUserFromID(ticket.created_by)}</th>
-                      <th>{this.getUserFromID(ticket.assigned_to)}</th>
-                      <th>{ticket.status}</th>
-                      <th>{this.getProjectNameFromTicket(projects, ticket)}</th>
-                      <th id={ticket._id} onClick={this.handleEdit}>
-                        <FontAwesomeIcon id={ticket._id} icon={faEdit} />
-                      </th>
-                      <th onClick={this.handleView} id={ticket._id}>
-                        <FontAwesomeIcon
-                          id={ticket._id}
-                          icon={faEye}
-                        ></FontAwesomeIcon>
-                      </th>
-                      {hasRightToDelete ? (
-                        <th id={ticket._id} onClick={this.handleDelete}>
-                          <FontAwesomeIcon id={ticket._id} icon={faTrash} />
+      <Container className="tickets-list">
+        <Col>
+          {this.state.modal ? (
+            <EditTicketModal
+              modal={this.state.modal}
+              users={users}
+              projects={projects}
+              editTicket={this.state.editTicket}
+              toggleModal={this.toggleModal}
+            />
+          ) : (
+            ''
+          )}
+          <Card>
+            <CardHeader className="text-center">Tickets List</CardHeader>
+            <CardBody>
+              <Table hover>
+                <thead>
+                  <tr className="text-center">
+                    <th>title</th>
+                    <th>created by</th>
+                    <th>assigned_to</th>
+                    <th>status</th>
+                    <th>Project</th>
+                    <th>Edit</th>
+                    <th>View</th>
+                    {hasRightToDelete ? <th>Delete</th> : ''}
+                  </tr>
+                </thead>
+                <tbody>
+                  {tickets.map((ticket) => {
+                    return (
+                      <tr
+                        key={ticket._id}
+                        id={ticket._id}
+                        className="text-center"
+                      >
+                        <th>{ticket.title}</th>
+                        <th>{this.getUserFromID(ticket.created_by)}</th>
+                        <th>{this.getUserFromID(ticket.assigned_to)}</th>
+                        <th>{ticket.status}</th>
+                        <th>
+                          {this.getProjectNameFromTicket(projects, ticket)}
                         </th>
-                      ) : (
-                        ''
-                      )}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          </CardBody>
-        </Card>
+                        <th
+                          id={ticket._id}
+                          onClick={this.handleEdit}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <FontAwesomeIcon id={ticket._id} icon={faEdit} />
+                        </th>
+                        <th
+                          onClick={this.handleView}
+                          id={ticket._id}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <FontAwesomeIcon
+                            id={ticket._id}
+                            icon={faEye}
+                          ></FontAwesomeIcon>
+                        </th>
+                        {hasRightToDelete ? (
+                          <th
+                            id={ticket._id}
+                            onClick={this.handleDelete}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            <FontAwesomeIcon id={ticket._id} icon={faTrash} />
+                          </th>
+                        ) : (
+                          ''
+                        )}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </CardBody>
+          </Card>
+        </Col>
       </Container>
     );
   }
