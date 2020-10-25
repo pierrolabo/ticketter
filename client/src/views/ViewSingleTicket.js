@@ -105,72 +105,65 @@ class ViewSingleTicket extends Component {
     const loading = this.props.ticket.isLoading;
     const hasRightOptions = this.props.auth.role !== 'USER';
     return (
-      <Row className='viewsingleticket-container'>
-        <Col lg='8'>
-          <Container className='viewsingleticket-display-ticket'>
-            <Card>
-              <CardHeader>
+      <Row className="m-auto">
+        <Col md="12" sm="12" lg="8">
+          <Card>
+            <CardHeader>
+              <Row>
+                <Col className="text-center">{ticket.title}</Col>
+              </Row>
+            </CardHeader>
+            <CardHeader>
+              <Container className="themed-container">
                 <Row>
-                  <Col className='text-center'>{ticket.title}</Col>
+                  <Col md="12" lg="3">
+                    <span>Created_by: {created_by}</span>
+                  </Col>
+                  <Col md="12" lg="3">
+                    <span>Assigned_to: {assigned_to}</span>
+                  </Col>
+                  <Col md="12" lg="3">
+                    <span>{new Date(ticket.date).toUTCString()}</span>
+                  </Col>
+                  {ticket.isCompleted ? (
+                    <Col md="12" lg="3">
+                      <Badge color="danger">Completed</Badge>
+                    </Col>
+                  ) : (
+                    <Col md="12" lg="3">
+                      <Badge color="danger">{ticket.status}</Badge>
+                    </Col>
+                  )}
                 </Row>
-              </CardHeader>
-              <CardHeader>
-                <Container className='themed-container'>
-                  <Row>
-                    <Col>
-                      <span>Created_by: {created_by}</span>
-                    </Col>
-                    <Col>
-                      <span>Assigned_to: {assigned_to}</span>
-                    </Col>
-                    <Col>
-                      <span>{new Date(ticket.date).toUTCString()}</span>
-                    </Col>
-                    {ticket.isCompleted ? (
-                      <Col xs='1' sm='3' md='2'>
-                        <Badge color='danger'>Completed</Badge>
-                      </Col>
-                    ) : (
-                      <Col xs='1' sm='3' md='2'>
-                        <Badge color='danger'>{ticket.status}</Badge>
-                      </Col>
-                    )}
-                  </Row>
-                </Container>
-              </CardHeader>
-              <CardBody>{ticket.description}</CardBody>
-            </Card>
+              </Container>
+            </CardHeader>
+            <CardBody>{ticket.description}</CardBody>
+          </Card>
 
-            {answers.map((answer) => {
-              return (
-                <Answer
-                  getUserFromId={this.getUserFromID}
-                  role={this.props.auth.role}
-                  answer={answer}
-                  handleDelete={this.handleDelete}
-                />
-              );
-            })}
+          {answers.map((answer) => {
+            return (
+              <Answer
+                getUserFromId={this.getUserFromID}
+                role={this.props.auth.role}
+                answer={answer}
+                handleDelete={this.handleDelete}
+              />
+            );
+          })}
 
-            <AddAnswer handleAddReply={this.handleAddReply} />
-          </Container>
+          <AddAnswer handleAddReply={this.handleAddReply} />
         </Col>
-        <Col
-          xs='1'
-          sm='3'
-          lg='2'
-          className='viewsingleticketcontainer-optionsContainer d-none d-md-block'
-        >
-          <Container className='viewsignelticketcontainer-options'>
+        <Col md="12" lg="4">
+          <Container className="">
             {ticket.isCompleted || !hasRightOptions ? (
               ''
             ) : (
-              <Button color='danger' onClick={this.handleMarkAsCompleted}>
+              <Button color="danger" onClick={this.handleMarkAsCompleted}>
                 Mark as Completed
               </Button>
             )}
             {/*
-          We render the only if the ticket is loaded
+          We render only if the ticket is loaded
           its doesnt update if the props change :(
         */}
             {!loading && hasRightOptions ? (
@@ -183,7 +176,7 @@ class ViewSingleTicket extends Component {
               ''
             )}
             {this.state.nextAssignedUser ? (
-              <Button color='success' onClick={this.handleSaveSelectUser}>
+              <Button color="success" onClick={this.handleSaveSelectUser}>
                 Reassign
               </Button>
             ) : (

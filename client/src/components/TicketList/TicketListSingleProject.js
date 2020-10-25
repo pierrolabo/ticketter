@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card, CardBody, CardHeader, Table } from 'reactstrap';
+import { Card, CardBody, CardHeader, Table, Container, Col } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { history } from '../../configureStore';
@@ -35,57 +35,61 @@ const TicketListSingleProject = (props) => {
 
   const handleEdit = () => {};
   return (
-    <Card xs='8'>
-      <CardHeader className='text-center'>Tickets List</CardHeader>
-      <CardBody>
-        <Table hover>
-          <thead>
-            <tr>
-              <th>title</th>
-              <th>created by</th>
-              <th>assigned_to</th>
-              <th>status</th>
-              {authorizedToEdit ? <th>Edit</th> : ''}
-              <th>View</th>
-              {hasRightToDelete ? <th>Delete</th> : ''}
-            </tr>
-          </thead>
-          <tbody>
-            {tickets.map((ticket) => {
-              return (
-                <tr key={ticket._id} id={ticket._id}>
-                  <th>{ticket.title}</th>
-                  <th>{getUserFromID(ticket.created_by)}</th>
-                  <th>{getUserFromID(ticket.assigned_to)}</th>
-                  <th>{ticket.status}</th>
-                  {authorizedToEdit ? (
-                    <th id={ticket._id} onClick={handleEdit}>
-                      <FontAwesomeIcon id={ticket._id} icon={faEdit} />
-                    </th>
-                  ) : (
-                    ''
-                  )}
-
-                  <th onClick={handleView} id={ticket._id}>
-                    <FontAwesomeIcon
-                      id={ticket._id}
-                      icon={faEye}
-                    ></FontAwesomeIcon>
-                  </th>
-                  {hasRightToDelete ? (
-                    <th id={ticket._id} onClick={props.handleDelete}>
-                      <FontAwesomeIcon id={ticket._id} icon={faTrash} />
-                    </th>
-                  ) : (
-                    ''
-                  )}
+    <Container>
+      <Col>
+        <Card xs="8">
+          <CardHeader className="text-center">Tickets List</CardHeader>
+          <CardBody>
+            <Table hover>
+              <thead>
+                <tr>
+                  <th>title</th>
+                  <th>created by</th>
+                  <th>assigned_to</th>
+                  <th>status</th>
+                  {authorizedToEdit ? <th>Edit</th> : ''}
+                  <th>View</th>
+                  {hasRightToDelete ? <th>Delete</th> : ''}
                 </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      </CardBody>
-    </Card>
+              </thead>
+              <tbody>
+                {tickets.map((ticket) => {
+                  return (
+                    <tr key={ticket._id} id={ticket._id}>
+                      <th>{ticket.title}</th>
+                      <th>{getUserFromID(ticket.created_by)}</th>
+                      <th>{getUserFromID(ticket.assigned_to)}</th>
+                      <th>{ticket.status}</th>
+                      {authorizedToEdit ? (
+                        <th id={ticket._id} onClick={handleEdit}>
+                          <FontAwesomeIcon id={ticket._id} icon={faEdit} />
+                        </th>
+                      ) : (
+                        ''
+                      )}
+
+                      <th onClick={handleView} id={ticket._id}>
+                        <FontAwesomeIcon
+                          id={ticket._id}
+                          icon={faEye}
+                        ></FontAwesomeIcon>
+                      </th>
+                      {hasRightToDelete ? (
+                        <th id={ticket._id} onClick={props.handleDelete}>
+                          <FontAwesomeIcon id={ticket._id} icon={faTrash} />
+                        </th>
+                      ) : (
+                        ''
+                      )}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </CardBody>
+        </Card>
+      </Col>
+    </Container>
   );
 };
 

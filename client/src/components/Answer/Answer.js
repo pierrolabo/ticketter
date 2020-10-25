@@ -8,19 +8,19 @@ export const Answer = (props) => {
     <Card>
       <CardHeader>
         <Row>
-          <Col>
+          <Col md="12" lg="4">
             <span>{props.getUserFromId(answer.created_by)}</span>
           </Col>
-          <Col>
+          <Col md="12" lg="4">
             <span>{new Date(answer.date).toUTCString()}</span>
           </Col>
           {role !== 'USER' ? (
-            <Col md='1'>
+            <Col md="12" lg="4" className="d-flex justify-content-lg-center">
               <th
                 key={answer.replyID}
-                className='row align-items-end'
                 onClick={props.handleDelete}
                 id={answer.replyID}
+                className=" text-center"
               >
                 <FontAwesomeIcon
                   id={answer.replyID}
