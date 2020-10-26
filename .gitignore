@@ -28,3 +28,4 @@ yarn-error.log*
 /log/
 log/combined.log
 log/rejections.log
+.env

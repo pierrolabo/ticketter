@@ -1,7 +1,7 @@
-import React from 'react';
-import { Card, CardHeader, CardBody, Col, Row } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import { Card, CardHeader, CardBody, Col, Row } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 export const Answer = (props) => {
   const { answer, role } = props;
   return (
@@ -14,9 +14,9 @@ export const Answer = (props) => {
           <Col md="12" lg="4">
             <span>{new Date(answer.date).toUTCString()}</span>
           </Col>
-          {role !== 'USER' ? (
+          {role !== "USER" ? (
             <Col md="12" lg="4" className="d-flex justify-content-lg-center">
-              <th
+              <div
                 key={answer.replyID}
                 onClick={props.handleDelete}
                 id={answer.replyID}
@@ -26,11 +26,9 @@ export const Answer = (props) => {
                   id={answer.replyID}
                   icon={faTrash}
                 ></FontAwesomeIcon>
-              </th>
+              </div>
             </Col>
-          ) : (
-            ''
-          )}
+          ) : null}
         </Row>
       </CardHeader>
       <CardBody>{answer.reply}</CardBody>

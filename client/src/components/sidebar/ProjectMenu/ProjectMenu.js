@@ -1,12 +1,12 @@
-import React from 'react';
-import { ListGroup, ListGroupItem } from 'reactstrap';
-import { history } from '../../../configureStore';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFolder } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import { ListGroup, ListGroupItem } from "reactstrap";
+import { history } from "../../../configureStore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFolder } from "@fortawesome/free-solid-svg-icons";
 
 const TicketMenu = (props) => {
   const { projects, role } = props;
-  const hasRightToCreate = role === 'PROJECT_MANAGER';
+  const hasRightToCreate = role === "PROJECT_MANAGER";
   const handleClick = (e) => history.push(`/project/view/${e.target.id}`);
   const handleClickMenu = () => history.push(`/projects`);
   const handleClickCreate = () => history.push(`/projects/create`);
@@ -14,9 +14,9 @@ const TicketMenu = (props) => {
   return (
     <ListGroup>
       <ListGroupItem
-        className='menu-head'
+        className="menu-head"
         active
-        tag='button'
+        tag="button"
         onClick={handleClickMenu}
       >
         All my Projects
@@ -25,10 +25,11 @@ const TicketMenu = (props) => {
       {projects.map((project, index) => {
         return (
           <ListGroupItem
-            className='menu-icon'
+            key={index}
+            className="menu-icon"
             onClick={handleClick}
             id={project._id}
-            tag='button'
+            tag="button"
             action
           >
             <FontAwesomeIcon icon={faFolder}></FontAwesomeIcon>
@@ -38,15 +39,15 @@ const TicketMenu = (props) => {
       })}
       {hasRightToCreate ? (
         <ListGroupItem
-          className='menu-head'
+          className="menu-head"
           active
-          tag='button'
+          tag="button"
           onClick={handleClickCreate}
         >
           Create a project
         </ListGroupItem>
       ) : (
-        ''
+        ""
       )}
     </ListGroup>
   );
