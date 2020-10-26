@@ -11,9 +11,11 @@ import { connect } from 'react-redux';
 //  Components
 import NavBar from '../components/NavBar';
 import SideBar from '../components/sidebar/SideBar';
+import Layout from '../components/layout/layout';
+
 //  Pages
 import Index from '../views/Index';
-import Home from '../views/Home';
+import Dashboard from '../views/Dashboard';
 import Register from '../components/auth/Register';
 import Login from '../components/auth/Login';
 import Users from '../views/Users';
@@ -47,13 +49,10 @@ class Routes extends Component {
   render() {
     const location = history.location;
     return (
-      <div>
-        <Row>
-          <NavBar />
-        </Row>
-        <Row className="main-container">
+      <Layout>
+        <Row className="m-auto">
           {this.props.auth.isAuthenticated && location.pathname !== '/' ? (
-            <Col className="sidebar-container">
+            <Col className="sidebar-container" md="2" xl="2">
               <SideBar
                 role={this.props.auth.role}
                 tickets={this.props.ticket.tickets}
@@ -63,13 +62,13 @@ class Routes extends Component {
           ) : (
             ''
           )}
-          <Col className="main">
+          <Col className="content__col">
             <Switch className="switch">
               <Route exact path="/" component={Index} />
               <Route path="/register" component={Register} />
               <Route path="/login" component={Login} />
-              <PrivateRoute exact path="/home" auth={this.props.auth}>
-                <Home />
+              <PrivateRoute exact path="/dashboard" auth={this.props.auth}>
+                <Dashboard />
               </PrivateRoute>
               <PrivateRoute exact path="/tickets" auth={this.props.auth}>
                 <Tickets />
@@ -122,7 +121,7 @@ class Routes extends Component {
             </Switch>
           </Col>
         </Row>
-      </div>
+      </Layout>
     );
   }
 }

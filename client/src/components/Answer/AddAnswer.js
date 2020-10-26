@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Card,
   CardHeader,
+  Container,
   InputGroup,
   Input,
   InputGroupAddon,
@@ -18,16 +19,18 @@ export const AddAnswer = (props) => {
     props.handleAddReply(reply);
   };
   return (
-    <Card>
-      <CardHeader>Reply</CardHeader>
-      <InputGroup>
-        <Input placeholder='and...' value={reply} onChange={handleChange} />
-        <InputGroupAddon addonType='append'>
-          <Button onClick={handleClick} color='success'>
-            Reply
-          </Button>
-        </InputGroupAddon>
-      </InputGroup>
-    </Card>
+    <Container>
+      <Card>
+        <CardHeader>Reply</CardHeader>
+        <InputGroup>
+          <Input placeholder="and..." value={reply} onChange={handleChange} />
+          <InputGroupAddon addonType="append">
+            <Button onClick={handleClick} color="success">
+              Reply
+            </Button>
+          </InputGroupAddon>
+        </InputGroup>
+      </Card>
+    </Container>
   );
 };
