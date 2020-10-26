@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -7,7 +7,7 @@ import {
   Input,
   InputGroupAddon,
   Button,
-} from 'reactstrap';
+} from "reactstrap";
 
 export const AddAnswer = (props) => {
   const [reply, setReply] = useState();
@@ -15,11 +15,11 @@ export const AddAnswer = (props) => {
     setReply(e.target.value);
   };
   const handleClick = () => {
-    setReply('');
+    setReply("");
     props.handleAddReply(reply);
   };
   return (
-    <Container>
+    <Container className="pl-0">
       <Card>
         <CardHeader>Reply</CardHeader>
         <InputGroup>
