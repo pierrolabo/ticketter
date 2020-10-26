@@ -9,7 +9,7 @@ const AdminRoute = ({ children, auth, role, ...rest }) => {
         if (auth.isAuthenticated && role === 'ADMIN') {
           return children;
         } else {
-          return <Redirect to='/home' />;
+          return <Redirect to="/dashboard" />;
         }
       }}
     />

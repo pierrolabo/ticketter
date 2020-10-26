@@ -12,7 +12,7 @@ const AdminOrPGRoute = ({ children, auth, role, ...rest }) => {
         ) {
           return children;
         } else {
-          return <Redirect to='/home' />;
+          return <Redirect to="/dashboard" />;
         }
       }}
     />
