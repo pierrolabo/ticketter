@@ -6,6 +6,7 @@ import { getTickets } from '../../actions/ticketActions';
 
 import TicketCard from '../TicketsCards/TicketCard';
 //import ChartComponent from '../chart/ChartComponent';
+import './style.css';
 
 export class HomeTicketsCards extends Component {
   static propTypes = {
@@ -50,27 +51,27 @@ export class HomeTicketsCards extends Component {
     }
     const noProjectForUser = this.props.project.projects.length > 0;
     return (
-      <Container className='dashboard'>
+      <Container className="dashboard mt-5">
         <Row>
-          <Col>
+          <Col md="6" lg="3">
             <TicketCard ticketInfo={newTicket} />
           </Col>
-          <Col>
+          <Col md="6" lg="3">
             <TicketCard ticketInfo={progressTicket} />
           </Col>
-          <Col>
+          <Col md="6" lg="3">
             <TicketCard ticketInfo={urgentTicket} />
           </Col>
-          <Col>
+          <Col md="6" lg="3">
             <TicketCard ticketInfo={unresolvedTicket} />
           </Col>
         </Row>
-        <Row className='sorry-no-projects'>
+        <Row className="sorry-no-projects">
           {!noProjectForUser ? (
             <Container>
               <Jumbotron fluid>
                 <Container fluid>
-                  <p className='lead text-center'>
+                  <p className="lead text-center">
                     You have no project assigned :( Contact your administrator
                     to be part of a project
                   </p>

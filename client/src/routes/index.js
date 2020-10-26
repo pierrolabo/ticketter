@@ -11,9 +11,11 @@ import { connect } from 'react-redux';
 //  Components
 import NavBar from '../components/NavBar';
 import SideBar from '../components/sidebar/SideBar';
+import Layout from '../components/layout/layout';
+
 //  Pages
 import Index from '../views/Index';
-import Home from '../views/Home';
+import Dashboard from '../views/Dashboard';
 import Register from '../components/auth/Register';
 import Login from '../components/auth/Login';
 import Users from '../views/Users';
@@ -47,13 +49,10 @@ class Routes extends Component {
   render() {
     const location = history.location;
     return (
-      <div>
-        <Row>
-          <NavBar />
-        </Row>
-        <Row className='main-container'>
+      <Layout>
+        <Row className="m-auto">
           {this.props.auth.isAuthenticated && location.pathname !== '/' ? (
-            <Col className='sidebar-container'>
+            <Col className="sidebar-container" md="2" xl="2">
               <SideBar
                 role={this.props.auth.role}
                 tickets={this.props.ticket.tickets}
@@ -63,47 +62,47 @@ class Routes extends Component {
           ) : (
             ''
           )}
-          <Col className='main'>
-            <Switch className='switch'>
-              <Route exact path='/' component={Index} />
-              <Route path='/register' component={Register} />
-              <Route path='/login' component={Login} />
-              <PrivateRoute exact path='/home' auth={this.props.auth}>
-                <Home />
+          <Col className="content__col">
+            <Switch className="switch">
+              <Route exact path="/" component={Index} />
+              <Route path="/register" component={Register} />
+              <Route path="/login" component={Login} />
+              <PrivateRoute exact path="/dashboard" auth={this.props.auth}>
+                <Dashboard />
               </PrivateRoute>
-              <PrivateRoute exact path='/tickets' auth={this.props.auth}>
+              <PrivateRoute exact path="/tickets" auth={this.props.auth}>
                 <Tickets />
               </PrivateRoute>
               <AdminOrPGRoute
-                path='/users'
+                path="/users"
                 auth={this.props.auth}
                 role={this.props.auth.role}
               >
                 <Users />
               </AdminOrPGRoute>
               <PrivateRoute
-                path='/tickets/create'
+                path="/tickets/create"
                 auth={this.props.auth}
                 role={this.props.auth.role}
               >
                 <CreateTicket />
               </PrivateRoute>
               <AdminOrPGRoute
-                path='/projects/create/'
+                path="/projects/create/"
                 auth={this.props.auth}
                 role={this.props.auth.role}
               >
                 <CreateProject />
               </AdminOrPGRoute>
               <PrivateRoute
-                path='/projects'
+                path="/projects"
                 auth={this.props.auth}
                 role={this.props.auth.role}
               >
                 <Projects />
               </PrivateRoute>
               <PrivateRoute
-                path='/tickets/view/:id'
+                path="/tickets/view/:id"
                 auth={this.props.auth}
                 role={this.props.auth.role}
               >
@@ -114,7 +113,7 @@ class Routes extends Component {
                 />
               </PrivateRoute>
               <PrivateRoute
-                path='/project/view/:id'
+                path="/project/view/:id"
                 auth={this.props.auth}
                 role={this.props.auth.role}
                 component={DetailsProject}
@@ -122,7 +121,7 @@ class Routes extends Component {
             </Switch>
           </Col>
         </Row>
-      </div>
+      </Layout>
     );
   }
 }

@@ -10,6 +10,8 @@ import {
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTicketAlt } from '@fortawesome/free-solid-svg-icons';
+
+import './style.css';
 const TicketCard = (props) => {
   const { ticketNumber, ticketType } = props.ticketInfo;
   const renderSwitch = (param) => {
@@ -28,14 +30,15 @@ const TicketCard = (props) => {
   };
   const newTickets = (
     <Col>
-      <Card>
+      <Card className="ticketcard">
         <CardBody>
-          <CardTitle className='text-center'>New Tickets</CardTitle>
-          <CardText className='text-center'>
-            <FontAwesomeIcon icon={faTicketAlt} /> {ticketNumber}
+          <CardTitle className="text-center">New Tickets</CardTitle>
+          <CardText className="text-center">
+            <FontAwesomeIcon icon={faTicketAlt} color="#ffc107" />{' '}
+            {ticketNumber}
           </CardText>
-          <div className='text-center'>{`${ticketNumber}%`}</div>
-          <Progress color='warning' value={ticketNumber} />
+          <div className="text-center text-warning">{`${ticketNumber}%`}</div>
+          <Progress color="warning" value={ticketNumber} />
         </CardBody>
       </Card>
     </Col>
@@ -43,51 +46,54 @@ const TicketCard = (props) => {
 
   const progressTickets = (
     <Col>
-      <Card>
+      <Card className="ticketcard">
         <CardBody>
-          <CardTitle className='text-center'>Tickets In Progress</CardTitle>
-          <CardText className='text-center'>
-            <FontAwesomeIcon icon={faTicketAlt} /> {ticketNumber}
+          <CardTitle className="text-center">Tickets In Progress</CardTitle>
+          <CardText className="text-center">
+            <FontAwesomeIcon icon={faTicketAlt} color="#28a745" />{' '}
+            {ticketNumber}
           </CardText>
-          <div className='text-center'>{`${ticketNumber}%`}</div>
+          <div className="text-center text-success">{`${ticketNumber}%`}</div>
 
-          <Progress color='success' value={ticketNumber} />
+          <Progress color="success" value={ticketNumber} />
         </CardBody>
       </Card>
     </Col>
   );
   const urgentTickets = (
     <Col>
-      <Card>
+      <Card className="ticketcard">
         <CardBody>
-          <CardTitle className='text-center'>Urgent Tickets</CardTitle>
-          <CardText className='text-center'>
-            <FontAwesomeIcon icon={faTicketAlt} /> {ticketNumber}
+          <CardTitle className="text-center">Urgent Tickets</CardTitle>
+          <CardText className="text-center">
+            <FontAwesomeIcon icon={faTicketAlt} color="#dc3545" />{' '}
+            {ticketNumber}
           </CardText>
-          <div className='text-center'>{`${ticketNumber}%`}</div>
+          <div className="text-center text-danger">{`${ticketNumber}%`}</div>
 
-          <Progress color='danger' value={ticketNumber} />
+          <Progress color="danger" value={ticketNumber} />
         </CardBody>
       </Card>
     </Col>
   );
   const unresolvedTickets = (
     <Col>
-      <Card xs='4'>
+      <Card xs="4" className="ticketcard">
         <CardBody>
-          <CardTitle className='text-center'>Not Resolved Tickets</CardTitle>
-          <CardText className='text-center'>
-            <FontAwesomeIcon icon={faTicketAlt} /> {ticketNumber}
+          <CardTitle className="text-center">Not Resolved Tickets</CardTitle>
+          <CardText className="text-center">
+            <FontAwesomeIcon icon={faTicketAlt} color="#17a2b8" />{' '}
+            {ticketNumber}
           </CardText>
-          <div className='text-center'>{`${ticketNumber}%`}</div>
+          <div className="text-center text-info">{`${ticketNumber}%`}</div>
 
-          <Progress color='info' value={ticketNumber}></Progress>
+          <Progress color="info" value={ticketNumber}></Progress>
         </CardBody>
       </Card>
     </Col>
   );
   return (
-    <Row className='d-flex flex-sm-column' xs='12' md='8' lg='12'>
+    <Row className="d-flex flex-sm-column" xs="12" md="8" lg="12">
       {renderSwitch(ticketType)}
     </Row>
   );
