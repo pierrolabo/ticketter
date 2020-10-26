@@ -1,26 +1,26 @@
-import React from 'react';
+import React from "react";
 
-import { Card, CardBody, CardHeader, Table, Container, Col } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { history } from '../../configureStore';
+import { Card, CardBody, CardHeader, Table, Container, Col } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { history } from "../../configureStore";
 
 const TicketListSingleProject = (props) => {
   const { tickets, role, users } = props;
-  const authorizedToEdit = role === 'ADMIN' || 'PROJECT_MANAGER';
-  const hasRightToDelete = role === 'ADMIN' || role === 'PROJECT_MANAGER';
+  const authorizedToEdit = role === "ADMIN" || role === "PROJECT_MANAGER";
+  const hasRightToDelete = role === "ADMIN" || role === "PROJECT_MANAGER";
 
   const getUserFromID = (id) => {
     //  If ID is null then te ticket is unassigned
-    if (id === '') {
-      return 'Unassigned';
+    if (id === "") {
+      return "Unassigned";
     }
     const filteredUser = users.filter((user) => user._id === id);
     //  If no user has been found, return default
     if (filteredUser.length !== 0) {
       return filteredUser[0].email;
     }
-    return 'User not Found';
+    return "User not Found";
   };
   const handleView = (event) => {
     //  The modal is close
@@ -47,9 +47,9 @@ const TicketListSingleProject = (props) => {
                   <th>created by</th>
                   <th>assigned_to</th>
                   <th>status</th>
-                  {authorizedToEdit ? <th>Edit</th> : ''}
+                  {authorizedToEdit ? <th>Edit</th> : null}
                   <th>View</th>
-                  {hasRightToDelete ? <th>Delete</th> : ''}
+                  {hasRightToDelete ? <th>Delete</th> : null}
                 </tr>
               </thead>
               <tbody>
@@ -64,9 +64,7 @@ const TicketListSingleProject = (props) => {
                         <th id={ticket._id} onClick={handleEdit}>
                           <FontAwesomeIcon id={ticket._id} icon={faEdit} />
                         </th>
-                      ) : (
-                        ''
-                      )}
+                      ) : null}
 
                       <th onClick={handleView} id={ticket._id}>
                         <FontAwesomeIcon
@@ -78,9 +76,7 @@ const TicketListSingleProject = (props) => {
                         <th id={ticket._id} onClick={props.handleDelete}>
                           <FontAwesomeIcon id={ticket._id} icon={faTrash} />
                         </th>
-                      ) : (
-                        ''
-                      )}
+                      ) : null}
                     </tr>
                   );
                 })}

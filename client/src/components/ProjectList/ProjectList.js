@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-import { Card, CardBody, CardHeader, Container, Table } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEye } from '@fortawesome/free-solid-svg-icons';
+import { Card, CardBody, CardHeader, Container, Table } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faEye } from "@fortawesome/free-solid-svg-icons";
 
-import { getUsers } from '../../actions/userActions';
-import { getProjects } from '../../actions/projectActions';
-import { deleteProject } from '../../actions/projectActions';
+import { getUsers } from "../../actions/userActions";
+import { getProjects } from "../../actions/projectActions";
+import { deleteProject } from "../../actions/projectActions";
 
-import EditProjectModal from '../modals/EditProjectModal';
-import ConfirmDeleteModal from '../modals/ConfirmDeleteModal';
-import { history } from '../../configureStore';
+import EditProjectModal from "../modals/EditProjectModal";
+import ConfirmDeleteModal from "../modals/ConfirmDeleteModal";
+import { history } from "../../configureStore";
 export class ProjectList extends Component {
   state = {
     modal: false,
@@ -59,8 +59,8 @@ export class ProjectList extends Component {
   render() {
     const { projects } = this.props.project;
     const hasRightToModify =
-      this.props.auth.role === 'ADMIN' ||
-      this.props.auth.role === 'PROJECT_MANAGER';
+      this.props.auth.role === "ADMIN" ||
+      this.props.auth.role === "PROJECT_MANAGER";
     return (
       <Container>
         {this.state.modal ? (
@@ -72,10 +72,10 @@ export class ProjectList extends Component {
             toggleModal={this.toggleModal}
           />
         ) : (
-          ''
+          ""
         )}
         <Card>
-          <CardHeader className='text-center'>Project List</CardHeader>
+          <CardHeader className="text-center">Project List</CardHeader>
           <CardBody>
             <Table hover>
               <thead>
@@ -84,8 +84,8 @@ export class ProjectList extends Component {
                   <th>Description</th>
                   <th>Tickets</th>
                   <th>View</th>
-                  {hasRightToModify ? <th>Edit</th> : ''}
-                  {hasRightToModify ? <th>Delete</th> : ''}
+                  {hasRightToModify ? <th>Edit</th> : null}
+                  {hasRightToModify ? <th>Delete</th> : null}
                 </tr>
               </thead>
               <tbody>
@@ -106,17 +106,13 @@ export class ProjectList extends Component {
                         <th id={project._id} onClick={this.toggleModal}>
                           <FontAwesomeIcon id={project._id} icon={faEdit} />
                         </th>
-                      ) : (
-                        ''
-                      )}
+                      ) : null}
                       {hasRightToModify ? (
                         <ConfirmDeleteModal
                           projectID={project._id}
                           delete={this.handleDelete}
                         />
-                      ) : (
-                        ''
-                      )}
+                      ) : null}
                     </tr>
                   );
                 })}
