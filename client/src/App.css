@@ -4,7 +4,7 @@ body {
   font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #2d2d35;
+  background-color: #fff;
 }
 .navbar-container {
   width: 100%;
@@ -33,7 +33,6 @@ body {
 .login-row,
 .createproject-container,
 .userlist-container {
-  margin-top: 150px;
 }
 
 .login-row {
@@ -108,4 +107,16 @@ body {
 .card-header {
   font-size: 22px;
   font-weight: bold;
+}
+
+main {
+  width: 100%;
+  min-height: 100%;
+}
+section {
+  width: 100%;
+}
+.content__col {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
 }

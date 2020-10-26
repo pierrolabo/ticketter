@@ -1,0 +1,14 @@
+.jumbotron {
+  background-color: #3a3fa0 !important;
+  color: #fff;
+  border-top: 1px solid #fff;
+  margin-bottom: 0 !important;
+}
+.jumbotron__container {
+}
+.jumbotron__image {
+  max-width: 300px !important;
+}
+.jumbotron__description ul {
+  list-style: none;
+}
