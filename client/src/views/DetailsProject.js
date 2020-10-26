@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Container, Card, CardHeader, CardBody, Col, Row } from 'reactstrap';
+import React, { Component } from "react";
+import { Container, Card, CardHeader, CardBody, Col, Row } from "reactstrap";
 //  Redux
-import { connect } from 'react-redux';
-import { deleteTicket } from '../actions/ticketActions';
+import { connect } from "react-redux";
+import { deleteTicket } from "../actions/ticketActions";
 //Components
-import TicketSingleUser from '../components/TicketList/TicketListSingleProject';
-import UserListSingleProject from '../components/UserList/UserListSingleProject';
+import TicketSingleUser from "../components/TicketList/TicketListSingleProject";
+import UserListSingleProject from "../components/UserList/UserListSingleProject";
 
 class DetailsProject extends Component {
   handleDelete = (event) => {
@@ -40,11 +40,11 @@ class DetailsProject extends Component {
       project.userList.includes(user._id)
     );
     return (
-      <Row className='detailsproject-container'>
-        <Col xs='8'>
-          <Container xs='8'>
+      <Row className="detailsproject-container">
+        <Col xs="8">
+          <Container xs="8">
             <Card>
-              <CardHeader className='text-center'>{project.name}</CardHeader>
+              <CardHeader className="text-center">{project.name}</CardHeader>
               <CardBody>{project.description}</CardBody>
             </Card>
             <TicketSingleUser
@@ -55,10 +55,10 @@ class DetailsProject extends Component {
             />
           </Container>
         </Col>
-        <Col className='detailsproject-options-container' md='1' xl='4'>
+        <Col className="detailsproject-options-container" md="1" xl="4">
           <Row>
             {filteredUsers.map((user, i) => {
-              return <UserListSingleProject user={user} index={i} />;
+              return <UserListSingleProject user={user} index={i} key={i} />;
             })}
           </Row>
         </Col>
