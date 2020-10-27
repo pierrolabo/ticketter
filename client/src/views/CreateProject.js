@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Container,
   Card,
@@ -8,16 +8,16 @@ import {
   FormGroup,
   Label,
   Input,
-} from 'reactstrap';
+} from "reactstrap";
 //  Redux
-import { connect } from 'react-redux';
-import { addProject } from '../actions/projectActions';
+import { connect } from "react-redux";
+import { addProject } from "../actions/projectActions";
 
-import { history } from '../configureStore';
+import { history } from "../configureStore";
 class CreateProject extends Component {
   state = {
-    name: '',
-    description: '',
+    name: "",
+    description: "",
   };
   handleChange = (e) => {
     this.setState({
@@ -25,7 +25,7 @@ class CreateProject extends Component {
     });
   };
   handleCancel = () => {
-    history.push('/projects');
+    history.push("/projects");
   };
   handleSubmit = () => {
     const { name, description } = this.state;
@@ -35,37 +35,37 @@ class CreateProject extends Component {
   };
   render() {
     return (
-      <Container className='createproject-container'>
+      <Container className="createproject-container mt-5">
         <Card>
-          <CardHeader className='text-center'>Create a new project</CardHeader>
+          <CardHeader className="text-center">Create a new project</CardHeader>
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
-              <Label for='name'>name</Label>
+              <Label for="name">name</Label>
               <Input
-                type='name'
-                name='name'
-                id='name'
+                type="name"
+                name="name"
+                id="name"
                 value={this.state.name}
                 onChange={this.handleChange}
-                placeholder='Project name...'
+                placeholder="Project name..."
               ></Input>
             </FormGroup>
             <FormGroup>
-              <Label for='description'>Description</Label>
+              <Label for="description">Description</Label>
               <Input
-                type='textarea'
-                name='description'
-                id='textarea'
+                type="textarea"
+                name="description"
+                id="textarea"
                 value={this.state.description}
                 onChange={this.handleChange}
-                placeholder='Describe the project..'
+                placeholder="Describe the project.."
               />
             </FormGroup>
-            <FormGroup className='formgroup-buttons-cancel-save'>
-              <Button color='danger' onClick={this.handleCancel}>
+            <FormGroup className="formgroup-buttons-cancel-save">
+              <Button color="danger" onClick={this.handleCancel}>
                 Cancel
               </Button>
-              <Button onClick={this.handleSubmit} color='success'>
+              <Button onClick={this.handleSubmit} color="success">
                 Save
               </Button>
             </FormGroup>
