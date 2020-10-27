@@ -1,5 +1,12 @@
-import React, { useState } from 'react';
-import { Card, CardImg, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import React, { useState } from "react";
+import {
+  Card,
+  CardImg,
+  Popover,
+  PopoverHeader,
+  PopoverBody,
+  Col,
+} from "reactstrap";
 
 const UserListSingleProject = (props) => {
   const { user, index } = props;
@@ -10,16 +17,17 @@ const UserListSingleProject = (props) => {
     <Card
       key={user._id}
       id={`popover${index}`}
-      style={{ width: '50px', height: '50px' }}
+      style={{ width: "50px", height: "50px" }}
+      className=""
     >
       <CardImg
         top
-        width='50%'
-        src={process.env.PUBLIC_URL + '/avatar.png'}
-        alt='Card image cap'
+        width="50%"
+        src={process.env.PUBLIC_URL + "/avatar.png"}
+        alt="Card image cap"
       />
       <Popover
-        placement='bottom'
+        placement="bottom"
         isOpen={popoverOpen}
         target={`popover${index}`}
         toggle={toggle}
