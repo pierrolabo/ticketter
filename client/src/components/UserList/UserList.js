@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { Card, CardBody, CardHeader, Container, Table } from 'reactstrap';
+import React, { Component } from "react";
+import { Card, CardBody, CardHeader, Container, Table } from "reactstrap";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
 
 //  Redux
-import { connect } from 'react-redux';
-import { updateUser } from '../../actions/userActions';
-import { getUsers } from '../../actions/userActions';
-import { getProjects } from '../../actions/projectActions';
-import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import { updateUser } from "../../actions/userActions";
+import { getUsers } from "../../actions/userActions";
+import { getProjects } from "../../actions/projectActions";
+import PropTypes from "prop-types";
 
-import EditUserModal from '../modals/EditUserModal';
+import EditUserModal from "../modals/EditUserModal";
 
 class UserList extends Component {
   static propTypes = {
@@ -29,9 +29,9 @@ class UserList extends Component {
     email: null,
     role: null,
     address: null,
-    city: '',
-    state: '',
-    zip: '',
+    city: "",
+    state: "",
+    zip: "",
     id: null,
     orgs: [],
     prevProjects: [],
@@ -113,9 +113,9 @@ class UserList extends Component {
       email: null,
       role: null,
       address: null,
-      city: '',
-      state: '',
-      zip: '',
+      city: "",
+      state: "",
+      zip: "",
       id: null,
       orgs: [],
       nextProjects: null,
@@ -171,7 +171,7 @@ class UserList extends Component {
   render() {
     const { users, projects } = this.props;
     return (
-      <Container className='userlist-container'>
+      <Container className="userlist-container mt-5">
         <EditUserModal
           modal={this.state.modal}
           handleChange={this.handleChange}
@@ -194,7 +194,7 @@ class UserList extends Component {
           id={this.state.id}
         />
         <Card>
-          <CardHeader className='text-center'>User List</CardHeader>
+          <CardHeader className="text-center">User List</CardHeader>
           <CardBody>
             <Table>
               <thead>
@@ -211,7 +211,7 @@ class UserList extends Component {
                 {users.map((user, index) => {
                   return (
                     <tr key={user._id}>
-                      <th scope='row'>{index}</th>
+                      <th scope="row">{index}</th>
                       <th>{user.name}</th>
                       <th>{user.lastname}</th>
                       <th>{user.email}</th>
