@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Container,
   Card,
@@ -8,33 +8,33 @@ import {
   Label,
   Input,
   CardHeader,
-} from 'reactstrap';
-import Select from 'react-select';
+} from "reactstrap";
+import Select from "react-select";
 
 //  Redux
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { getTickets } from '../actions/ticketActions';
-import { getProjects } from '../actions/projectActions';
-import { createTicket } from '../actions/ticketActions';
-import { getUsers } from '../actions/userActions';
-import { history } from '../configureStore';
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getTickets } from "../actions/ticketActions";
+import { getProjects } from "../actions/projectActions";
+import { createTicket } from "../actions/ticketActions";
+import { getUsers } from "../actions/userActions";
+import { history } from "../configureStore";
 
 const STATUS_TICKET = [
-  { value: 'NEW', label: 'NEW' },
-  { value: 'URGENT', label: 'URGENT' },
-  { value: 'PROGRESS', label: 'PROGRESS' },
-  { value: 'UNRESOLVED', label: 'UNRESOLVED' },
+  { value: "NEW", label: "NEW" },
+  { value: "URGENT", label: "URGENT" },
+  { value: "PROGRESS", label: "PROGRESS" },
+  { value: "UNRESOLVED", label: "UNRESOLVED" },
 ];
-const DEFAULT_STATUS_TICKET = [{ value: 'NEW', label: 'NEW' }];
-const DEFAULT_USER_ASSIGNED = [{ value: 'NEW', label: 'UNASSIGNED' }];
+const DEFAULT_STATUS_TICKET = [{ value: "NEW", label: "NEW" }];
+const DEFAULT_USER_ASSIGNED = [{ value: "NEW", label: "UNASSIGNED" }];
 class CreateTicket extends Component {
   state = {
-    title: '',
-    description: '',
-    status: '',
+    title: "",
+    description: "",
+    status: "",
     projectID: null,
-    assigned_to: '',
+    assigned_to: "",
   };
   static propTypes = {
     auth: PropTypes.object.isRequired,
@@ -52,7 +52,7 @@ class CreateTicket extends Component {
         label: `${user.name} ${user.lastname} | ${user.role}`,
       };
     });
-    return [{ value: '', label: 'UNASSIGNED' }, ...filteredUsers];
+    return [{ value: "", label: "UNASSIGNED" }, ...filteredUsers];
   };
   createOptionsProjects = () => {
     return this.props.project.projects.map((project) => {
@@ -65,7 +65,7 @@ class CreateTicket extends Component {
   createDefaultProject = (defaultProject) => {
     if (!defaultProject) {
       let defaultProject = this.props.project.projects.filter(
-        (project) => project.name === 'GENERAL'
+        (project) => project.name === "GENERAL"
       );
       //  if there is a GENERAL Project
       if (defaultProject.length > 0) {
@@ -73,7 +73,7 @@ class CreateTicket extends Component {
           { value: defaultProject[0]._id, label: defaultProject[0].name },
         ];
       } else {
-        return [{ value: '', label: 'GENERAL' }];
+        return [{ value: "", label: "GENERAL" }];
       }
     }
   };
@@ -97,7 +97,7 @@ class CreateTicket extends Component {
     this.setState({ projectID: e.value });
   };
   handleCancel = () => {
-    history.push('/tickets');
+    history.push("/tickets");
   };
   handleSave = () => {
     const { title, description, status, assigned_to, projectID } = this.state;
@@ -110,6 +110,7 @@ class CreateTicket extends Component {
       assigned_to,
       projectID,
     };
+    console.log("new ticket: ", newTicket);
     this.props.createTicket(newTicket);
   };
   render() {
@@ -117,68 +118,68 @@ class CreateTicket extends Component {
     const { users } = this.props.user;
     const role = this.props.auth.user.role;
     return (
-      <Container className='createticket-container'>
+      <Container className="createticket-container mt-5">
         <Card>
-          <CardHeader className='text-center'>Create a new ticket</CardHeader>
+          <CardHeader className="text-center">Create a new ticket</CardHeader>
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
-              <Label for='title'>Title</Label>
+              <Label for="title">Title</Label>
               <Input
-                type='title'
-                name='title'
-                id='title'
-                placeholder='What is the problem ?'
+                type="title"
+                name="title"
+                id="title"
+                placeholder="What is the problem ?"
                 value={this.state.title}
                 onChange={this.handleChange}
               ></Input>
             </FormGroup>
             <FormGroup>
-              <Label for='description'>Description</Label>
+              <Label for="description">Description</Label>
               <Input
-                type='textarea'
-                name='description'
-                placeholder='Describe the problem...'
+                type="textarea"
+                name="description"
+                placeholder="Describe the problem..."
                 value={this.state.description}
                 onChange={this.handleChange}
               />
             </FormGroup>
             <FormGroup>
-              <Label for='status'>Ticket Status</Label>
+              <Label for="status">Ticket Status</Label>
               <Select
-                name='statusSelect'
+                name="statusSelect"
                 onChange={this.handleChangeSelectStatus}
                 options={STATUS_TICKET}
                 defaultValue={DEFAULT_STATUS_TICKET}
               />
             </FormGroup>
             <FormGroup>
-              <Label for='assigned'>Assigned Project</Label>
+              <Label for="assigned">Assigned Project</Label>
               <Select
-                name='assignedProject'
+                name="assignedProject"
                 onChange={this.handleChangeSelectAssignedProject}
                 options={this.createOptionsProjects(projects)}
                 defaultValue={this.createDefaultProject()}
               />
             </FormGroup>
-            {role !== 'USER' ? (
+            {role !== "USER" ? (
               <FormGroup>
-                <Label for='assigned'>Assigned to</Label>
+                <Label for="assigned">Assigned to</Label>
                 <Select
-                  name='assignedSelect'
+                  name="assignedSelect"
                   onChange={this.handleChangeSelectAssignedTo}
                   options={this.createOptionsUsers(users)}
                   defaultValue={DEFAULT_USER_ASSIGNED}
                 />
               </FormGroup>
             ) : (
-              ''
+              ""
             )}
 
-            <FormGroup className='formgroup-buttons-cancel-save'>
-              <Button color='danger' onClick={this.handleCancel}>
+            <FormGroup className="formgroup-buttons-cancel-save">
+              <Button color="danger" onClick={this.handleCancel}>
                 Cancel
               </Button>
-              <Button onClick={this.handleSave} color='success'>
+              <Button onClick={this.handleSave} color="success">
                 Save
               </Button>
             </FormGroup>

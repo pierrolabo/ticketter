@@ -124,11 +124,14 @@ export class Tickets extends Component {
     this.props.deleteTicket(id, projectID._id);
   };
   render() {
-    const { tickets } = this.props.ticket;
+    let { tickets } = this.props.ticket;
+    tickets = tickets.filter((ticket) => !ticket.isCompleted);
     const { projects } = this.props.project;
     const { users } = this.props.user;
     const { role } = this.props.auth;
     const hasRightToDelete = role === "ADMIN" || role === "PROJECT_MANAGER";
+    const hasRightToEdit = role !== "USER";
+
     return (
       <Container className=" mt-5">
         <Row>

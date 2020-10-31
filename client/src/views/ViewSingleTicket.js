@@ -104,7 +104,7 @@ class ViewSingleTicket extends Component {
     const assigned_to = this.getUserFromID(ticket.assigned_to);
     const loading = this.props.ticket.isLoading;
     const hasRightOptions = this.props.auth.role !== "USER";
-    console.log("role:", this.props.auth.role);
+    console.log("role:", this.props.auth);
     return (
       <Row className="m-auto">
         <Col md="12" sm="12" lg="8" className="mt-5">
