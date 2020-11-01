@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Container,
   Card,
@@ -8,24 +8,43 @@ import {
   FormGroup,
   Label,
   Input,
-} from "reactstrap";
-//  Redux
-import { connect } from "react-redux";
-import { addProject } from "../actions/projectActions";
+  Alert,
+} from 'reactstrap';
 
-import { history } from "../configureStore";
+//  Redux
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { addProject } from '../actions/projectActions';
+
+import { history } from '../configureStore';
 class CreateProject extends Component {
   state = {
-    name: "",
-    description: "",
+    name: '',
+    description: '',
+    msg: null,
   };
+  static propTypes = {
+    error: PropTypes.object.isRequired,
+  };
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+    if (error !== prevProps.error) {
+      console.log('error in createticket: ', error);
+      //check for register error
+      if (error.id === 'ADD_PROJECT_FAIL') {
+        this.setState({ msg: error.msg.msg });
+      } else {
+        this.setState({ msg: null });
+      }
+    }
+  }
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
   handleCancel = () => {
-    history.push("/projects");
+    history.push('/projects');
   };
   handleSubmit = () => {
     const { name, description } = this.state;
@@ -38,6 +57,7 @@ class CreateProject extends Component {
       <Container className="createproject-container mt-5">
         <Card>
           <CardHeader className="text-center">Create a new project</CardHeader>
+          {this.state.msg ? <Alert color="danger">{this.state.msg}</Alert> : ''}
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
               <Label for="name">name</Label>
@@ -77,5 +97,6 @@ class CreateProject extends Component {
 }
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  error: state.error,
 });
 export default connect(mapStateToProps, { addProject })(CreateProject);
