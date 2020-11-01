@@ -51,6 +51,7 @@ class DetailsProject extends Component {
               tickets={filteredTickets}
               users={users}
               role={role}
+              projects={projects}
               handleDelete={this.handleDelete}
             />
           </Container>
