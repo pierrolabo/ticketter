@@ -30,24 +30,23 @@ export class HomeTicketsCards extends Component {
       ticketNumber: 25,
       ticketType: 'URGENT',
     };
-    let unresolvedTicket = {
+    let completedTickets = {
       ticketNumber: 5,
-      ticketType: 'UNRESOLVED',
+      ticketType: 'COMPLETED',
     };
-    const { tickets } = this.props.ticket;
+    let { tickets } = this.props.ticket;
+    const filteredTickets = tickets.filter((ticket) => !ticket.isCompleted);
     if (tickets) {
-      newTicket.ticketNumber = tickets.filter(
+      newTicket.ticketNumber = filteredTickets.filter(
         (ticket) => ticket.status === 'NEW'
       ).length;
-      progressTicket.ticketNumber = tickets.filter(
+      progressTicket.ticketNumber = filteredTickets.filter(
         (ticket) => ticket.status === 'PROGRESS'
       ).length;
-      urgentTicket.ticketNumber = tickets.filter(
+      urgentTicket.ticketNumber = filteredTickets.filter(
         (ticket) => ticket.status === 'URGENT'
       ).length;
-      unresolvedTicket.ticketNumber = tickets.filter((ticket) => {
-        return ticket.status !== 'UNRESOLVED';
-      }).length;
+      completedTickets.ticketNumber = tickets.length;
     }
     const noProjectForUser = this.props.project.projects.length > 0;
     return (
@@ -63,7 +62,7 @@ export class HomeTicketsCards extends Component {
             <TicketCard ticketInfo={urgentTicket} />
           </Col>
           <Col md="6" lg="3">
-            <TicketCard ticketInfo={unresolvedTicket} />
+            <TicketCard ticketInfo={completedTickets} />
           </Col>
         </Row>
         <Row className="sorry-no-projects">
