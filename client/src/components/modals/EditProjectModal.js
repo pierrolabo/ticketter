@@ -31,7 +31,7 @@ class EditProjectModal extends Component {
     userList: null,
     nextUserList: null,
   };
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { name, description, _id, userList } = this.props.editProject;
     this.setState({ name, description, _id, userList });
   }
@@ -67,21 +67,21 @@ class EditProjectModal extends Component {
         <ModalBody>
           <Form onSubmit={this.handleSave}>
             <FormGroup>
-              <Label for='name'>Name</Label>
+              <Label for="name">Name</Label>
               <Input
-                type='name'
-                name='name'
-                id='name'
+                type="name"
+                name="name"
+                id="name"
                 value={this.state.name}
                 onChange={this.handleChange}
               ></Input>
             </FormGroup>
             <FormGroup>
-              <Label for='description'>Description</Label>
+              <Label for="description">Description</Label>
               <Input
-                type='textarea'
-                name='description'
-                id='textarea'
+                type="textarea"
+                name="description"
+                id="textarea"
                 value={this.state.description}
                 onChange={this.handleChange}
               />
@@ -92,8 +92,8 @@ class EditProjectModal extends Component {
               handleChange={this.handleChangeSelectAssignedUsers}
             />
             <FormGroup>
-              <Button color='secondary'>Cancel</Button>
-              <Button onClick={this.handleSave} color='success'>
+              <Button color="secondary">Cancel</Button>
+              <Button onClick={this.handleSave} color="success">
                 Save
               </Button>
             </FormGroup>

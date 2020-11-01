@@ -61,7 +61,7 @@ class EditTicketModal extends Component {
     projectID: '',
     nextProjID: null,
   };
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     //this.props.getUsers();
     const {
       title,
@@ -124,29 +124,29 @@ class EditTicketModal extends Component {
         <ModalBody>
           <Form onSubmit={this.handleSubmitModal}>
             <FormGroup>
-              <Label for='title'>Title</Label>
+              <Label for="title">Title</Label>
               <Input
-                type='title'
-                name='title'
-                id='title'
+                type="title"
+                name="title"
+                id="title"
                 value={this.state.title}
                 onChange={this.handleChange}
               ></Input>
             </FormGroup>
             <FormGroup>
-              <Label for='description'>Description</Label>
+              <Label for="description">Description</Label>
               <Input
-                type='textarea'
-                name='description'
-                id='textarea'
+                type="textarea"
+                name="description"
+                id="textarea"
                 value={this.state.description}
                 onChange={this.handleChange}
               />
             </FormGroup>
             <FormGroup>
-              <Label for='status'>Ticket Status</Label>
+              <Label for="status">Ticket Status</Label>
               <Select
-                name='statusSelect'
+                name="statusSelect"
                 onChange={this.handleChangeSelectStatus}
                 options={STATUS}
                 defaultValue={createDefaultStatus(this.state.status)}
@@ -159,9 +159,9 @@ class EditTicketModal extends Component {
             />
             {users.length > 0 && this.state.assigned_to != null ? (
               <FormGroup>
-                <Label for='assigned'>Assigned to</Label>
+                <Label for="assigned">Assigned to</Label>
                 <Select
-                  name='assignedSelect'
+                  name="assignedSelect"
                   onChange={this.handleChangeSelectAssignedTo}
                   options={createOptionsUsers(users)}
                   defaultValue={createDefaultUser(
@@ -175,8 +175,8 @@ class EditTicketModal extends Component {
             )}
 
             <FormGroup>
-              <Button color='secondary'>Cancel</Button>
-              <Button onClick={this.handleSave} color='success'>
+              <Button color="secondary">Cancel</Button>
+              <Button onClick={this.handleSave} color="success">
                 Save
               </Button>
             </FormGroup>
