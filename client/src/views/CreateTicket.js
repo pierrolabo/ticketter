@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Container,
   Card,
@@ -8,33 +8,36 @@ import {
   Label,
   Input,
   CardHeader,
-} from "reactstrap";
-import Select from "react-select";
+  Alert,
+} from 'reactstrap';
+import Select from 'react-select';
 
 //  Redux
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { getTickets } from "../actions/ticketActions";
-import { getProjects } from "../actions/projectActions";
-import { createTicket } from "../actions/ticketActions";
-import { getUsers } from "../actions/userActions";
-import { history } from "../configureStore";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getTickets } from '../actions/ticketActions';
+import { getProjects } from '../actions/projectActions';
+import { createTicket } from '../actions/ticketActions';
+import { getUsers } from '../actions/userActions';
+import { history } from '../configureStore';
+import { clearErrors } from '../actions/errorActions';
 
 const STATUS_TICKET = [
-  { value: "NEW", label: "NEW" },
-  { value: "URGENT", label: "URGENT" },
-  { value: "PROGRESS", label: "PROGRESS" },
-  { value: "UNRESOLVED", label: "UNRESOLVED" },
+  { value: 'NEW', label: 'NEW' },
+  { value: 'URGENT', label: 'URGENT' },
+  { value: 'PROGRESS', label: 'PROGRESS' },
+  { value: 'UNRESOLVED', label: 'UNRESOLVED' },
 ];
-const DEFAULT_STATUS_TICKET = [{ value: "NEW", label: "NEW" }];
-const DEFAULT_USER_ASSIGNED = [{ value: "NEW", label: "UNASSIGNED" }];
+const DEFAULT_STATUS_TICKET = [{ value: 'NEW', label: 'NEW' }];
+const DEFAULT_USER_ASSIGNED = [{ value: 'NEW', label: 'UNASSIGNED' }];
 class CreateTicket extends Component {
   state = {
-    title: "",
-    description: "",
-    status: "",
+    title: '',
+    description: '',
+    status: '',
     projectID: null,
-    assigned_to: "",
+    assigned_to: '',
+    msg: null,
   };
   static propTypes = {
     auth: PropTypes.object.isRequired,
@@ -44,6 +47,8 @@ class CreateTicket extends Component {
     createTicket: PropTypes.func.isRequired,
     getProjects: PropTypes.func.isRequired,
     getUsers: PropTypes.func.isRequired,
+    error: PropTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired,
   };
   createOptionsUsers = () => {
     let filteredUsers = this.props.user.users.map((user) => {
@@ -52,7 +57,7 @@ class CreateTicket extends Component {
         label: `${user.name} ${user.lastname} | ${user.role}`,
       };
     });
-    return [{ value: "", label: "UNASSIGNED" }, ...filteredUsers];
+    return [{ value: '', label: 'UNASSIGNED' }, ...filteredUsers];
   };
   createOptionsProjects = () => {
     return this.props.project.projects.map((project) => {
@@ -65,7 +70,7 @@ class CreateTicket extends Component {
   createDefaultProject = (defaultProject) => {
     if (!defaultProject) {
       let defaultProject = this.props.project.projects.filter(
-        (project) => project.name === "GENERAL"
+        (project) => project.name === 'GENERAL'
       );
       //  if there is a GENERAL Project
       if (defaultProject.length > 0) {
@@ -73,7 +78,7 @@ class CreateTicket extends Component {
           { value: defaultProject[0]._id, label: defaultProject[0].name },
         ];
       } else {
-        return [{ value: "", label: "GENERAL" }];
+        return [{ value: '', label: 'GENERAL' }];
       }
     }
   };
@@ -81,6 +86,18 @@ class CreateTicket extends Component {
     this.props.getUsers();
     this.props.getProjects();
     this.props.getTickets();
+  }
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+    if (error !== prevProps.error) {
+      console.log('error in createticket: ', error);
+      //check for register error
+      if (error.id === 'CREATE_TICKET_FAIL') {
+        this.setState({ msg: error.msg.msg });
+      } else {
+        this.setState({ msg: null });
+      }
+    }
   }
   handleChange = (e) => {
     this.setState({
@@ -97,7 +114,7 @@ class CreateTicket extends Component {
     this.setState({ projectID: e.value });
   };
   handleCancel = () => {
-    history.push("/tickets");
+    history.push('/tickets');
   };
   handleSave = () => {
     const { title, description, status, assigned_to, projectID } = this.state;
@@ -110,7 +127,7 @@ class CreateTicket extends Component {
       assigned_to,
       projectID,
     };
-    console.log("new ticket: ", newTicket);
+    console.log('new ticket: ', newTicket);
     this.props.createTicket(newTicket);
   };
   render() {
@@ -121,6 +138,7 @@ class CreateTicket extends Component {
       <Container className="createticket-container mt-5">
         <Card>
           <CardHeader className="text-center">Create a new ticket</CardHeader>
+          {this.state.msg ? <Alert color="danger">{this.state.msg}</Alert> : ''}
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
               <Label for="title">Title</Label>
@@ -161,7 +179,7 @@ class CreateTicket extends Component {
                 defaultValue={this.createDefaultProject()}
               />
             </FormGroup>
-            {role !== "USER" ? (
+            {role !== 'USER' ? (
               <FormGroup>
                 <Label for="assigned">Assigned to</Label>
                 <Select
@@ -172,7 +190,7 @@ class CreateTicket extends Component {
                 />
               </FormGroup>
             ) : (
-              ""
+              ''
             )}
 
             <FormGroup className="formgroup-buttons-cancel-save">
@@ -195,10 +213,12 @@ const mapStateToProps = (state) => ({
   ticket: state.ticket,
   project: state.project,
   user: state.user,
+  error: state.error,
 });
 export default connect(mapStateToProps, {
   getTickets,
   getProjects,
   getUsers,
   createTicket,
+  clearErrors,
 })(CreateTicket);
