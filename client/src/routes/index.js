@@ -9,7 +9,6 @@ import AdminOrPGRoute from './AdminOrPGRoute';
 //  Redux
 import { connect } from 'react-redux';
 //  Components
-import NavBar from '../components/NavBar';
 import SideBar from '../components/sidebar/SideBar';
 import Layout from '../components/layout/layout';
 
@@ -35,7 +34,7 @@ class Routes extends Component {
     this.props.getProjects();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //  If a user just logged in
     if (
       nextProps.auth.isAuthenticated !== this.props.auth.isAuthenticated &&

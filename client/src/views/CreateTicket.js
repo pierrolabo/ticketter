@@ -8,6 +8,7 @@ import {
   Label,
   Input,
   CardHeader,
+  Alert,
 } from 'reactstrap';
 import Select from 'react-select';
 
@@ -19,6 +20,7 @@ import { getProjects } from '../actions/projectActions';
 import { createTicket } from '../actions/ticketActions';
 import { getUsers } from '../actions/userActions';
 import { history } from '../configureStore';
+import { clearErrors } from '../actions/errorActions';
 
 const STATUS_TICKET = [
   { value: 'NEW', label: 'NEW' },
@@ -35,6 +37,7 @@ class CreateTicket extends Component {
     status: '',
     projectID: null,
     assigned_to: '',
+    msg: null,
   };
   static propTypes = {
     auth: PropTypes.object.isRequired,
@@ -44,6 +47,8 @@ class CreateTicket extends Component {
     createTicket: PropTypes.func.isRequired,
     getProjects: PropTypes.func.isRequired,
     getUsers: PropTypes.func.isRequired,
+    error: PropTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired,
   };
   createOptionsUsers = () => {
     let filteredUsers = this.props.user.users.map((user) => {
@@ -77,10 +82,21 @@ class CreateTicket extends Component {
       }
     }
   };
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getUsers();
     this.props.getProjects();
     this.props.getTickets();
+  }
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+    if (error !== prevProps.error) {
+      //check for register error
+      if (error.id === 'CREATE_TICKET_FAIL') {
+        this.setState({ msg: error.msg.msg });
+      } else {
+        this.setState({ msg: null });
+      }
+    }
   }
   handleChange = (e) => {
     this.setState({
@@ -117,44 +133,45 @@ class CreateTicket extends Component {
     const { users } = this.props.user;
     const role = this.props.auth.user.role;
     return (
-      <Container className='createticket-container'>
+      <Container className="createticket-container mt-5">
         <Card>
-          <CardHeader className='text-center'>Create a new ticket</CardHeader>
+          <CardHeader className="text-center">Create a new ticket</CardHeader>
+          {this.state.msg ? <Alert color="danger">{this.state.msg}</Alert> : ''}
           <Form onSubmit={this.handleSubmit}>
             <FormGroup>
-              <Label for='title'>Title</Label>
+              <Label for="title">Title</Label>
               <Input
-                type='title'
-                name='title'
-                id='title'
-                placeholder='What is the problem ?'
+                type="title"
+                name="title"
+                id="title"
+                placeholder="What is the problem ?"
                 value={this.state.title}
                 onChange={this.handleChange}
               ></Input>
             </FormGroup>
             <FormGroup>
-              <Label for='description'>Description</Label>
+              <Label for="description">Description</Label>
               <Input
-                type='textarea'
-                name='description'
-                placeholder='Describe the problem...'
+                type="textarea"
+                name="description"
+                placeholder="Describe the problem..."
                 value={this.state.description}
                 onChange={this.handleChange}
               />
             </FormGroup>
             <FormGroup>
-              <Label for='status'>Ticket Status</Label>
+              <Label for="status">Ticket Status</Label>
               <Select
-                name='statusSelect'
+                name="statusSelect"
                 onChange={this.handleChangeSelectStatus}
                 options={STATUS_TICKET}
                 defaultValue={DEFAULT_STATUS_TICKET}
               />
             </FormGroup>
             <FormGroup>
-              <Label for='assigned'>Assigned Project</Label>
+              <Label for="assigned">Assigned Project</Label>
               <Select
-                name='assignedProject'
+                name="assignedProject"
                 onChange={this.handleChangeSelectAssignedProject}
                 options={this.createOptionsProjects(projects)}
                 defaultValue={this.createDefaultProject()}
@@ -162,9 +179,9 @@ class CreateTicket extends Component {
             </FormGroup>
             {role !== 'USER' ? (
               <FormGroup>
-                <Label for='assigned'>Assigned to</Label>
+                <Label for="assigned">Assigned to</Label>
                 <Select
-                  name='assignedSelect'
+                  name="assignedSelect"
                   onChange={this.handleChangeSelectAssignedTo}
                   options={this.createOptionsUsers(users)}
                   defaultValue={DEFAULT_USER_ASSIGNED}
@@ -174,11 +191,11 @@ class CreateTicket extends Component {
               ''
             )}
 
-            <FormGroup className='formgroup-buttons-cancel-save'>
-              <Button color='danger' onClick={this.handleCancel}>
+            <FormGroup className="formgroup-buttons-cancel-save">
+              <Button color="danger" onClick={this.handleCancel}>
                 Cancel
               </Button>
-              <Button onClick={this.handleSave} color='success'>
+              <Button onClick={this.handleSave} color="success">
                 Save
               </Button>
             </FormGroup>
@@ -194,10 +211,12 @@ const mapStateToProps = (state) => ({
   ticket: state.ticket,
   project: state.project,
   user: state.user,
+  error: state.error,
 });
 export default connect(mapStateToProps, {
   getTickets,
   getProjects,
   getUsers,
   createTicket,
+  clearErrors,
 })(CreateTicket);

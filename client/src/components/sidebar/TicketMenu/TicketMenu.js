@@ -11,9 +11,9 @@ const TicketMenu = (props) => {
   return (
     <ListGroup>
       <ListGroupItem
-        className='ticketmenu menu-head'
+        className="ticketmenu menu-head"
         active
-        tag='button'
+        tag="button"
         onClick={handleClickMenu}
       >
         All my Tickets
@@ -24,10 +24,10 @@ const TicketMenu = (props) => {
           return (
             <ListGroupItem
               key={ticket._id}
-              className='menu-icon'
+              className="menu-icon"
               onClick={handleClick}
               id={ticket._id}
-              tag='button'
+              tag="button"
               action
             >
               <FontAwesomeIcon icon={faTicketAlt}></FontAwesomeIcon>
@@ -35,11 +35,12 @@ const TicketMenu = (props) => {
             </ListGroupItem>
           );
         }
+        return null;
       })}
       <ListGroupItem
-        className='menu-head'
+        className="menu-head"
         active
-        tag='button'
+        tag="button"
         onClick={handleClickCreate}
       >
         Create a ticket

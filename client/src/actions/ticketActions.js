@@ -91,6 +91,7 @@ export const setCompletedTicket = (id, userID) => (dispatch) => {
   axios
     .put(`/api/tickets/setCompletedTicket/${id}`, body, config)
     .then((res) => {
+      console.log('ACTION: setCompletedTicket: ', res.data);
       dispatch({
         type: COMPLETED_TICKET,
         payload: res.data,

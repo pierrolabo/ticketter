@@ -1,40 +1,25 @@
-import React, { useState } from "react";
-import {
-  Card,
-  CardImg,
-  Popover,
-  PopoverHeader,
-  PopoverBody,
-  Col,
-} from "reactstrap";
+import React from 'react';
+import { Card, CardImg } from 'reactstrap';
+
+import Popover from '../popover/popover';
 
 const UserListSingleProject = (props) => {
   const { user, index } = props;
-  const [popoverOpen, setPopoverOpen] = useState(false);
-
-  const toggle = () => setPopoverOpen(!popoverOpen);
   return (
     <Card
       key={user._id}
       id={`popover${index}`}
-      style={{ width: "50px", height: "50px" }}
+      style={{ width: '50px', height: '50px' }}
       className=""
     >
       <CardImg
         top
         width="50%"
-        src={process.env.PUBLIC_URL + "/avatar.png"}
+        src={process.env.PUBLIC_URL + '/avatar.png'}
         alt="Card image cap"
       />
-      <Popover
-        placement="bottom"
-        isOpen={popoverOpen}
-        target={`popover${index}`}
-        toggle={toggle}
-      >
-        <PopoverHeader>{`${user.name} ${user.lastname}`}</PopoverHeader>
-        <PopoverBody>{user.email}</PopoverBody>
-      </Popover>
+
+      <Popover user={user} index={index} />
     </Card>
   );
 };
