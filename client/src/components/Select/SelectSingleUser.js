@@ -21,7 +21,7 @@ export const SelectSingleUser = (props) => {
   //  this project is selected as default inside the select
   const createDefaultUser = (users, userID) => {
     if (userID !== '') {
-      let defaultUser = users.map((user) => {
+      let defaultUser = users.forEach((user) => {
         if (user._id === userID) {
           return {
             value: user._id,
@@ -36,9 +36,9 @@ export const SelectSingleUser = (props) => {
   };
   return (
     <FormGroup>
-      <Label for='assigned'>Assigned User</Label>
+      <Label for="assigned">Assigned User</Label>
       <Select
-        name='assignedProject'
+        name="assignedProject"
         onChange={props.handleChange}
         options={createOptionsUser(users)}
         defaultValue={createDefaultUser(users, assigned_to)}

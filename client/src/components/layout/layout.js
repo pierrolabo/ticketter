@@ -1,9 +1,7 @@
 import React from 'react';
 import { Container, Row } from 'reactstrap';
 
-//  Components
 import NavBar from '../NavBar';
-import Footer from '../Footer/footer';
 
 const Layout = ({ children }) => {
   return (

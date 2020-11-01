@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Container,
   Card,
@@ -8,20 +8,20 @@ import {
   Col,
   Row,
   Button,
-} from "reactstrap";
+} from 'reactstrap';
 
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { getUsers } from "../actions/userActions";
-import { getTicket } from "../actions/ticketActions";
-import { addReply } from "../actions/ticketActions";
-import { clearTicket } from "../actions/ticketActions";
-import { deleteReply } from "../actions/ticketActions";
-import { setCompletedTicket } from "../actions/ticketActions";
-import { setAssignedTo } from "../actions/ticketActions";
-import { Answer } from "../components/Answer/Answer";
-import { AddAnswer } from "../components/Answer/AddAnswer";
-import SelectSingleUser from "../components/Select/SelectSingleUser";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getUsers } from '../actions/userActions';
+import { getTicket } from '../actions/ticketActions';
+import { addReply } from '../actions/ticketActions';
+import { clearTicket } from '../actions/ticketActions';
+import { deleteReply } from '../actions/ticketActions';
+import { setCompletedTicket } from '../actions/ticketActions';
+import { setAssignedTo } from '../actions/ticketActions';
+import { Answer } from '../components/Answer/Answer';
+import { AddAnswer } from '../components/Answer/AddAnswer';
+import SelectSingleUser from '../components/Select/SelectSingleUser';
 
 class ViewSingleTicket extends Component {
   static propTypes = {
@@ -34,19 +34,19 @@ class ViewSingleTicket extends Component {
   state = {
     nextAssignedUser: null,
   };
-  async componentWillMount() {
+  UNSAFE_componentWillMount() {
     //  Get the params in url
     const id = this.props.router.location.pathname.slice(14);
-    await this.props.getTicket(id);
+    this.props.getTicket(id);
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     try {
       //  If the key in history has change, it means the location has changed
       //  So we update the ticket
       if (prevProps.router.location.key !== this.props.router.location.key) {
         const id = this.props.router.location.pathname.slice(14);
-        this.props.getTicket(id);
+        await this.props.getTicket(id);
       }
     } catch (err) {}
   }
@@ -70,13 +70,14 @@ class ViewSingleTicket extends Component {
     this.props.deleteReply(ticketID, answerID);
   };
   getUserFromID = (id) => {
+    if (id === '') return 'Unassigned';
     const { users } = this.props.user;
     const filteredUser = users.filter((user) => user._id === id);
     //  If no user has been found, return default
     if (filteredUser.length !== 0) {
       return filteredUser[0].email;
     }
-    return "User not Found";
+    return 'User not Found';
   };
   handleChangeSelectUser = (event) => {
     this.setState({
@@ -97,14 +98,33 @@ class ViewSingleTicket extends Component {
     this.props.setCompletedTicket(ticketID, user._id);
   };
   render() {
-    const ticket = this.props.ticket.ticket;
+    //  default ticket to print
+    let ticket = {
+      answers: [],
+      history: [],
+      status: 'PROGRESS',
+      assigned_to: '5f9596e82a5d267341e909fb',
+      completed_by: null,
+      ip_address: null,
+      isCompleted: false,
+      _id: '5f981747d1e1983424ceb3e4',
+      projectID: '5f9410c86fdcef63a19cd1b6',
+      title: 'loading',
+      description: 'validated',
+      created_by: '5f95975d2a5d267341e909fe',
+      last_updated: '2020-10-27T12:49:11.745Z',
+      date: '2020-10-27T12:49:11.745Z',
+      __v: 0,
+    };
+    let loadingTicket = this.props.ticket.ticket;
+    //  Fix a bug when this.props.ticket is undefined
+    if (loadingTicket) ticket = loadingTicket;
     const { users } = this.props.user;
     const answers = ticket.answers;
     const created_by = this.getUserFromID(ticket.created_by);
     const assigned_to = this.getUserFromID(ticket.assigned_to);
     const loading = this.props.ticket.isLoading;
-    const hasRightOptions = this.props.auth.role !== "USER";
-    console.log("role:", this.props.auth.role);
+    const hasRightOptions = this.props.auth.role !== 'USER';
     return (
       <Row className="m-auto">
         <Col md="12" sm="12" lg="8" className="mt-5">
@@ -127,11 +147,11 @@ class ViewSingleTicket extends Component {
                     <span>{new Date(ticket.date).toUTCString()}</span>
                   </Col>
                   {ticket.isCompleted ? (
-                    <Col md="12" lg="3">
+                    <Col md="12" lg="3" className="text-right">
                       <Badge color="danger">Completed</Badge>
                     </Col>
                   ) : (
-                    <Col md="12" lg="3">
+                    <Col md="12" lg="3" className="text-right">
                       <Badge color="danger">{ticket.status}</Badge>
                     </Col>
                   )}
@@ -158,7 +178,7 @@ class ViewSingleTicket extends Component {
         <Col md="12" lg="4">
           <Container className=" mt-sm-3 pl-sm-0 mt-md-5">
             {ticket.isCompleted || !hasRightOptions ? (
-              ""
+              ''
             ) : (
               <Button color="danger" onClick={this.handleMarkAsCompleted}>
                 Mark as Completed
@@ -175,14 +195,14 @@ class ViewSingleTicket extends Component {
                 handleChange={this.handleChangeSelectUser}
               />
             ) : (
-              ""
+              ''
             )}
             {this.state.nextAssignedUser ? (
               <Button color="success" onClick={this.handleSaveSelectUser}>
                 Reassign
               </Button>
             ) : (
-              ""
+              ''
             )}
           </Container>
         </Col>
