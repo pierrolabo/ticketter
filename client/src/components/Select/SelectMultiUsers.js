@@ -24,7 +24,7 @@ export const SelectMultiUsers = (props) => {
   //  this project is selected as default inside the select
   const createDefaultUser = (users, userList) => {
     if (userList.length > 0) {
-      let filteredUsers = users.map((user) => {
+      let filteredUsers = users.forEach((user) => {
         if (userList.includes(user._id)) {
           return {
             value: user._id,
@@ -37,9 +37,9 @@ export const SelectMultiUsers = (props) => {
   };
   return (
     <FormGroup>
-      <Label for='assigned'>Assigned Users</Label>
+      <Label for="assigned">Assigned Users</Label>
       <Select
-        name='assignedProject'
+        name="assignedProject"
         onChange={props.handleChange}
         options={createOptionsUsers(users)}
         defaultValue={createDefaultUser(users, userList)}

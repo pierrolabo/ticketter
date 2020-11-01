@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loadUser } from '../actions/authActions';
-//  Bootstrap Elm
-import { Container } from 'reactstrap';
+
 import JumbotronLanding from '../components/jumbotron/jumbotron';
 import Features from '../components/features/features';
 

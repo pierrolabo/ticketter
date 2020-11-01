@@ -1,26 +1,26 @@
-import React from "react";
+import React from 'react';
 
-import { Table } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { history } from "../../configureStore";
+import { Table } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { history } from '../../configureStore';
 
 const TicketListSingleProject = (props) => {
   const { tickets, role, users } = props;
-  const authorizedToEdit = role === "ADMIN" || role === "PROJECT_MANAGER";
-  const hasRightToDelete = role === "ADMIN" || role === "PROJECT_MANAGER";
+  const authorizedToEdit = role === 'ADMIN' || role === 'PROJECT_MANAGER';
+  const hasRightToDelete = role === 'ADMIN' || role === 'PROJECT_MANAGER';
 
   const getUserFromID = (id) => {
     //  If ID is null then te ticket is unassigned
-    if (id === "") {
-      return "Unassigned";
+    if (id === '') {
+      return 'Unassigned';
     }
     const filteredUser = users.filter((user) => user._id === id);
     //  If no user has been found, return default
     if (filteredUser.length !== 0) {
       return filteredUser[0].email;
     }
-    return "User not Found";
+    return 'User not Found';
   };
   const handleView = (event) => {
     //  The modal is close
@@ -50,7 +50,7 @@ const TicketListSingleProject = (props) => {
       <tbody>
         {tickets.map((ticket) => {
           return (
-            <tr key={ticket._id} id={ticket._id} scope="row">
+            <tr key={ticket._id} id={ticket._id}>
               <th>{ticket.title}</th>
               <th>{getUserFromID(ticket.created_by)}</th>
               <th>{getUserFromID(ticket.assigned_to)}</th>

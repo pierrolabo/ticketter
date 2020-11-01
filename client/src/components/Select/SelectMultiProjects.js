@@ -22,7 +22,7 @@ export const SelectMultiProjects = (props) => {
   //  if the user already has a project assigned
   //  this project is selected as default inside the select
   const createDefaultProject = (projects, id) => {
-    let filteredProjects = projects.map((project) => {
+    let filteredProjects = projects.forEach((project) => {
       if (project.userList.includes(id)) {
         return {
           value: project._id,
@@ -34,9 +34,9 @@ export const SelectMultiProjects = (props) => {
   };
   return (
     <FormGroup>
-      <Label for='assigned'>Assigned Projects</Label>
+      <Label for="assigned">Assigned Projects</Label>
       <Select
-        name='assignedProject'
+        name="assignedProject"
         onChange={props.handleChange}
         options={createOptionsProjects(projects)}
         defaultValue={createDefaultProject(projects, id)}
