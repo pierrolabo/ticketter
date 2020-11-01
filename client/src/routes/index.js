@@ -34,7 +34,7 @@ class Routes extends Component {
     this.props.getProjects();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     //  If a user just logged in
     if (
       nextProps.auth.isAuthenticated !== this.props.auth.isAuthenticated &&

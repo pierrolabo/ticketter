@@ -82,7 +82,7 @@ class CreateTicket extends Component {
       }
     }
   };
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getUsers();
     this.props.getProjects();
     this.props.getTickets();
@@ -90,7 +90,6 @@ class CreateTicket extends Component {
   componentDidUpdate(prevProps) {
     const { error } = this.props;
     if (error !== prevProps.error) {
-      console.log('error in createticket: ', error);
       //check for register error
       if (error.id === 'CREATE_TICKET_FAIL') {
         this.setState({ msg: error.msg.msg });
@@ -127,7 +126,6 @@ class CreateTicket extends Component {
       assigned_to,
       projectID,
     };
-    console.log('new ticket: ', newTicket);
     this.props.createTicket(newTicket);
   };
   render() {

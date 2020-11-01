@@ -28,7 +28,7 @@ export class Tickets extends Component {
     getProjects: PropTypes.func.isRequired,
     getUsers: PropTypes.func.isRequired,
   };
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getProjects();
     this.props.getTickets();
     this.props.getUsers();

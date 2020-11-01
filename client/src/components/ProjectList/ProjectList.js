@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { Card, CardBody, CardHeader, Container, Table } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faEye } from "@fortawesome/free-solid-svg-icons";
+import { Card, CardBody, CardHeader, Container, Table } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faEye } from '@fortawesome/free-solid-svg-icons';
 
-import { getUsers } from "../../actions/userActions";
-import { getProjects } from "../../actions/projectActions";
-import { deleteProject } from "../../actions/projectActions";
+import { getUsers } from '../../actions/userActions';
+import { getProjects } from '../../actions/projectActions';
+import { deleteProject } from '../../actions/projectActions';
 
-import EditProjectModal from "../modals/EditProjectModal";
-import ConfirmDeleteModal from "../modals/ConfirmDeleteModal";
-import { history } from "../../configureStore";
+import EditProjectModal from '../modals/EditProjectModal';
+import ConfirmDeleteModal from '../modals/ConfirmDeleteModal';
+import { history } from '../../configureStore';
 export class ProjectList extends Component {
   state = {
     modal: false,
@@ -59,8 +59,8 @@ export class ProjectList extends Component {
   render() {
     const { projects } = this.props.project;
     const hasRightToModify =
-      this.props.auth.role === "ADMIN" ||
-      this.props.auth.role === "PROJECT_MANAGER";
+      this.props.auth.role === 'ADMIN' ||
+      this.props.auth.role === 'PROJECT_MANAGER';
     return (
       <Container>
         {this.state.modal ? (
@@ -72,7 +72,7 @@ export class ProjectList extends Component {
             toggleModal={this.toggleModal}
           />
         ) : (
-          ""
+          ''
         )}
         <Card>
           <CardHeader className="text-center">Project List</CardHeader>
@@ -89,10 +89,10 @@ export class ProjectList extends Component {
                 </tr>
               </thead>
               <tbody>
-                {projects.map((project) => {
+                {projects.map((project, index) => {
                   let projectNbr = project.tickets ? project.tickets.length : 0;
                   return (
-                    <tr key={project._id}>
+                    <tr key={index}>
                       <th>{project.name}</th>
                       <th>{project.description}</th>
                       <th>{projectNbr}</th>
