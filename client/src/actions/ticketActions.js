@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
 //  We cant use thunk to getState()
 //  So we import it manually
-import { store } from "../configureStore";
+import { store } from '../configureStore';
 import {
   GET_TICKET,
   GET_TICKET_SUCCESS,
@@ -23,9 +23,9 @@ import {
   COMPLETED_TICKET,
   UPDATE_ASSIGNED_TO,
   DELETE_TICKET,
-} from "../actions/types";
-import { history } from "../configureStore";
-import { returnErrors } from "./errorActions";
+} from '../actions/types';
+import { history } from '../configureStore';
+import { returnErrors } from './errorActions';
 
 export const deleteTicket = (id, projectID) => (dispatch) => {
   axios
@@ -37,12 +37,12 @@ export const deleteTicket = (id, projectID) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log("err: ", err);
+      console.log('err: ', err);
       dispatch(
         returnErrors(
           err.response.data,
           err.response.status,
-          "DELETE_TICKET_FAIL"
+          'DELETE_TICKET_FAIL'
         )
       );
     });
@@ -51,7 +51,7 @@ export const setAssignedTo = (id, userID) => (dispatch) => {
   //    Headers
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
   // body request
@@ -67,12 +67,12 @@ export const setAssignedTo = (id, userID) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log("err: ", err);
+      console.log('err: ', err);
       dispatch(
         returnErrors(
           err.response.data,
           err.response.status,
-          "UPDATE_ASSIGNED_TO_FAIL"
+          'UPDATE_ASSIGNED_TO_FAIL'
         )
       );
     });
@@ -81,7 +81,7 @@ export const setCompletedTicket = (id, userID) => (dispatch) => {
   //    Headers
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
   // body request
@@ -91,7 +91,7 @@ export const setCompletedTicket = (id, userID) => (dispatch) => {
   axios
     .put(`/api/tickets/setCompletedTicket/${id}`, body, config)
     .then((res) => {
-      console.log("ACTION: setCompletedTicket: ", res.data);
+      console.log('ACTION: setCompletedTicket: ', res.data);
       dispatch({
         type: COMPLETED_TICKET,
         payload: res.data,
@@ -102,7 +102,7 @@ export const setCompletedTicket = (id, userID) => (dispatch) => {
         returnErrors(
           err.response.data,
           err.response.status,
-          "COMPLETED_TICKET_FAIL"
+          'COMPLETED_TICKET_FAIL'
         )
       );
     });
@@ -114,7 +114,7 @@ export const clearTicket = () => (dispatch) => {
 };
 export const deleteReply = (ticketID, answerID) => (dispatch, getState) => {
   axios
-    .delete("/api/reply", { data: { ticketID, answerID } })
+    .delete('/api/reply', { data: { ticketID, answerID } })
     .then((res) => {
       dispatch({
         type: DELETE_REPLY,
@@ -126,7 +126,7 @@ export const deleteReply = (ticketID, answerID) => (dispatch, getState) => {
         returnErrors(
           err.response.data,
           err.response.status,
-          "DELETE_REPLY_FAIL"
+          'DELETE_REPLY_FAIL'
         )
       );
       dispatch({
@@ -138,7 +138,7 @@ export const addReply = (reply, id, userID, status) => (dispatch, getState) => {
   //    Headers
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
   // body request
@@ -157,7 +157,7 @@ export const addReply = (reply, id, userID, status) => (dispatch, getState) => {
     })
     .catch((err) => {
       dispatch(
-        returnErrors(err.response.data, err.response.status, "ADD_REPLY_FAIL")
+        returnErrors(err.response.data, err.response.status, 'ADD_REPLY_FAIL')
       );
       dispatch({
         type: ADD_REPLY_FAIL,
@@ -168,7 +168,7 @@ export const getTickets = () => (dispatch, getState) => {
   dispatch(setTicketsLoading());
 
   axios
-    .get("/api/tickets", tokenConfig())
+    .get('/api/tickets', tokenConfig())
     .then((res) => {
       dispatch({
         type: GET_TICKETS,
@@ -214,7 +214,7 @@ export const updateTicket = ({
   //    Headers
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
   // body request
@@ -240,7 +240,7 @@ export const updateTicket = ({
         returnErrors(
           err.response.data,
           err.response.status,
-          "UPDATE_TICKET_FAIL"
+          'UPDATE_TICKET_FAIL'
         )
       );
       dispatch({
@@ -261,7 +261,7 @@ export const createTicket = ({
   //    Headers
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
   // body request
@@ -274,20 +274,20 @@ export const createTicket = ({
     projectID,
   });
   axios
-    .post("/api/tickets", body, config)
+    .post('/api/tickets', body, config)
     .then((res) => {
       dispatch({
         type: CREATE_TICKET_SUCCESS,
         payload: res.data,
       });
-      history.push("/tickets");
+      history.push('/tickets');
     })
     .catch((err) => {
       dispatch(
         returnErrors(
           err.response.data,
           err.response.status,
-          "CREATE_TICKET_FAIL"
+          'CREATE_TICKET_FAIL'
         )
       );
       dispatch({
@@ -309,13 +309,13 @@ export const tokenConfig = () => {
   //Headers
   const config = {
     headers: {
-      "Content-type": "application/json",
+      'Content-type': 'application/json',
     },
   };
 
   // if tooken, add to headers
   if (token) {
-    config.headers["x-auth-token"] = token;
+    config.headers['x-auth-token'] = token;
   }
   return config;
 };
