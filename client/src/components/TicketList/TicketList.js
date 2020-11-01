@@ -1,26 +1,18 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Container,
-  Table,
-  Col,
-  Row,
-} from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Container, Table, Col, Row } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import EditTicketModal from "../modals/EditTicketModal";
+import EditTicketModal from '../modals/EditTicketModal';
 
-import { getTickets } from "../../actions/ticketActions";
-import { getProjects } from "../../actions/projectActions";
-import { getUsers } from "../../actions/userActions";
-import { deleteTicket } from "../../actions/ticketActions";
-import { history } from "../../configureStore";
+import { getTickets } from '../../actions/ticketActions';
+import { getProjects } from '../../actions/projectActions';
+import { getUsers } from '../../actions/userActions';
+import { deleteTicket } from '../../actions/ticketActions';
+import { history } from '../../configureStore';
 
 export class Tickets extends Component {
   state = {
@@ -73,10 +65,12 @@ export class Tickets extends Component {
     });
   };
 
+  //  return the ticket status or completed if ticket is completed
+  getStatusFromTicket = (ticket) => {};
   getUserFromID = (id) => {
     //  If ID is null then te ticket is unassigned
-    if (id === "") {
-      return "Unassigned";
+    if (id === '') {
+      return 'Unassigned';
     }
     const { users } = this.props.user;
     const filteredUser = users.filter((user) => user._id === id);
@@ -84,7 +78,7 @@ export class Tickets extends Component {
     if (filteredUser.length !== 0) {
       return filteredUser[0].email;
     }
-    return "User not Found";
+    return 'User not Found';
   };
 
   getProjectNameFromTicket = (projects, ticket) => {
@@ -120,15 +114,18 @@ export class Tickets extends Component {
     const projectID = projects.filter((project) =>
       project.tickets.includes(id)
     )[0];
-    console.log("delete: ", id, "project: ", projectID._id);
+    console.log('delete: ', id, 'project: ', projectID._id);
     this.props.deleteTicket(id, projectID._id);
   };
   render() {
-    const { tickets } = this.props.ticket;
+    let { tickets } = this.props.ticket;
+    tickets = tickets.filter((ticket) => !ticket.isCompleted);
     const { projects } = this.props.project;
     const { users } = this.props.user;
     const { role } = this.props.auth;
-    const hasRightToDelete = role === "ADMIN" || role === "PROJECT_MANAGER";
+    const hasRightToDelete = role === 'ADMIN' || role === 'PROJECT_MANAGER';
+    const hasRightToEdit =
+      role === 'ADMIN' || role === 'PROJECT_MANAGER' || role === 'DEVELOPER';
     return (
       <Container className=" mt-5">
         <Row>
@@ -141,9 +138,7 @@ export class Tickets extends Component {
                 editTicket={this.state.editTicket}
                 toggleModal={this.toggleModal}
               />
-            ) : (
-              ""
-            )}
+            ) : null}
             <h1 className="text-center">Ticket List</h1>
             <Table hover className="mt-5">
               <thead>
@@ -153,9 +148,9 @@ export class Tickets extends Component {
                   <th scope="col">assigned_to</th>
                   <th scope="col">status</th>
                   <th scope="col">Project</th>
-                  <th scope="col">Edit</th>
+                  {hasRightToEdit ? <th scope="col">Edit</th> : null}
                   <th scope="col">View</th>
-                  {hasRightToDelete ? <th>Delete</th> : ""}
+                  {hasRightToDelete ? <th>Delete</th> : null}
                 </tr>
               </thead>
               <tbody>
@@ -171,17 +166,19 @@ export class Tickets extends Component {
                       <th>{this.getUserFromID(ticket.assigned_to)}</th>
                       <th>{ticket.status}</th>
                       <th>{this.getProjectNameFromTicket(projects, ticket)}</th>
-                      <th
-                        id={ticket._id}
-                        onClick={this.handleEdit}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <FontAwesomeIcon id={ticket._id} icon={faEdit} />
-                      </th>
+                      {hasRightToEdit ? (
+                        <th
+                          id={ticket._id}
+                          onClick={this.handleEdit}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <FontAwesomeIcon id={ticket._id} icon={faEdit} />
+                        </th>
+                      ) : null}
                       <th
                         onClick={this.handleView}
                         id={ticket._id}
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: 'pointer' }}
                       >
                         <FontAwesomeIcon
                           id={ticket._id}
@@ -192,13 +189,11 @@ export class Tickets extends Component {
                         <th
                           id={ticket._id}
                           onClick={this.handleDelete}
-                          style={{ cursor: "pointer" }}
+                          style={{ cursor: 'pointer' }}
                         >
                           <FontAwesomeIcon id={ticket._id} icon={faTrash} />
                         </th>
-                      ) : (
-                        ""
-                      )}
+                      ) : null}
                     </tr>
                   );
                 })}

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment } from 'react';
 
 import {
   Collapse,
@@ -9,13 +9,13 @@ import {
   Nav,
   NavItem,
   NavLink,
-} from "reactstrap";
+} from 'reactstrap';
 
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { history } from "../configureStore";
-import { clearProjects } from "../actions/projectActions";
-import { logout } from "../actions/authActions";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { history } from '../configureStore';
+import { clearProjects } from '../actions/projectActions';
+import { logout } from '../actions/authActions';
 
 class NavBar extends Component {
   state = {
@@ -37,9 +37,9 @@ class NavBar extends Component {
     this.props.logout();
   };
   handleLogin = () => {
-    history.push("/login");
+    history.push('/login');
   };
-  handleRegister = () => history.push("/register");
+  handleRegister = () => history.push('/register');
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
@@ -48,7 +48,7 @@ class NavBar extends Component {
       <Fragment>
         <NavItem>
           <span className="navbar-text mr-3">
-            <strong>{user ? `Welcome ${user.name}` : ""}</strong>
+            <strong>{user ? `Welcome ${user.name}` : ''}</strong>
           </span>
         </NavItem>
         <NavItem>
@@ -79,9 +79,9 @@ class NavBar extends Component {
         <Navbar color="dark" dark expand="sm" className="mb-8">
           <Container className="navbar-main">
             <NavbarBrand
-              style={{ fontSize: "34px" }}
+              style={{ fontSize: '34px' }}
               className="text-align-left"
-              href="/"
+              href="/dashboard"
             >
               Ticketter
             </NavbarBrand>

@@ -20,20 +20,20 @@ import {
   UPDATE_ASSIGNED_TO,
   DELETE_TICKET_FAIL,
   DELETE_TICKET,
-} from '../actions/types';
+} from "../actions/types";
 
 const initialState = {
   tickets: [],
   ticket: {
     _id: 1,
-    status: 'loading',
+    status: "loading",
     assigned_to: 1,
-    completed_by: 'fake',
+    completed_by: "fake",
     isCompleted: false,
     projectID: 1,
-    title: 'fake',
-    description: 'fake',
-    created_by: 'fake',
+    title: "fake",
+    description: "fake",
+    created_by: "fake",
     date: Date.now,
     answers: [],
   },
@@ -61,6 +61,9 @@ export default function (state = initialState, action) {
     case COMPLETED_TICKET:
       return {
         ...state,
+        tickets: state.tickets.filter(
+          (ticket) => ticket._id !== action.payload._id
+        ),
         ticket: action.payload,
       };
     case DELETE_REPLY:
