@@ -9,7 +9,6 @@ import AdminOrPGRoute from './AdminOrPGRoute';
 //  Redux
 import { connect } from 'react-redux';
 //  Components
-import NavBar from '../components/NavBar';
 import SideBar from '../components/sidebar/SideBar';
 import Layout from '../components/layout/layout';
 

@@ -22,8 +22,8 @@ const TicketCard = (props) => {
         return progressTickets;
       case 'URGENT':
         return urgentTickets;
-      case 'UNRESOLVED':
-        return unresolvedTickets;
+      case 'COMPLETED':
+        return completedTickets;
       default:
         return '';
     }
@@ -76,11 +76,11 @@ const TicketCard = (props) => {
       </Card>
     </Col>
   );
-  const unresolvedTickets = (
+  const completedTickets = (
     <Col>
       <Card xs="4" className="ticketcard">
         <CardBody>
-          <CardTitle className="text-center">Not Resolved Tickets</CardTitle>
+          <CardTitle className="text-center">Completed Tickets</CardTitle>
           <CardText className="text-center">
             <FontAwesomeIcon icon={faTicketAlt} color="#17a2b8" />{' '}
             {ticketNumber}
