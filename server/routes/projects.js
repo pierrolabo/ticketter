@@ -1,9 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth');
-var mongoose = require('mongoose');
-const config = require('config');
+
 const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.jwtSecret;
+
 //TODO: Add route permissions + data validations for ID
 
 //const admin = require('../../middleware/permissions/admin');
@@ -12,7 +13,7 @@ const Ticket = require('../models/Ticket');
 getRoleFromToken = (token) => {
   try {
     //Verify token
-    const decoded = jwt.verify(token, config.get('jwtSecret'));
+    const decoded = jwt.verify(token, JWT_SECRET);
     //add user from payload
     return decoded;
   } catch (e) {}

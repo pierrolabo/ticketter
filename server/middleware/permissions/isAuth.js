@@ -1,5 +1,7 @@
-const config = require('config');
+require('dotenv').config();
+
 const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.jwtSecret;
 
 //  User is at least authenticated
 function isAuth(req, res, next) {
@@ -12,7 +14,7 @@ function isAuth(req, res, next) {
 
   //Verify token
   try {
-    const decodedToken = jwt.verify(token, config.get('jwtSecret'));
+    const decodedToken = jwt.verify(token, JWT_SECRET);
 
     //  We attach user into the request
     req.user = decodedToken;

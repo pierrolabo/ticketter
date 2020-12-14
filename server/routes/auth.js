@@ -1,10 +1,13 @@
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const config = require('config');
-const jwt = require('jsonwebtoken');
+
 const auth = require('../middleware/auth');
 const User = require('../models/User');
+
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.jwtSecret;
 
 //  @route POST api/auth
 //  @desc   Auth user
@@ -39,7 +42,7 @@ router.post('/', async (req, res) => {
           id: user.id,
           role: user.role,
         },
-        config.get('jwtSecret'),
+        JWT_SECRET,
         { expiresIn: '365d' },
         (err, token) => {
           if (err) throw err;

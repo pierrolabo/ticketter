@@ -1,31 +1,32 @@
-const express = require("express");
+require('dotenv').config();
+const express = require('express');
 const router = express.Router();
-const bcrypt = require("bcryptjs");
-const config = require("config");
-const jwt = require("jsonwebtoken");
-const auth = require("../middleware/auth");
-const admin = require("../middleware/permissions/admin");
+const bcrypt = require('bcryptjs');
+const admin = require('../middleware/permissions/admin');
 
-const User = require("../models/User");
-const Project = require("../models/Project");
+const User = require('../models/User');
+const Project = require('../models/Project');
 
-const { getRoleFromToken } = require("../helpers/AuthHelpers");
-const { getOrCreateGeneralProject } = require("../helpers/DbHelpers");
+const { getRoleFromToken } = require('../helpers/AuthHelpers');
+const { getOrCreateGeneralProject } = require('../helpers/DbHelpers');
+
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.jwtSecret;
 
 //  @route GET api/users
 //  @desc   Get the list of all users || users from project
 //  @access private
-router.get("/", async (req, res) => {
-  const token = req.header("x-auth-token");
-  if (!token) return res.status(401).json({ msg: "Unauthorized" });
+router.get('/', async (req, res) => {
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).json({ msg: 'Unauthorized' });
 
   const { role, id } = getRoleFromToken(token);
 
   //  If is admin => all the users
   //  If is user => Users from his project
-  if (role === "ADMIN") {
+  if (role === 'ADMIN') {
     User.find()
-      .select("-password")
+      .select('-password')
       .then((user) => res.json(user));
   } else {
     //  Find the project where the user is in
@@ -43,15 +44,15 @@ router.get("/", async (req, res) => {
 //  @route GET api/user:id
 //  @desc   Get user by id
 //  @access private
-router.get("/:id", admin, async (req, res) => {
+router.get('/:id', admin, async (req, res) => {
   const { id } = req.params;
   try {
     //    If ID doesnt match mongoID type
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      throw "ID isnt valid";
+      throw 'ID isnt valid';
     }
     User.find({ _id: id })
-      .select("-password")
+      .select('-password')
       .then((user) => res.json(user));
   } catch (err) {
     return res.status(400).json({ msg: err });
@@ -61,12 +62,12 @@ router.get("/:id", admin, async (req, res) => {
 //  @route POST api/users
 //  @desc   Register new users
 //  @access Public
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   const { name, lastname, email, password } = req.body;
   console.log(req.body);
   //  Quick data validations
   if (!name || !lastname || !email || !password) {
-    return res.status(400).json({ msg: "All fields must be complete!" });
+    return res.status(400).json({ msg: 'All fields must be complete!' });
   }
 
   //  Check if email exist in database
@@ -74,7 +75,7 @@ router.post("/", async (req, res) => {
 
   //  Email already in database
   if (emailInDatabase) {
-    return res.status(400).json({ msg: "This email is already registered!" });
+    return res.status(400).json({ msg: 'This email is already registered!' });
   }
 
   //  User is not in database, we create a new user
@@ -106,7 +107,7 @@ router.post("/", async (req, res) => {
             id: user.id,
             role: user.role,
           },
-          config.get("jwtSecret"),
+          JWT_SECRET,
           { expiresIn: 3600 },
           (err, token) => {
             if (err) throw err;
@@ -132,7 +133,7 @@ router.post("/", async (req, res) => {
 //  @route PUT api/users
 //  @desc   Update a user by id
 //  @access private
-router.put("/", async (req, res) => {
+router.put('/', async (req, res) => {
   const {
     name,
     lastname,
@@ -147,7 +148,7 @@ router.put("/", async (req, res) => {
     nextProjects,
   } = req.body;
   if (!name || !lastname || !email || !role || !id) {
-    return res.status(400).json({ msg: "All fields must be complete!" });
+    return res.status(400).json({ msg: 'All fields must be complete!' });
   }
   //  Update the user
   let query = { _id: id };
@@ -188,7 +189,7 @@ router.put("/", async (req, res) => {
     let updatedUser = await User.findOneAndUpdate(query, update, options);
     return res.json(updatedUser);
   } catch (err) {
-    return res.status(400).json({ msg: "Error updating user" });
+    return res.status(400).json({ msg: 'Error updating user' });
   }
 });
 module.exports = router;

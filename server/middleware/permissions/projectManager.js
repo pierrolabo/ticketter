@@ -1,5 +1,7 @@
-const config = require('config');
+require('dotenv').config();
+
 const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.jwtSecret;
 
 function projectManager(req, res, next) {
   //We grab the token from the header
@@ -12,7 +14,7 @@ function projectManager(req, res, next) {
 
   //Verify token
   try {
-    const decodedToken = jwt.verify(token, config.get('jwtSecret'));
+    const decodedToken = jwt.verify(token, JWT_SECRET);
 
     //  Check if user is admin
     let role = decodedToken.role;

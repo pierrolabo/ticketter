@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 var mongoose = require('mongoose');
-const config = require('config');
-const jwt = require('jsonwebtoken');
+
 //TODO: Add route permissions + data validations for ID
 
 const { getRoleFromToken } = require('../helpers/AuthHelpers');

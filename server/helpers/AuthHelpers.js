@@ -2,6 +2,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.jwtSecret;
+
 module.exports = {
   getRoleFromToken: (token) => {
     if (!token) return { role: null, id: null };

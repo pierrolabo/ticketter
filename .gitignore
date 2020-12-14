@@ -29,3 +29,4 @@ yarn-error.log*
 log/combined.log
 log/rejections.log
 .env
+private.txt
