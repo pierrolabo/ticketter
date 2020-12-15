@@ -29,11 +29,6 @@ import { getUsers } from '../actions/userActions';
 import DetailsProject from '../views/DetailsProject';
 
 class Routes extends Component {
-  componentDidMount() {
-    this.props.getTickets();
-    this.props.getProjects();
-  }
-
   UNSAFE_componentWillReceiveProps(nextProps) {
     //  If a user just logged in
     if (
