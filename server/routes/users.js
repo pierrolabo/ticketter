@@ -22,9 +22,13 @@ router.get('/', async (req, res) => {
 
   const { role, id } = getRoleFromToken(token);
 
-  //  If is admin => all the users
-  //  If is user => Users from his project
-  if (role === 'ADMIN') {
+  /*
+   If is admin => all the users
+   If we want to restrict project manager by letting admin choose what PG has access
+   remove pg from this condition
+   If is user => Users from his project
+  */
+  if (role === 'ADMIN' || role === 'PROJECT_MANAGER') {
     User.find()
       .select('-password')
       .then((user) => res.json(user));
