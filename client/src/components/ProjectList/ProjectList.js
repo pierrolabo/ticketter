@@ -62,7 +62,6 @@ export class ProjectList extends Component {
     if (!id) {
       id = e.target.id;
     }
-    console.log('handleclick: ', id);
     history.push(`/project/view/${id}`);
   };
 

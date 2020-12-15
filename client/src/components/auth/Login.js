@@ -87,55 +87,56 @@ class Login extends Component {
   };
   render() {
     return (
-      <Row className='login-row'>
-        <Col xs='5' md='5' xl='3' className='login-container'>
+      <Row className="login-row">
+        <Col xs="5" md="5" xl="3" className="login-container">
           <Container>
             {this.state.msg ? (
-              <Alert color='danger'>{this.state.msg}</Alert>
+              <Alert color="danger">{this.state.msg}</Alert>
             ) : (
               ''
             )}
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
-                <Label for='email'>Email</Label>
+                <Label for="email">Email</Label>
                 <Input
-                  type='email'
-                  name='email'
-                  id='email'
-                  placeholder='Email'
-                  className='mb-3'
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Email"
+                  className="mb-3"
                   onChange={this.onChange}
                 />
-                <Label for='Password'>Password</Label>
+                <Label for="Password">Password</Label>
                 <Input
-                  type='password'
-                  name='password'
-                  id='password'
-                  placeholder='Password'
-                  className='mb-3'
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  className="mb-3"
+                  autocomplete="on"
                   onChange={this.onChange}
                 />
-                <Button color='primary' block>
+                <Button color="primary" block>
                   Login
                 </Button>
               </FormGroup>
             </Form>
           </Container>
         </Col>
-        <Col xs='4' md='3' xl='2' className='login-as-container'>
-          <Card className='login-as'>
+        <Col xs="4" md="3" xl="2" className="login-as-container">
+          <Card className="login-as">
             <CardHeader>Login as</CardHeader>
-            <CardBody className='login-as-container-login-buttons'>
-              <Button onClick={this.handleLoginDemo} id='ADMIN'>
+            <CardBody className="login-as-container-login-buttons">
+              <Button onClick={this.handleLoginDemo} id="ADMIN">
                 admin
               </Button>
-              <Button onClick={this.handleLoginDemo} id='PROJECT_MANAGER'>
+              <Button onClick={this.handleLoginDemo} id="PROJECT_MANAGER">
                 Project Manager
               </Button>
-              <Button onClick={this.handleLoginDemo} id='DEVELOPER'>
+              <Button onClick={this.handleLoginDemo} id="DEVELOPER">
                 Developer
               </Button>
-              <Button onClick={this.handleLoginDemo} id='CLIENT'>
+              <Button onClick={this.handleLoginDemo} id="CLIENT">
                 Client
               </Button>
             </CardBody>

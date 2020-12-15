@@ -114,7 +114,6 @@ export class Tickets extends Component {
     const projectID = projects.filter((project) =>
       project.tickets.includes(id)
     )[0];
-    console.log('delete: ', id, 'project: ', projectID._id);
     this.props.deleteTicket(id, projectID._id);
   };
   render() {

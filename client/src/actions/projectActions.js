@@ -28,17 +28,11 @@ export const clearProjects = () => (dispatch) => {
   });
 };
 export const getProjects = () => (dispatch, getState) => {
-  console.log('getting projects...');
-  console.log('getting projects dispatched ?');
   dispatch(setProjectsLoading());
-  console.log('getting projects dispatched !');
   const token = tokenConfig();
-  console.log('launch: ', token);
   axios
     .get('/api/projects', token)
     .then((res) => {
-      console.log('getting projects DONE');
-
       dispatch({
         type: GET_PROJECTS,
         payload: res.data,
