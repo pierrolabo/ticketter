@@ -22,16 +22,19 @@ export const SelectMultiProjects = (props) => {
   //  if the user already has a project assigned
   //  this project is selected as default inside the select
   const createDefaultProject = (projects, id) => {
-    let filteredProjects = projects.forEach((project) => {
+    let filteredProjects = [];
+
+    projects.forEach((project) => {
       if (project.userList.includes(id)) {
-        return {
+        filteredProjects.push({
           value: project._id,
           label: project.name,
-        };
+        });
       }
     });
     return filteredProjects;
   };
+
   return (
     <FormGroup>
       <Label for="assigned">Assigned Projects</Label>

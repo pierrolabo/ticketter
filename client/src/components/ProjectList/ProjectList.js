@@ -13,6 +13,7 @@ import { deleteProject } from '../../actions/projectActions';
 import EditProjectModal from '../modals/EditProjectModal';
 import ConfirmDeleteModal from '../modals/ConfirmDeleteModal';
 import { history } from '../../configureStore';
+
 export class ProjectList extends Component {
   state = {
     modal: false,
@@ -54,7 +55,16 @@ export class ProjectList extends Component {
   handleDelete = (id) => {
     this.props.deleteProject(id);
   };
-  handleClick = (e) => history.push(`/project/view/${e.target.id}`);
+  handleClick = (e) => {
+    let id = e.target.parentNode.id;
+    //  If svg or <th> is clicked, sometimes we dont get id
+    //  this fix the bug
+    if (!id) {
+      id = e.target.id;
+    }
+    console.log('handleclick: ', id);
+    history.push(`/project/view/${id}`);
+  };
 
   render() {
     const { projects } = this.props.project;

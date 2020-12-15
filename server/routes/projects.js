@@ -27,8 +27,8 @@ router.get('/', (req, res) => {
     const token = req.header('x-auth-token');
     const { role, id } = getRoleFromToken(token);
 
-    //  If is admin => all the tickets
-    if (role === 'ADMIN') {
+    //  If is admin || PG => all the tickets
+    if (role === 'ADMIN' || role === 'PROJECT_MANAGER') {
       Project.find().then((projects) => res.json(projects));
     } else {
       Project.find({ userList: id }).then((projects) => res.json(projects));

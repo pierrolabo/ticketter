@@ -65,6 +65,7 @@ export class HomeTicketsCards extends Component {
             <TicketCard ticketInfo={completedTickets} />
           </Col>
         </Row>
+        {/*
         <Row className="sorry-no-projects">
           {!noProjectForUser ? (
             <Container>
@@ -81,6 +82,8 @@ export class HomeTicketsCards extends Component {
             ''
           )}
         </Row>
+
+          */}
       </Container>
     );
   }
