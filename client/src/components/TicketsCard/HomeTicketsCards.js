@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Container, Row, Col, Jumbotron } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { getTickets } from '../../actions/ticketActions';
 
 import TicketCard from '../TicketsCards/TicketCard';
@@ -48,7 +48,6 @@ export class HomeTicketsCards extends Component {
       ).length;
       completedTickets.ticketNumber = tickets.length;
     }
-    const noProjectForUser = this.props.project.projects.length > 0;
     return (
       <Container className="dashboard mt-5">
         <Row>

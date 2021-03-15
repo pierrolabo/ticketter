@@ -115,7 +115,7 @@ const TicketListSingleProject = (props) => {
               ) : null}
 
               <th onClick={handleView} id={ticket._id}>
-                <FontAwesomeIcon id={ticket._id} icon={faEye}></FontAwesomeIcon>
+                <FontAwesomeIcon id={ticket._id} icon={faEye} style={{cursor: 'pointer'}}></FontAwesomeIcon>
               </th>
               {hasRightToDelete ? (
                 <th

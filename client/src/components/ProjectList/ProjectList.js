@@ -105,7 +105,7 @@ export class ProjectList extends Component {
                       <th>{project.name}</th>
                       <th>{project.description}</th>
                       <th>{projectNbr}</th>
-                      <th id={project._id} onClick={this.handleClick}>
+                      <th id={project._id} onClick={this.handleClick} style={{cursor: 'pointer'}}>
                         <FontAwesomeIcon
                           id={project._id}
                           icon={faEye}

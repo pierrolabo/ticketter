@@ -45,7 +45,7 @@ class DetailsProject extends Component {
           <Container className="mt-5">
             <Card>
               <CardHeader className="text-center">{project.name}</CardHeader>
-              <CardBody>{project.description}</CardBody>
+              <CardBody className="text-center">{project.description}</CardBody>
             </Card>
             <TicketSingleProject
               tickets={filteredTickets}
@@ -61,7 +61,7 @@ class DetailsProject extends Component {
             <Row>
               {filteredUsers.map((user, i) => {
                 return (
-                  <Col xs="1" className="mr-3 mr-xl-0" key={i}>
+                  <Col xs="1" className="m-2 mr-xl-0" key={i}>
                     <UserListSingleProject user={user} index={i} key={i} />
                   </Col>
                 );

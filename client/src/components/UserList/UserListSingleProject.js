@@ -9,8 +9,7 @@ const UserListSingleProject = (props) => {
     <Card
       key={user._id}
       id={`popover${index}`}
-      style={{ width: '50px', height: '50px' }}
-      className=""
+      style={{ width: '50px', height: '50px', cursor: 'pointer'}}
     >
       <CardImg
         top

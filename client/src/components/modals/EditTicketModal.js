@@ -8,6 +8,8 @@ import {
   FormGroup,
   Label,
   Input,
+  Row,
+  Col
 } from 'reactstrap';
 import Select from 'react-select';
 import { connect } from 'react-redux';
@@ -175,10 +177,16 @@ class EditTicketModal extends Component {
             )}
 
             <FormGroup>
+              <Row>
+               <Col>
               <Button color="secondary">Cancel</Button>
-              <Button onClick={this.handleSave} color="success">
+               </Col>  
+               <Col className="text-right">
+              <Button onClick={this.handleSave} color="success" >
                 Save
               </Button>
+               </Col>  
+              </Row>
             </FormGroup>
           </Form>
         </ModalBody>
